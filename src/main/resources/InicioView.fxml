@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Region?>
+<?import jfxtras.scene.layout.HBox?>
+<?import jfxtras.scene.layout.VBox?>
+
+<VBox fx:id="vboxPrincipal" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1000" spacing="10" style="-fx-padding: 20" stylesheets="@Style/InicioViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.InicioViewcontroller">
+   <HBox fx:id="hboxSaludoIniSesionRegistro" alignment="CENTER" spacing="20">
+      <Label fx:id="lblBienvenido" text="Bienvenido a BookYourStay!" />
+      <Region HBox.hgrow="ALWAYS" />
+      <HBox fx:id="hboxIniSesionRegistro" spacing="10">
+         <JFXButton fx:id="btnIniciarSesion" maxWidth="Infinity" minWidth="-Infinity" prefHeight="40" prefWidth="120" styleClass="" text="Iniciar sesión" />
+         <JFXButton fx:id="btnRegistro" maxWidth="Infinity" minWidth="-Infinity" prefHeight="40" prefWidth="120" text="Registrarse" />
+      </HBox>
+   </HBox>
+   <Separator fx:id="sepSeparadorSaludoYAlojamientos" maxWidth="Infinity" minWidth="-Infinity" />
+   <VBox fx:id="vboxEslogans" alignment="CENTER">
+      <Label fx:id="lblEslogan" alignment="CENTER" text="Miles de opciones para tus vacaciones o viajes de negocios" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="lblEslogan2" alignment="CENTER" text="Encuentra tu alojamiento perfecto" />
+   </VBox>
+   <ScrollPane fx:id="scrollPanePrincipal" fitToHeight="false" fitToWidth="true" vbarPolicy="ALWAYS">
+      <VBox fx:id="vboxContenedorAlojamientosOfertas" alignment="CENTER" spacing="10">
+         <ScrollPane fx:id="scrollPaneAlojamientos" fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" prefHeight="400" vbarPolicy="NEVER" VBox.vgrow="NEVER">
+            <VBox fx:id="vboxAlojamientos" alignment="CENTER">
+               <VBox fx:id="vboxFiltroAlojamientos" alignment="CENTER">
+                  <HBox fx:id="hboxFiltroAlojamientosLabels" alignment="CENTER" style="-fx-padding: 8">
+                     <Label text=" 📍 Ciudad" />
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Label text=" 📆 Llegada" />
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Label text="📆 Salida" />
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Label text="👤 Huespedes" />
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Label text="🌟 Estrellas" />
+                  </HBox>
+                  <HBox fx:id="hboxFiltroAlojamientosFields" alignment="CENTER" spacing="10">
+                     <TextField fx:id="txtFieldFiltroCiudad" />
+                     <DatePicker fx:id="datePickerLLegada" />
+                     <DatePicker fx:id="datePickerSalida" />
+                     <TextField fx:id="txtFieldFiltroCantidadHuespedes" />
+                     <ComboBox fx:id="textFieldFiltroEstrellas" prefWidth="150.0" />
+                  </HBox>
+               </VBox>
+               <FlowPane fx:id="flowPaneVistaTarjetasAlojamiento" hgap="10" prefWrapLength="900" vgap="10" />
+               <JFXButton fx:id="btnVerMas" prefHeight="40" prefWidth="120" text="Ver más" />
+            </VBox>
+         </ScrollPane>
+         <Separator fx:id="sepSeparadorAlojamientosOfertas" prefWidth="200.0" />
+         <Label fx:id="lblOfertas" text="Ofertas Destacadas" />
+         <ScrollPane fx:id="scrollPaneOfertas" fitToHeight="false" fitToWidth="true" hbarPolicy="ALWAYS" prefHeight="300" vbarPolicy="NEVER" VBox.vgrow="NEVER">
+            <HBox fx:id="hboxVistaTarjetaOfertas" alignment="CENTER_LEFT" prefHeight="200" spacing="10" style="-fx-padding: 10;" />
+         </ScrollPane>
+      </VBox>
+   </ScrollPane>
+</VBox>

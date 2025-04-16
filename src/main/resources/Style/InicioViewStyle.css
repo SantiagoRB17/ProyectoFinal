@@ -1,0 +1,198 @@
+.root{
+    -fx-background-color: #FDFBEE;
+}
+#lblBienvenido{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+#btnIniciarSesion{
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-border-width: 1px;
+    -fx-border-color: Gray;
+    -fx-border-radius: 10;
+}
+#btnRegistro{
+    -fx-background-color: Black;
+    -fx-background-radius: 12;
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-border-width: 1px;
+    -fx-border-color: Gray;
+    -fx-border-radius: 10;
+}
+#btnRegistro:hover{
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+#btnIniciarSesion:hover{
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+#lblEslogan{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+#lblEslogan2{
+    fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+#vboxEslogans{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FBA518, #F9CB43);
+}
+#vboxContenedorAlojamientosOfertas{
+    -fx-background-color: #FDFBEE;
+}
+#sepSeparadorAlojamientosOfertas .line {
+    -fx-border-color: #E52020;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+#sepSeparadorSaludoYAlojamientos .line {
+    -fx-border-color: #ff9800;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+}
+#vboxAlojamientos{
+    -fx-background-color: #FFDDAE;
+    -fx-spacing: 10px;
+}
+#hboxFiltroAlojamientosLabels{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 20px;
+}
+#hboxFiltroAlojamientosFields .text-field{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-background-color: #328E6E;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+#btnVerMas{
+    -fx-background-color: #E52020;
+    -fx-background-radius: 12;
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-border-width: 1px;
+    -fx-border-color: #E52020;
+    -fx-border-radius: 10;
+}
+#btnVerMas:hover{
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+#lblOfertas{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+#hboxVistaTarjetaOfertas{
+    -fx-background-color: #F2AE66;
+}
+#flowPaneVistaTarjetasAlojamiento .scroll-pane{
+    -fx-b: #F2AE66;
+}
+#scrollPaneAlojamiento{
+    -fx-background-radius: 10;
+}
+#scrollPanePrincipal{
+    -fx-background-color: transparent;
+}
+#scrollPanePrincipal .scroll-bar{
+    -fx-pref-width: 11px;
+    -fx-background-color: #e0e0e0;
+}
+#scrollPanePrincipal .scroll-bar .track {
+    -fx-background-color: #e0e0e0;
+}
+#scrollPanePrincipal .scroll-bar .thumb {
+    -fx-background-color: #F75A5A;
+    -fx-background-insets: 2;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: "";
+    -fx-background-color: transparent;
+}
+.date-picker {
+    -fx-font-size: 14px;
+    -fx-background-color: #90C67C;
+}
+.date-picker .arrow-button {
+    -fx-background-color: #90C67C;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #E1EEBC;
+}
+
+.date-picker .arrow {
+    -fx-background-color: white;
+}
+.date-picker-popup {
+    -fx-background-color: #90C67C;
+    -fx-border-color: #328E6E;
+    -fx-border-radius: 5;
+}
+.date-picker-popup .day-name-cell {
+    -fx-background-color: #90C67C;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #90C67C;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+.date-picker-popup .left-button,
+.date-picker-popup .right-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #444;
+}
+.date-picker-popup .left-arrow,
+.date-picker-popup .right-arrow {
+    -fx-background-color: black;
+}
+.date-picker-popup .day-cell {
+    -fx-background-color: #E1EEBC;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #90C67C;
+}
+
+.date-picker-popup .selected {
+    -fx-background-color: #328E6E;
+    -fx-text-fill: white;
+}
+.date-picker-popup .today {
+    -fx-background-color: #41644A;
+    -fx-border-width: 3;
+}
+.combo-box {
+    -fx-background-color: #328E6E;
+    -fx-font-size: 14px;
+}
+@font-face {
+    font-family: 'Satoshi-Bold';
+    src: url('/Fonts/Satoshi-Bold.otf');
+}
+@font-face {
+    font-family: 'Satoshi-Variable';
+    src: url('/Fonts/Satoshi-Variable.ttf');
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Region?>
+<?import jfxtras.scene.layout.HBox?>
+<?import jfxtras.scene.layout.VBox?>
+
+<VBox fx:id="vboxTarjetaAlojamientoOferta" alignment="CENTER" spacing="2" stylesheets="@Style/TarjetaAlojamientoOfertaView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <ImageView fx:id="imgViewFotoAlojamientoOferta" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+    <HBox fx:id="hboxInformacionAlojamientoTarjetaOferta">
+        <Label fx:id="lblNombreAlojamientoOferta" text="Nombre Alojamiento" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="lblEstrellasAlojamientoOferta" text="Estellas" />
+    </HBox>
+    <VBox fx:id="vboxInformacionOferta">
+        <Label fx:id="lblUbicacionAlojamientoOferta" text="Ubicacion Alojamiento" />
+        <Label fx:id="lblDescripcionOferta" text="DescripcionOferta" wrapText="true" />
+    </VBox>
+    <JFXButton fx:id="btnVerDetallesOfertas" text="Ver detalles" />
+</VBox>
