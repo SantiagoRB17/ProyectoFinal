@@ -188,6 +188,29 @@
     -fx-background-color: #328E6E;
     -fx-font-size: 14px;
 }
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 6;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #555;
+}
+.combo-box-popup .list-cell {
+    -fx-background-color: #90C67C;
+    -fx-text-fill: #333;
+    -fx-font-size: 13px;
+    -fx-padding: 6 10;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #E1EEBC;
+}
+
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #328E6E;
+    -fx-text-fill: white;
+}
 @font-face {
     font-family: 'Satoshi-Bold';
     src: url('/Fonts/Satoshi-Bold.otf');

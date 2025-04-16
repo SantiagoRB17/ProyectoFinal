@@ -17,8 +17,8 @@
       <Label fx:id="lblBienvenido" text="Bienvenido a BookYourStay!" />
       <Region HBox.hgrow="ALWAYS" />
       <HBox fx:id="hboxIniSesionRegistro" spacing="10">
-         <JFXButton fx:id="btnIniciarSesion" maxWidth="Infinity" minWidth="-Infinity" prefHeight="40" prefWidth="120" styleClass="" text="Iniciar sesión" />
-         <JFXButton fx:id="btnRegistro" maxWidth="Infinity" minWidth="-Infinity" prefHeight="40" prefWidth="120" text="Registrarse" />
+         <JFXButton fx:id="btnIniciarSesion" maxWidth="Infinity" minWidth="-Infinity" onAction="#abrirVistaIniciarSesion" prefHeight="40" prefWidth="120" styleClass="" text="Iniciar sesión" />
+         <JFXButton fx:id="btnRegistro" maxWidth="Infinity" minWidth="-Infinity" onAction="#abrirVistaRegistrarse" prefHeight="40" prefWidth="120" text="Registrarse" />
       </HBox>
    </HBox>
    <Separator fx:id="sepSeparadorSaludoYAlojamientos" maxWidth="Infinity" minWidth="-Infinity" />
@@ -44,14 +44,18 @@
                   </HBox>
                   <HBox fx:id="hboxFiltroAlojamientosFields" alignment="CENTER" spacing="10">
                      <TextField fx:id="txtFieldFiltroCiudad" />
+                     <Region HBox.hgrow="ALWAYS" />
                      <DatePicker fx:id="datePickerLLegada" />
+                     <Region HBox.hgrow="ALWAYS" />
                      <DatePicker fx:id="datePickerSalida" />
+                     <Region HBox.hgrow="ALWAYS" />
                      <TextField fx:id="txtFieldFiltroCantidadHuespedes" />
+                     <Region HBox.hgrow="ALWAYS" />
                      <ComboBox fx:id="textFieldFiltroEstrellas" prefWidth="150.0" />
                   </HBox>
                </VBox>
                <FlowPane fx:id="flowPaneVistaTarjetasAlojamiento" hgap="10" prefWrapLength="900" vgap="10" />
-               <JFXButton fx:id="btnVerMas" prefHeight="40" prefWidth="120" text="Ver más" />
+               <JFXButton fx:id="btnVerMas" onAction="#verMasAlojamientos" prefHeight="40" prefWidth="120" text="Ver más" />
             </VBox>
          </ScrollPane>
          <Separator fx:id="sepSeparadorAlojamientosOfertas" prefWidth="200.0" />

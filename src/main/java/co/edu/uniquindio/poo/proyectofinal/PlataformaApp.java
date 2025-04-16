@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal;
 
+import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanasController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,17 +10,11 @@ import javafx.stage.Stage;
 
 public class PlataformaApp extends Application {
 
+    VentanasController ventanasController = VentanasController.getInstancia();
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/InicioView.fxml"));
-        Parent root = loader.load();
-
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("BookYourStay");
-
-
-        primaryStage.show();
+        ventanasController.setPrimaryStage(primaryStage);
+        ventanasController.navegarVentanas("/servicioAlojamientosView.fxml","Gestion Alojamientos",true);
     }
 
     public static void main(String[] args) {

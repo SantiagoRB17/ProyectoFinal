@@ -1,0 +1,221 @@
+.root{
+    -fx-background-color: #FDFBEE;
+}
+#gridPaneFormulario .label{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 14;
+}
+#gridPaneFormularioHoteles .label{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 14;
+}
+#gridPaneFormularioOfertas{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 14;
+}
+.button{
+    -fx-background-color: #E52020;
+    -fx-background-radius: 12;
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-border-width: 1px;
+    -fx-border-color: #E52020;
+    -fx-border-radius: 10;
+}
+.button:hover{
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+.text-field{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-background-color: #E1EEBC;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: black;
+    -fx-font-size: 14px;
+}
+.text-area{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-background-color: #E1EEBC;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+.text-area .content{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-background-color: #E1EEBC;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.combo-box {
+    -fx-background-color: #328E6E;
+    -fx-font-size: 14px;
+}
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 6;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #555;
+}
+.combo-box-popup .list-cell {
+    -fx-background-color: #90C67C;
+    -fx-text-fill: #333;
+    -fx-font-size: 13px;
+    -fx-padding: 6 10;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #E1EEBC;
+}
+
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #328E6E;
+    -fx-text-fill: white;
+}
+
+
+.date-picker {
+    -fx-font-size: 14px;
+    -fx-background-color: #90C67C;
+}
+.date-picker .arrow-button {
+    -fx-background-color: #90C67C;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #E1EEBC;
+}
+
+.date-picker .arrow {
+    -fx-background-color: white;
+}
+.date-picker-popup {
+    -fx-background-color: #90C67C;
+    -fx-border-color: #328E6E;
+    -fx-border-radius: 5;
+}
+.date-picker-popup .day-name-cell {
+    -fx-background-color: #90C67C;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #90C67C;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+.date-picker-popup .left-button,
+.date-picker-popup .right-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #444;
+}
+.date-picker-popup .left-arrow,
+.date-picker-popup .right-arrow {
+    -fx-background-color: black;
+}
+.date-picker-popup .day-cell {
+    -fx-background-color: #E1EEBC;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #90C67C;
+}
+
+.date-picker-popup .selected {
+    -fx-background-color: #328E6E;
+    -fx-text-fill: white;
+}
+.date-picker-popup .today {
+    -fx-background-color: #41644A;
+    -fx-border-width: 3;
+}
+.menu-button{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-background-color: #67AE6E;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-border-radius: 50px;
+}
+.menu-button .label{
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+.menu-button .menu-item{
+    -fx-background-color: #90C67C;
+    -fx-font-size: 12px;
+}
+.menu-button .menu-item:hover{
+    -fx-background-color: #E1EEBC;
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+}
+.menu-button .context-menu{
+    -fx-background-color: #90C67C;
+}
+.table-view{
+    -fx-background-color: #90C67C;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: #90C67C;
+}
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #eeeeee;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+.table-view .label {
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+.table-row-cell:selected {
+    -fx-background-color: #E1EEBC;
+    -fx-text-fill: black;
+}
+.tab-pane .tab-header-area {
+    -fx-background-color: #328E6E;
+}
+.tab-pane .tab {
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-weight: bold;
+    -fx-background-color: #67AE6E;
+    -fx-padding: 5;
+    -fx-border-color: transparent;
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color: #E1EEBC;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #328E6E;
+    -fx-text-base-color: #000;
+}
+.label{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-text-fill: Black;
+    -fx-font-size: 20px;
+}
+@font-face {
+    font-family: 'Satoshi-Bold';
+    src: url('/Fonts/Satoshi-Bold.otf');
+}
+@font-face {
+    font-family: 'Satoshi-Variable';
+    src: url('/Fonts/Satoshi-Variable.ttf');
+}

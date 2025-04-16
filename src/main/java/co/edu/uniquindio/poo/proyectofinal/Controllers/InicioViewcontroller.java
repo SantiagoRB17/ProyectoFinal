@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -106,6 +107,15 @@ public class InicioViewcontroller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         /*cargarAlojamientos();
         cargarOfertas();*/
+    }
+
+    public void abrirVistaIniciarSesion(ActionEvent actionEvent) {
+    }
+
+    public void abrirVistaRegistrarse(ActionEvent actionEvent) {
+    }
+
+    public void verMasAlojamientos(ActionEvent actionEvent) {
     }
     /*private void cargarAlojamientos() {
         for (int i = 0; i < 8; i++) {
