@@ -225,11 +225,11 @@
                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints VBox.vgrow="ALWAYS" />
+                        <RowConstraints VBox.vgrow="ALWAYS" />
+                        <RowConstraints VBox.vgrow="ALWAYS" />
+                        <RowConstraints VBox.vgrow="ALWAYS" />
+                        <RowConstraints VBox.vgrow="ALWAYS" />
                     </rowConstraints>
                     <Label text="Descuento" GridPane.rowIndex="1" />
                     <Label text="Descripcion" GridPane.rowIndex="2" />

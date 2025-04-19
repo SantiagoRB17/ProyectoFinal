@@ -105,19 +105,20 @@ public class InicioViewcontroller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*cargarAlojamientos();
-        cargarOfertas();*/
+        cargarAlojamientos();
+        cargarOfertas();
     }
 
     public void abrirVistaIniciarSesion(ActionEvent actionEvent) {
     }
 
     public void abrirVistaRegistrarse(ActionEvent actionEvent) {
+
     }
 
     public void verMasAlojamientos(ActionEvent actionEvent) {
     }
-    /*private void cargarAlojamientos() {
+    private void cargarAlojamientos() {
         for (int i = 0; i < 8; i++) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoView.fxml"));
@@ -155,6 +156,6 @@ public class InicioViewcontroller implements Initializable {
             }
         }
 
-    }*/
+    }
 }
 

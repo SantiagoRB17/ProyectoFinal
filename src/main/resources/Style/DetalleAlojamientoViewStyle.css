@@ -1,0 +1,58 @@
+.root{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FBA518, #E16A54);
+}
+#lblSaludoDetalles{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+#lblResenas{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+#lblSaludoReservaDetalles{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+#gridPaneInformacionAlojamiento .label{
+    -fx-font-family: "Satoshi-Variable";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+#gridPaneInformacionAlojamiento{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #88304E, #522546);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+#gridPaneFormularioReserva .label{
+    -fx-font-family: "Satoshi-Variable";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 17px;
+}
+#gridPaneFormularioReserva{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #88304E, #522546);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+#btnAnadirReserva{
+    -fx-font-family: "Satoshi-Variable";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8;
+    -fx-border-color: black;
+    -fx-font-size: 18px;
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 8;
+}
+@font-face {
+    font-family: 'Satoshi-Bold';
+    src: url('/Fonts/Satoshi-Bold.otf');
+}
+@font-face {
+    font-family: 'Satoshi-Variable';
+    src: url('/Fonts/Satoshi-Variable.ttf');
+}

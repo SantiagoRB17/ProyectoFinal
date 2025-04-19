@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.dlsc.gemsfx.ResizableTextArea?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="930.0" spacing="20.0" style="-fx-padding: 20" stylesheets="@Style/DetalleAlojamientoViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox spacing="20" HBox.hgrow="ALWAYS">
+        <Label fx:id="lblSaludoDetalles" text="Tu proximo destino" />
+        <GridPane fx:id="gridPaneInformacionAlojamiento" alignment="CENTER" hgap="10.0" maxWidth="Infinity" minWidth="-Infinity" vgap="10.0" HBox.hgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+            <Label text="Nombre" />
+            <Label text="Ciudad" GridPane.rowIndex="1" />
+            <Label text="Descripcion" GridPane.rowIndex="2" />
+            <Label text="Foto" GridPane.rowIndex="6" />
+            <Label text="Capacidad de huespedes" GridPane.rowIndex="3" />
+            <Label text="Servicios" GridPane.rowIndex="4" />
+            <Label text="Valoracion" GridPane.rowIndex="5" />
+            <ListView fx:id="listViewServiciosAlojamiento" prefHeight="80.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor></ListView>
+            <ImageView fx:id="imgViewFotoAlojamiento" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+         <ResizableTextArea fx:id="txtAreaDescripcion" editable="false" prefHeight="34.0" prefWidth="162.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor></ResizableTextArea>
+         <TextField fx:id="txtFieldNombreAlojamiento" editable="false" GridPane.columnIndex="1">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor></TextField>
+         <TextField fx:id="txtFieldCiudadAlojamiento" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor></TextField>
+         <TextField fx:id="txtFieldCapacidadHuespedes" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor></TextField>
+         <TextField fx:id="txtFieldValoracionAlojamiento" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor></TextField>
+        </GridPane>
+      <Label fx:id="lblResenas" text="Reseñas de nuestros usuario" />
+      <ListView fx:id="listViewResenasAlojamiento" prefHeight="200.0" prefWidth="200.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></ListView>
+    </VBox>
+    <VBox spacing="20" HBox.hgrow="ALWAYS">
+        <Label fx:id="lblSaludoReservaDetalles" text="¿Que esperas para reservar?" />
+        <GridPane fx:id="gridPaneFormularioReserva" alignment="CENTER" hgap="10.0" maxWidth="Infinity" minWidth="-Infinity" vgap="10.0" HBox.hgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+            <Label text="LLegada" />
+            <Label text="Salida" GridPane.rowIndex="1" />
+            <DatePicker fx:id="datePickerLLegada" maxWidth="Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" HBox.hgrow="ALWAYS" />
+            <DatePicker fx:id="datePickerSalida" maxWidth="Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" HBox.hgrow="ALWAYS" />
+            <Label text="Cantidad de Huespedes" GridPane.rowIndex="2" />
+            <TextField fx:id="datePickerCantidadHuespedes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        </GridPane>
+        <HBox alignment="CENTER">
+            <JFXButton fx:id="btnAnadirReserva" text="Reservar Alojamiento" />
+        </HBox>
+    </VBox>
+</HBox>

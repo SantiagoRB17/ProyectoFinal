@@ -14,7 +14,7 @@ public class PlataformaApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         ventanasController.setPrimaryStage(primaryStage);
-        ventanasController.navegarVentanas("/servicioAlojamientosView.fxml","Gestion Alojamientos",true);
+        ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true);
     }
 
     public static void main(String[] args) {
