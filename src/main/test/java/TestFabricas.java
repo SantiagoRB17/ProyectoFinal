@@ -1,86 +1,160 @@
+import co.edu.uniquindio.poo.proyectofinal.Enums.Estado;
+import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.*;
-import javafx.scene.image.Image;
+import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
+import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioAlojamientos;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestFabricas {
-    @Test
-    public void crearAlojamientoCasaTest(){
-            String nombre = "Casa en el Bosque";
-            String ciudad = "Manizales";
-            String descripcion = "Hermosa casa rural";
-            ArrayList<String> resenas = new ArrayList<>();
-            resenas.add("Acojedora");
-            resenas.add("Espaciosa");
-            Image foto = null;
-            double precio = 350000;
-            double valoracion = 4.8;
-            ArrayList<String> servicios = new ArrayList<>();
-            servicios.add("WiFi");
-            servicios.add("Piscina");
-            Estado estado = Estado.DISPONIBLE;
-            int capacidadMaxima = 6;
-            double costoExtra = 50000;
+        public ServicioAlojamientos servicioAlojamientos = new ServicioAlojamientos();
+        public RepositorioAlojamientos repo = RepositorioAlojamientos.getInstancia();
 
-            FabricaAlojamiento fabricaCasa = new FabricaCasa(nombre, ciudad, descripcion, resenas, foto, precio, valoracion, servicios
-                    , estado, capacidadMaxima, costoExtra);
+        @Test
+        public void crearAlojamientoCasaTest() {
+                String nombre = "Casa en el Bosque";
+                String ciudad = "Manizales";
+                String descripcion = "Hermosa casa rural";
+                ArrayList<String> resenas = new ArrayList<>();
+                resenas.add("Acojedora");
+                resenas.add("Espaciosa");
+                String rutaFoto = null;
+                double precio = 350000;
+                double valoracion = 4.8;
+                ArrayList<String> servicios = new ArrayList<>();
+                servicios.add("WiFi");
+                servicios.add("Piscina");
+                int capacidadMaxima = 6;
+                double costoExtra = 50000;
 
-            ProductoCasa casa = (ProductoCasa) fabricaCasa.crearProducto();
+                FabricaAlojamiento fabricaCasa = new FabricaCasa(nombre, ciudad, descripcion, rutaFoto, precio, servicios,
+                        capacidadMaxima, costoExtra);
 
-            assertEquals(nombre, casa.getNombre());
-            assertEquals(ciudad, casa.getCiudad());
-            assertEquals(descripcion, casa.getDescripcion());
-            assertEquals(2, casa.getResenas().size());
-            assertNull(casa.getFoto());
-            assertEquals(precio, casa.getPrecio());
-            assertEquals(valoracion, casa.getValoracion());
-            assertEquals(2, casa.getServicios().size());
-            assertEquals(estado, casa.getEstado());
-            assertEquals(capacidadMaxima, casa.getCapacidadMaxima());
-            assertEquals(costoExtra, casa.getCostoExtra());
+                Alojamiento alojamientoCasa = fabricaCasa.crearProducto();
 
-            assertEquals(precio+costoExtra,casa.calcularCosto());
-    }
-    @Test
-    public void crearAlojamientoApartamentoTest(){
-            String nombre = "Habitat";
-            String ciudad = "Armenia";
-            String descripcion = "Aparta-estudio";
-            ArrayList<String> resenas = new ArrayList<>();
-            resenas.add("Espacioso");
-            resenas.add("Moderno");
-            resenas.add("Comodo");
-            Image foto = null;
-            double precio = 500000;
-            double valoracion = 4.8;
-            ArrayList<String> servicios = new ArrayList<>();
-            servicios.add("WiFi");
-            servicios.add("Parqueadero");
-            servicios.add("Piscina");
-            Estado estado = Estado.DISPONIBLE;
-            int capacidadMaxima = 6;
-            double costoExtra = 50000;
+                assertInstanceOf(ProductoCasa.class, alojamientoCasa);
 
-            FabricaAlojamiento fabricaCasa = new FabricaCasa(nombre, ciudad, descripcion, resenas, foto, precio, valoracion, servicios
-                    , estado, capacidadMaxima, costoExtra);
+                ProductoCasa casa = (ProductoCasa) alojamientoCasa;
 
-            ProductoCasa casa = (ProductoCasa) fabricaCasa.crearProducto();
+                casa.setResenas(resenas);
+                casa.setValoracion(valoracion);
+                assertNotNull(casa.getId());
+                assertEquals(nombre, casa.getNombre());
+                assertEquals(ciudad, casa.getCiudad());
+                assertEquals(descripcion, casa.getDescripcion());
+                assertEquals(2, casa.getResenas().size());
+                assertNull(casa.getRutaFoto());
+                assertEquals(precio, casa.getPrecio());
+                assertEquals(valoracion, casa.getValoracion());
+                assertEquals(2, casa.getServicios().size());
+                assertEquals(Estado.DISPONIBLE, casa.getEstado());
+                assertEquals(capacidadMaxima, casa.getCapacidadMaxima());
+                assertEquals(costoExtra, casa.getCostoExtra());
 
-            assertEquals(nombre, casa.getNombre());
-            assertEquals(ciudad, casa.getCiudad());
-            assertEquals(descripcion, casa.getDescripcion());
-            assertEquals(3, casa.getResenas().size());
-            assertNull(casa.getFoto());
-            assertEquals(precio, casa.getPrecio());
-            assertEquals(valoracion, casa.getValoracion());
-            assertEquals(3, casa.getServicios().size());
-            assertEquals(estado, casa.getEstado());
-            assertEquals(capacidadMaxima, casa.getCapacidadMaxima());
-            assertEquals(costoExtra, casa.getCostoExtra());
+                assertEquals(precio + costoExtra, casa.calcularCosto());
+        }
 
-            assertEquals(precio+costoExtra,casa.calcularCosto());
-    }
+        @Test
+        public void crearAlojamientoApartamentoTest() {
+                String nombre = "Habitat";
+                String ciudad = "Armenia";
+                String descripcion = "Aparta-estudio";
+                ArrayList<String> resenas = new ArrayList<>();
+                resenas.add("Espacioso");
+                resenas.add("Moderno");
+                resenas.add("Comodo");
+                String rutaFoto = null;
+                double precio = 500000;
+                double valoracion = 4.8;
+                ArrayList<String> servicios = new ArrayList<>();
+                servicios.add("WiFi");
+                servicios.add("Parqueadero");
+                servicios.add("Piscina");
+                int capacidadMaxima = 6;
+                double costoExtra = 50000;
+
+                FabricaAlojamiento fabricaApartamento = new FabricaApartamento(nombre, ciudad, descripcion, rutaFoto, precio,
+                        servicios, capacidadMaxima, costoExtra);
+
+                Alojamiento AlojamientoApartamento = fabricaApartamento.crearProducto();
+
+                assertInstanceOf(ProductoApartamento.class, AlojamientoApartamento);
+
+                ProductoApartamento apartamento = (ProductoApartamento) AlojamientoApartamento;
+
+                apartamento.setResenas(resenas);
+                apartamento.setValoracion(valoracion);
+
+                assertNotNull(apartamento.getId());
+                assertEquals(nombre, apartamento.getNombre());
+                assertEquals(ciudad, apartamento.getCiudad());
+                assertEquals(descripcion, apartamento.getDescripcion());
+                assertEquals(3, apartamento.getResenas().size());
+                assertNull(apartamento.getRutaFoto());
+                assertEquals(precio, apartamento.getPrecio());
+                assertEquals(valoracion, apartamento.getValoracion());
+                assertEquals(3, apartamento.getServicios().size());
+                assertEquals(Estado.DISPONIBLE, apartamento.getEstado());
+                assertEquals(capacidadMaxima, apartamento.getCapacidadMaxima());
+                assertEquals(costoExtra, apartamento.getCostoExtra());
+
+                assertEquals(precio + costoExtra, apartamento.calcularCosto());
+        }
+
+        @Test
+        public void guardarAlojamientosJsonTest() {
+                TipoAlojamiento tipo = TipoAlojamiento.CASA;
+                String nombre = "Habitat";
+                String ciudad = "Armenia";
+                String descripcion = "Aparta-estudio";
+                String rutaFoto = "imagenInexistenteDePrueba";
+                double precio = 500000;
+                ArrayList<String> servicios = new ArrayList<>();
+                servicios.add("WiFi");
+                servicios.add("Parqueadero");
+                servicios.add("Piscina");
+                int capacidadMaxima = 6;
+                double costoExtra = 50000;
+                assertDoesNotThrow(() -> servicioAlojamientos.agregarAlojamiento(tipo, nombre, ciudad, descripcion,
+                        rutaFoto, precio, servicios, capacidadMaxima, costoExtra));
+
+        }
+
+        @Test
+        public void obtenerAlojamientosTest(){
+                List<Alojamiento> alojamientos=repo.getAlojamientos();
+                assertEquals(1, alojamientos.size());
+        }
+
+        @Test
+        public void editarAlojamientoJsonTest() {
+                String nombre = "Galan";
+                String ciudad = "Quimbaya";
+                String descripcion = "casa de 2 pisos";
+                ArrayList<String> servicios = new ArrayList<>();
+                servicios.add("WiFi");
+                servicios.add("Parqueadero");
+                servicios.add("Piscina");
+                servicios.add("Cocina");
+                Alojamiento alojamiento=repo.getAlojamientos().stream().findFirst().get();
+                assertDoesNotThrow(()-> servicioAlojamientos.editarAlojamiento(alojamiento.getId(),nombre,ciudad,descripcion,alojamiento.getRutaFoto(),
+                        alojamiento.getPrecio(),servicios,alojamiento.getCapacidadMaxima(),alojamiento.getCostoExtra()));
+        }
+
+        @Test
+        public void borrarDatosDeTest() throws Exception {
+                List<Alojamiento> alojamientos=repo.getAlojamientos();
+                for(int i=0; i<alojamientos.size(); i++){
+                        try {
+                                repo.eliminarAlojamiento(alojamientos.get(i).getId());
+                        }catch(Exception e){
+                                throw new Exception("La eliminacion fallo");
+                        }
+                }
+        }
+
 }

@@ -170,12 +170,14 @@
     -fx-background-color: #90C67C;
 }
 .table-row-cell {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #eeeeee;
+    -fx-font-size: 15px;
+}
+.table-row-cell:odd {
+    -fx-background-color: #BBD8A3;
 }
 
-.table-row-cell:odd {
-    -fx-background-color: #f9f9f9;
+.table-row-cell:even {
+    -fx-background-color: #F0F1C5;
 }
 .table-view .label {
     -fx-font-family: 'Satoshi-Bold';
@@ -184,7 +186,7 @@
     -fx-font-size: 13px;
 }
 .table-row-cell:selected {
-    -fx-background-color: #E1EEBC;
+    -fx-background-color: #638C6D;
     -fx-text-fill: black;
 }
 .tab-pane .tab-header-area {
@@ -210,6 +212,41 @@
     -fx-font-family: 'Satoshi-Bold';
     -fx-text-fill: Black;
     -fx-font-size: 20px;
+}
+#vboxContenedorFormulario{
+    -fx-background-color: #FDFBEE;
+}
+#scrollPaneContenedorFormulario{
+    -fx-background-color: #FDFBEE;
+}
+#scrollPaneContenedorFormulario .scroll-bar{
+    -fx-pref-width: 11px;
+    -fx-background-color: #E1EEBC;
+}
+#scrollPaneContenedorFormulario .scroll-bar .track {
+    -fx-background-color: #E1EEBC;
+}
+#scrollPaneContenedorFormulario .scroll-bar .thumb {
+    -fx-background-color: #F75A5A;
+    -fx-background-insets: 2;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: "";
+    -fx-background-color: transparent;
+}
+.check-box .box {
+    -fx-background-color: #169976;
+    -fx-border-color: #1DCD9F;
+    -fx-border-radius: 3;
+}
+.check-box:selected .box {
+    -fx-text-fill: #27ae60;         /* Texto si está seleccionado */
+}
+.check-box:selected .mark {
+    -fx-background-color: #000000;   /* Color del check ✓ */
 }
 @font-face {
     font-family: 'Satoshi-Bold';

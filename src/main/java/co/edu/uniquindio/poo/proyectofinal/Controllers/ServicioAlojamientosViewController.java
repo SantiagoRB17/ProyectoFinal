@@ -1,30 +1,44 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Enums.Estado;
+import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
+import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
+import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioAlojamientos;
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import jfxtras.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class ServicioAlojamientosViewController implements Initializable {
 
@@ -107,7 +121,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private CheckBox chkBoxDisponibleHotel;
 
     @FXML
-    private TableColumn<?, ?> clCantidadHuespedes;
+    private TableColumn<Alojamiento, Integer> clCantidadHuespedes;
 
     @FXML
     private TableColumn<?, ?> clCantidadHuespedesAlojamientoEnOfertas;
@@ -116,7 +130,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clCantidadHuespedesHabitacionHotel;
 
     @FXML
-    private TableColumn<?, ?> clCiudad;
+    private TableColumn<Alojamiento, String> clCiudad;
 
     @FXML
     private TableColumn<?, ?> clCiudadAlojamientoEnOfertas;
@@ -128,7 +142,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clDescuento;
 
     @FXML
-    private TableColumn<?, ?> clDisponibleAlojamiento;
+    private TableColumn<Alojamiento, Estado> clDisponibleAlojamiento;
 
     @FXML
     private TableColumn<?, ?> clDisponibleAlojamientoAlojamientoEnOfertas;
@@ -140,13 +154,16 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clDisponibleHotel;
 
     @FXML
+    private TableColumn<Alojamiento, String> clTipoAlojamiento;
+
+    @FXML
     private TableColumn<?, ?> clIDAlojameinto;
 
     @FXML
     private TableColumn<?, ?> clInicioDescuento;
 
     @FXML
-    private TableColumn<?, ?> clNombre;
+    private TableColumn<Alojamiento, String> clNombre;
 
     @FXML
     private TableColumn<?, ?> clNombreAlojamientoEnOfertas;
@@ -164,7 +181,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clNumeroHabitaciones;
 
     @FXML
-    private TableColumn<?, ?> clNumeroServicios;
+    private TableColumn<Alojamiento, Integer> clNumeroServicios;
 
     @FXML
     private TableColumn<?, ?> clNumeroServiciosAlojamientoEnOfertas;
@@ -173,7 +190,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clNumeroServiciosHotel;
 
     @FXML
-    private TableColumn<?, ?> clPrecio;
+    private TableColumn<Alojamiento, Double> clPrecio;
 
     @FXML
     private TableColumn<?, ?> clPrecioAlojamientoEnOfertas;
@@ -203,10 +220,13 @@ public class ServicioAlojamientosViewController implements Initializable {
     private ComboBox<?> cmbBoxFiltroOpcionesOfertas;
 
     @FXML
-    private SearchableComboBox<?> cmbBoxListaServicios;
+    private SearchableComboBox<String> cmbBoxListaServicios;
 
     @FXML
     private SearchableComboBox<?> cmbBoxListaServiciosHotel;
+
+    @FXML
+    private ComboBox<TipoAlojamiento> cmbTipoAlojamiento;
 
     @FXML
     private DatePicker datePickerFinOferta;
@@ -275,7 +295,13 @@ public class ServicioAlojamientosViewController implements Initializable {
     private MenuItem menItemGuardarOferta;
 
     @FXML
-    private TableView<?> tbAlojamientos;
+    private ScrollPane scrollPaneContenedorFormulario;
+
+    @FXML
+    private JFXButton btnLimpiarFormulario;
+
+    @FXML
+    private TableView<Alojamiento> tbAlojamientos;
 
     @FXML
     private TableView<?> tbAlojamientosEnOfertas;
@@ -300,6 +326,9 @@ public class ServicioAlojamientosViewController implements Initializable {
 
     @FXML
     private TextField txtFieldCiudad;
+
+    @FXML
+    private TextField txtFieldCostoExtra;
 
     @FXML
     private TextField txtFieldCiudadHotel;
@@ -338,6 +367,12 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TextField txtServicio;
 
     @FXML
+    private Label lblDisponible;
+
+    @FXML
+    private Label lblTipo;
+
+    @FXML
     private TextField txtServicioHotel;
 
     @FXML
@@ -352,18 +387,9 @@ public class ServicioAlojamientosViewController implements Initializable {
     @FXML
     private VBox vboxContenedorTablaFiltro;
 
-    @FXML
-    void agregarServicio(ActionEvent event) {
-
-    }
 
     @FXML
     void agregarServicioHotel(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cargarFoto(ActionEvent event) {
 
     }
 
@@ -378,22 +404,12 @@ public class ServicioAlojamientosViewController implements Initializable {
     }
 
     @FXML
-    void crearAlojamiento(ActionEvent event) {
-
-    }
-
-    @FXML
     void crearHotel(ActionEvent event) {
 
     }
 
     @FXML
     void crearOferta(ActionEvent event) {
-
-    }
-
-    @FXML
-    void editarAlojamiento(ActionEvent event) {
 
     }
 
@@ -408,11 +424,6 @@ public class ServicioAlojamientosViewController implements Initializable {
     }
 
     @FXML
-    void eliminarAlojamiento(ActionEvent event) {
-
-    }
-
-    @FXML
     void eliminarHotel(ActionEvent event) {
 
     }
@@ -422,10 +433,6 @@ public class ServicioAlojamientosViewController implements Initializable {
 
     }
 
-    @FXML
-    void eliminarServicio(ActionEvent event) {
-
-    }
 
     @FXML
     void guardarCambios(ActionEvent event) {
@@ -472,10 +479,273 @@ public class ServicioAlojamientosViewController implements Initializable {
 
     }
 
+    private ServicioAlojamientos servicioAlojamientos=new ServicioAlojamientos();
+    private Image imagenAlojamientoPorDefecto=new Image(getClass().getResourceAsStream("/imagenes/imagenAlojamientoPorDefecto.png"));
+    private String rutaFotoGuardada;
+    private ObservableList<String> serviciosDisponibles;
+    private VentanasController ventanasController=VentanasController.getInstancia();
+    private Alojamiento alojamientoSeleccionado;
+    private RepositorioAlojamientos repositorioAlojamientos = RepositorioAlojamientos.getInstancia();
+    private RepositorioImagenes repositorioImagenes = RepositorioImagenes.getInstancia();
+    /**
+     * Inicializa el controlador cargando datos iniciales, configurando columnas de la tabla
+     * y eventos asociados a la selección de un alojamiento.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Configuración de columnas de la tabla
+        clTipoAlojamiento.setCellValueFactory(cellData -> {
+            Alojamiento alojamiento = cellData.getValue();
+            String tipo = "";
+
+            if (alojamiento instanceof ProductoCasa) {
+                tipo = "Casa";
+            } else if (alojamiento instanceof ProductoApartamento) {
+                tipo = "Apartamento";
+            } else {
+                tipo = "Desconocido";
+            }
+
+            return new SimpleStringProperty(tipo);
+        });
+        clNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        clCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCiudad()));
+        clPrecio.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
+        clCantidadHuespedes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCapacidadMaxima()));
+        clNumeroServicios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getServicios().size()));
+        clDisponibleAlojamiento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getEstado()));
+
+        // Carga de tipos de alojamiento y configuración inicial de imagen
+        cmbTipoAlojamiento.setItems(FXCollections.observableList(servicioAlojamientos.listarOpcionesAlojamiento()));
+        imgViewFotoAlojamiento.setImage(imagenAlojamientoPorDefecto);
+        serviciosDisponibles = FXCollections.observableArrayList();
+        cmbBoxListaServicios.setItems(serviciosDisponibles);
+        // Ocultar elementos no necesarios
+        lblDisponible.setVisible(false);
+        lblDisponible.setManaged(false);
+        chkBoxDisponible.setVisible(false);
+        chkBoxDisponible.setManaged(false);
+
+        cargarDatosTabla();
+        // Evento de clic sobre la tabla
+        tbAlojamientos.setOnMouseClicked(mouseEvent -> {
+            alojamientoSeleccionado=tbAlojamientos.getSelectionModel().getSelectedItem();
+            if(alojamientoSeleccionado!=null) {
+                txtFieldNombre.setText(alojamientoSeleccionado.getNombre());
+                txtFieldCiudad.setText(alojamientoSeleccionado.getCiudad());
+                txtAreaDescripcion.setText(alojamientoSeleccionado.getDescripcion());
+                txtFieldPrecio.setText(String.valueOf(alojamientoSeleccionado.getPrecio()));
+                txtFieldCostoExtra.setText(String.valueOf(alojamientoSeleccionado.getCostoExtra()));
+                txtFieldCantidadHuespedes.setText(String.valueOf(alojamientoSeleccionado.getCapacidadMaxima()));
+                serviciosDisponibles.setAll(alojamientoSeleccionado.getServicios());
+                try{
+                    imgViewFotoAlojamiento.setImage(RepositorioImagenes.cargarImagen(alojamientoSeleccionado.getRutaFoto()));
+                }catch(Exception e){
+                    ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                }
+                // Mostrar/ocultar elementos para modo edición
+                lblDisponible.setVisible(true);
+                lblDisponible.setManaged(true);
+                lblTipo.setVisible(false);
+                lblTipo.setManaged(false);
+                chkBoxDisponible.setVisible(true);
+                chkBoxDisponible.setManaged(true);
+                chkBoxDisponible.setSelected(true);
+                cmbTipoAlojamiento.setVisible(false);
+                cmbTipoAlojamiento.setManaged(false);
+            }
+        });
+    }
+    //Casa y Apartamentos
+    /**
+     * Metodo controlador para el boton de crear alojamiento
+     * Crea un nuevo alojamiento con los datos ingresados en el formulario.
+     * @param event
+     * @throws Exception
+     */
+    public void crearAlojamiento(ActionEvent event) throws Exception {
+        ArrayList<String> servicios = new ArrayList<>(serviciosDisponibles);
+        if (cmbTipoAlojamiento.getValue() == null) {
+            ventanasController.mostrarAlerta("Debes seleccionar un tipo de alojamiento", Alert.AlertType.ERROR);
+        }else if (hayCamposVacios(txtFieldNombre, txtFieldCiudad, txtAreaDescripcion, txtFieldPrecio, txtFieldCantidadHuespedes, txtFieldCostoExtra)) {
+            ventanasController.mostrarAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
+        } else {
+            try {
+                servicioAlojamientos.agregarAlojamiento(cmbTipoAlojamiento.getValue()
+                        , txtFieldNombre.getText()
+                        , txtFieldCiudad.getText()
+                        , txtAreaDescripcion.getText()
+                        , rutaFotoGuardada
+                        , Double.parseDouble(txtFieldPrecio.getText())
+                        , servicios
+                        , Integer.parseInt(txtFieldCantidadHuespedes.getText())
+                        , Double.parseDouble(txtFieldCostoExtra.getText()));
+                ventanasController.mostrarAlerta("Alojamiento creado con exito", Alert.AlertType.INFORMATION);
+                cargarDatosTabla();
+                limpiarCampos();
+            } catch (Exception e) {
+                System.out.println("EXCEPCIÓN CAPTURADA: " + e);
+                System.out.println("MENSAJE DE LA EXCEPCIÓN: '" + e.getMessage() + "'");
+                ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    /**
+     * Metodo que carga una imagen desde el sistema de archivos y la asocia al alojamiento.
+     * @param e
+     * @throws Exception
+     */
+    public void cargarFoto(ActionEvent e) throws Exception{
+        //Creacion de la instancia de la clase file chooser
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Cargar Imagen");
+        //Creacion del fitro para solo imagenes
+        FileChooser.ExtensionFilter filtro = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg","*.png");
+        fc.getExtensionFilters().add(filtro);
+
+        //Obtener la ventana del boton para asociarla al file chooser
+        Window ventana=btnCargarFoto.getScene().getWindow();
+
+        File file = fc.showOpenDialog(ventana);
+
+        if (file != null) {
+            try{
+                String rutaRelativa = RepositorioImagenes.guardarImagen(file);
+
+                imgViewFotoAlojamiento.setImage(new Image(file.toURI().toString()));
+                this.rutaFotoGuardada = new File(rutaRelativa).getName();
+
+            }catch (Exception ex){
+                throw new Exception(ex.getMessage());
+            }
+
+        }
+    }
+
+    /**
+     * Metodo que agrega un servicio ingresado al listado de servicios del alojamiento.
+     */
+    public void agregarServicio() {
+        String servicio = txtServicio.getText().trim();
+        if (!servicio.isEmpty() && !serviciosDisponibles.contains(servicio)) {
+            serviciosDisponibles.add(servicio);
+            txtServicio.clear();
+        }
+    }
+
+    /**
+     * Metodo que elimina un servicio seleccionado del listado de servicios.
+     */
+    public void eliminarServicio() {
+        String servicioSeleccionado = cmbBoxListaServicios.getValue();
+
+        if (servicioSeleccionado != null) {
+            serviciosDisponibles.remove(servicioSeleccionado);
+        }
+    }
+    /**
+     * Metodo que elimina el alojamiento seleccionado de la tabla y del repositorio.
+     * @param event Evento del botón.
+     */
+    public void eliminarAlojamiento(ActionEvent event) {
+        try {
+            UUID id=alojamientoSeleccionado.getId();
+            repositorioImagenes.eliminarImagen(alojamientoSeleccionado.getRutaFoto());
+            repositorioAlojamientos.eliminarAlojamiento(id);
+            cargarDatosTabla();
+            limpiarCampos();
+            ventanasController.mostrarAlerta("Alojamiento eliminado con exito", Alert.AlertType.INFORMATION);
+        }catch (Exception e){
+            ventanasController.mostrarAlerta("Alojamiento no encontrado", Alert.AlertType.ERROR);
+        }
+    }
+
+    /**
+     * M
+     * @param event
+     */
+    public void editarAlojamiento(ActionEvent event) {
+        try{
+            ArrayList<String> serviciosActualizados = new ArrayList<>(serviciosDisponibles);
+
+            String rutaFoto;
+            if (rutaFotoGuardada != null && !rutaFotoGuardada.equals(alojamientoSeleccionado.getRutaFoto())) {
+                repositorioImagenes.eliminarImagen(alojamientoSeleccionado.getRutaFoto());
+                rutaFoto = rutaFotoGuardada;
+            } else {
+                repositorioImagenes.eliminarImagen(alojamientoSeleccionado.getRutaFoto());
+                rutaFoto = alojamientoSeleccionado.getRutaFoto();
+            }
+            servicioAlojamientos.editarAlojamiento(alojamientoSeleccionado.getId()
+                    , txtFieldNombre.getText()
+                    , txtFieldCiudad.getText()
+                    , txtAreaDescripcion.getText()
+                    , rutaFoto
+                    , Double.parseDouble(txtFieldPrecio.getText())
+                    , serviciosActualizados
+                    , Integer.parseInt(txtFieldCantidadHuespedes.getText())
+                    , Double.parseDouble(txtFieldCostoExtra.getText()));
+            cargarDatosTabla();
+            limpiarCampos();
+            ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
+        }catch (Exception e){
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+    /**
+     * Limpia los campos de texto del formulario
+     */
+    public void limpiarCampos(){
+        cmbTipoAlojamiento.setValue(null);
+        txtFieldNombre.clear();
+        txtFieldCiudad.clear();
+        txtAreaDescripcion.clear();
+        txtFieldPrecio.clear();
+        txtFieldCantidadHuespedes.clear();
+        txtFieldCostoExtra.clear();
+        imgViewFotoAlojamiento.setImage(imagenAlojamientoPorDefecto);
+        rutaFotoGuardada = null;
+        serviciosDisponibles.clear();
+        lblDisponible.setVisible(false);
+        lblDisponible.setManaged(false);
+        chkBoxDisponible.setVisible(false);
+        chkBoxDisponible.setManaged(false);
+        lblTipo.setVisible(true);
+        lblTipo.setManaged(true);
+        cmbTipoAlojamiento.setVisible(true);
+        cmbTipoAlojamiento.setManaged(true);
+    }
+
+    /**
+     * Metodo que carga los datos de alojamiento en la tabla desde el repositorio.
+     */
+    public void cargarDatosTabla(){
+        try {
+            List<Alojamiento> lista = repositorioAlojamientos.getAlojamientos();
+            tbAlojamientos.setItems(FXCollections.observableArrayList(lista));
+        } catch (Exception e) {
+            e.printStackTrace(); // puedes mostrar alerta si prefieres
+        }
+    }
+
+    /**
+     * Método de que limpia el formulario.
+     * @param event
+     */
+    public void limpiarFormulario(ActionEvent event){
+        limpiarCampos();
 
     }
+
+    //Hoteles y Habitaciones
+
+    /**
+     * Metodo que abre una nueva ventana para la edición de habitaciónes.
+     * @param event Evento del botón.
+     */
     public void abrirEditarHabitacion(ActionEvent event){
         try {
 
@@ -499,5 +769,16 @@ public class ServicioAlojamientosViewController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
+    private boolean hayCamposVacios(TextInputControl... campos) {
+        for (TextInputControl campo : campos) {
+            if (campo.getText() == null || campo.getText().trim().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 

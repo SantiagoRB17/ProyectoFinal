@@ -4,6 +4,7 @@ import co.edu.uniquindio.poo.proyectofinal.PlataformaApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.*;
 
@@ -28,7 +29,7 @@ public class VentanasController {
      * @param resize parametro para establecer si la ventana se puede o no agrandar
      * @throws Exception
      */
-    public void navegarVentanas(String nombreArchivoFxml, String tituloVentana, Boolean resize) throws Exception {
+    public void navegarVentanas(String nombreArchivoFxml, String tituloVentana, Boolean resize,Boolean maximxado) throws Exception {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreArchivoFxml));
 
@@ -37,10 +38,24 @@ public class VentanasController {
             primaryStage.resizableProperty().setValue(resize);
             primaryStage.setTitle(tituloVentana);
             primaryStage.setScene(scene);
+            primaryStage.setMaximized(maximxado);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    /**
+     * Muestra una alerta en pantalla
+     * @param mensaje Mensaje a mostrar
+     * @param tipo Tipo de alerta
+     */
+    public void mostrarAlerta(String mensaje, Alert.AlertType tipo){
+        Alert alert = new Alert(tipo);
+        alert.setTitle("Informacion");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.show();
+
     }
 
 }

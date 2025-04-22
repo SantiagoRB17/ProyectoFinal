@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class FabricaApartamento extends FabricaAlojamiento{
     double costoExtra;
-    public FabricaApartamento(String nombre, String ciudad, String descripcion, ArrayList<String> resenas, Image foto,
-                              double precio, double valoracion, ArrayList<String> servicios, Estado estado,
+    public FabricaApartamento(String nombre, String ciudad, String descripcion, String rutaFoto,
+                              double precio, ArrayList<String> servicios,
                               int capacidadMaxima, double costoExtra) {
-        super(nombre, ciudad, descripcion, foto, precio, valoracion, servicios, resenas, estado, capacidadMaxima);
+        super(nombre, ciudad, descripcion, rutaFoto, precio, servicios, capacidadMaxima);
         this.costoExtra = costoExtra;
     }
 
@@ -20,8 +20,9 @@ public class FabricaApartamento extends FabricaAlojamiento{
                 .nombre(getNombre())
                 .ciudad(getCiudad())
                 .descripcion(getDescripcion())
-                .resenas(getResenas())
-                .estado(getEstado())
+                .rutaFoto(getRutaFoto())
+                .precio(getPrecio())
+                .servicios(getServicios())
                 .capacidadMaxima(getCapacidadMaxima())
                 .costoExtra(costoExtra).build();
     }
