@@ -4,6 +4,8 @@ import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import jfxtras.scene.layout.VBox;
@@ -122,7 +125,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clCantidadHuespedesAlojamientoEnOfertas;
 
     @FXML
-    private TableColumn<?, ?> clCantidadHuespedesHabitacionHotel;
+    private TableColumn<ProductoHabitacion, Integer> clCantidadHuespedesHabitacionHotel;
 
     @FXML
     private TableColumn<Alojamiento, String> clCiudad;
@@ -131,26 +134,14 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clCiudadAlojamientoEnOfertas;
 
     @FXML
-    private TableColumn<?, ?> clCiudadHotel;
+    private TableColumn<Alojamiento, String> clCiudadHotel;
 
     @FXML
     private TableColumn<?, ?> clDescuento;
 
-
-    @FXML
-    private TableColumn<?, ?> clDisponibleAlojamientoAlojamientoEnOfertas;
-
-    @FXML
-    private TableColumn<?, ?> clDisponibleHabitacionHotel;
-
-    @FXML
-    private TableColumn<?, ?> clDisponibleHotel;
-
     @FXML
     private TableColumn<Alojamiento, String> clTipoAlojamiento;
 
-    @FXML
-    private TableColumn<?, ?> clIDAlojameinto;
 
     @FXML
     private TableColumn<?, ?> clInicioDescuento;
@@ -162,16 +153,16 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clNombreAlojamientoEnOfertas;
 
     @FXML
-    private TableColumn<?, ?> clNombreHotel;
+    private TableColumn<Alojamiento, String> clNombreHotel;
 
     @FXML
     private TableColumn<?, ?> clNombreOferta;
 
     @FXML
-    private TableColumn<?, ?> clNumeroHabitacionHotel;
+    private TableColumn<ProductoHabitacion, Integer> clNumeroHabitacionHotel;
 
     @FXML
-    private TableColumn<?, ?> clNumeroHabitaciones;
+    private TableColumn<ProductoHotel, Integer> clNumeroHabitaciones;
 
     @FXML
     private TableColumn<Alojamiento, Integer> clNumeroServicios;
@@ -180,7 +171,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clNumeroServiciosAlojamientoEnOfertas;
 
     @FXML
-    private TableColumn<?, ?> clNumeroServiciosHotel;
+    private TableColumn<Alojamiento, Integer> clNumeroServiciosHotel;
 
     @FXML
     private TableColumn<Alojamiento, Double> clPrecio;
@@ -189,10 +180,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<?, ?> clPrecioAlojamientoEnOfertas;
 
     @FXML
-    private TableColumn<?, ?> clPrecioHabitacionHotel;
-
-    @FXML
-    private TableColumn<?, ?> clPrecioHotel;
+    private TableColumn<ProductoHabitacion, Double> clPrecioHabitacionHotel;
 
     @FXML
     private TableColumn<?, ?> clfinDescuento;
@@ -216,7 +204,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private SearchableComboBox<String> cmbBoxListaServicios;
 
     @FXML
-    private SearchableComboBox<?> cmbBoxListaServiciosHotel;
+    private SearchableComboBox<String> cmbBoxListaServiciosHotel;
 
     @FXML
     private ComboBox<TipoAlojamiento> cmbTipoAlojamiento;
@@ -295,6 +283,13 @@ public class ServicioAlojamientosViewController implements Initializable {
 
     @FXML
     private TableView<Alojamiento> tbAlojamientos;
+
+    @FXML
+    private TableView<ProductoHabitacion> tbHabitaciones;
+
+    @FXML
+    private TableView<Alojamiento> tbHoteles;
+
 
     @FXML
     private TableView<?> tbAlojamientosEnOfertas;
@@ -477,7 +472,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private final Image imagenAlojamientoPorDefecto=new Image(Objects.requireNonNull(getClass()
             .getResourceAsStream("/imagenes/imagenAlojamientoPorDefecto.png")));
     private ObservableList<String> serviciosDisponibles;
-    private VentanasController ventanasController=VentanasController.getInstancia();
+    private final VentanasController ventanasController=VentanasController.getInstancia();
     private Alojamiento alojamientoSeleccionado;
     /**
      * Inicializa el controlador cargando datos iniciales, configurando columnas de la tabla
@@ -487,7 +482,7 @@ public class ServicioAlojamientosViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Configuración de columnas de la tabla
+        // Configuración de columnas de la tabla de casas y apartamentos
         clTipoAlojamiento.setCellValueFactory(cellData -> {
             Alojamiento alojamiento = cellData.getValue();
             String tipo = "";
@@ -504,27 +499,75 @@ public class ServicioAlojamientosViewController implements Initializable {
         });
         clNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         clCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCiudad()));
-        clPrecio.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
-        clCantidadHuespedes.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCapacidadMaxima()));
+        clPrecio.setCellValueFactory(cellData-> {
+            Alojamiento alojamiento=cellData.getValue();
+            double precio=0;
+            if(alojamiento instanceof ProductoCasa){
+                ProductoCasa productoCasa=(ProductoCasa) alojamiento;
+                precio=productoCasa.getPrecio();
+            }else if(alojamiento instanceof ProductoApartamento) {
+                ProductoApartamento productoApartamento = (ProductoApartamento) alojamiento;
+                precio = productoApartamento.getPrecio();
+            }
+            return new SimpleObjectProperty<>(precio);
+        });
+        clCantidadHuespedes.setCellValueFactory(cellData -> {
+            Alojamiento alojamiento = cellData.getValue();
+            int cantidadHuespedes = 0;
+            if(alojamiento instanceof ProductoCasa){
+                ProductoCasa productoCasa = (ProductoCasa) alojamiento;
+                cantidadHuespedes = productoCasa.getCapacidadMaxima();
+            }else if(alojamiento instanceof ProductoApartamento){
+                ProductoApartamento productoApartamento = (ProductoApartamento) alojamiento;
+                cantidadHuespedes = productoApartamento.getCapacidadMaxima();
+            }
+            return new SimpleObjectProperty<>(cantidadHuespedes);
+        });
         clNumeroServicios.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getServicios().size()));
+        //Configuracion de columnas de la tabla de hoteles
+        clNombreHotel.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        clCiudadHotel.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCiudad()));
+        clNumeroServiciosHotel.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getServicios().size()));
+        clNumeroHabitaciones.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNumeroDeHabitaciones()));
+        //Configuracion de columnas de la tabla de habitaciones
+        clNumeroHabitacionHotel.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNumeroHabitacion()));
+        clPrecioHabitacionHotel.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
+        clCantidadHuespedesHabitacionHotel.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
 
         // Carga de tipos de alojamiento y configuración inicial de imagen
         cmbTipoAlojamiento.setItems(FXCollections.observableList(ventanasController.getPlataforma().listarOpcionesAlojamiento()));
         imgViewFotoAlojamiento.setImage(imagenAlojamientoPorDefecto);
         serviciosDisponibles = FXCollections.observableArrayList();
         cmbBoxListaServicios.setItems(serviciosDisponibles);
+        cmbBoxListaServiciosHotel.setItems(serviciosDisponibles);
 
         cargarDatosTabla();
-        // Evento de clic sobre la tabla
+        cargarDatosTablaHotel();
+
+
+        // Evento de clic sobre la tabla de apartamentos y casas
         tbAlojamientos.setOnMouseClicked(mouseEvent -> {
             alojamientoSeleccionado=tbAlojamientos.getSelectionModel().getSelectedItem();
             if(alojamientoSeleccionado!=null) {
                 txtFieldNombre.setText(alojamientoSeleccionado.getNombre());
                 txtFieldCiudad.setText(alojamientoSeleccionado.getCiudad());
                 txtAreaDescripcion.setText(alojamientoSeleccionado.getDescripcion());
-                txtFieldPrecio.setText(String.valueOf(alojamientoSeleccionado.getPrecio()));
+                double precio = 0.0;
+                if (alojamientoSeleccionado instanceof ProductoCasa casa) {
+                    precio = casa.getPrecio();
+                } else if (alojamientoSeleccionado instanceof ProductoApartamento apartamento) {
+                    precio = apartamento.getPrecio();
+                }
+                txtFieldPrecio.setText(String.valueOf(precio));
                 txtFieldCostoExtra.setText(String.valueOf(alojamientoSeleccionado.getCostoExtra()));
-                txtFieldCantidadHuespedes.setText(String.valueOf(alojamientoSeleccionado.getCapacidadMaxima()));
+                int capacidadMaxima = 0;
+                if(alojamientoSeleccionado instanceof ProductoCasa casa){
+                    capacidadMaxima=casa.getCapacidadMaxima();
+                }else if(alojamientoSeleccionado instanceof ProductoApartamento apartamento){
+                    capacidadMaxima=apartamento.getCapacidadMaxima();
+                }
+                txtFieldCantidadHuespedes.setText(String.valueOf(capacidadMaxima));
+                txtFieldCantidadHuespedes.setText(String.valueOf(capacidadMaxima));
                 serviciosDisponibles.setAll(alojamientoSeleccionado.getServicios());
                 try{
                     imgViewFotoAlojamiento.setImage(RepositorioImagenes.cargarImagen(alojamientoSeleccionado.getRutaFoto()));
@@ -536,6 +579,22 @@ public class ServicioAlojamientosViewController implements Initializable {
                 lblTipo.setManaged(false);
                 cmbTipoAlojamiento.setVisible(false);
                 cmbTipoAlojamiento.setManaged(false);
+            }
+        });
+        //Evento de clic sobre la tabla de hoteles
+        tbHoteles.setOnMouseClicked(mouseEvent -> {
+            alojamientoSeleccionado=tbHoteles.getSelectionModel().getSelectedItem();
+            if(alojamientoSeleccionado!=null){
+                txtFieldNombreHotel.setText(alojamientoSeleccionado.getNombre());
+                txtFieldCiudadHotel.setText(alojamientoSeleccionado.getCiudad());
+                txtAreaDescripcionHotel.setText(alojamientoSeleccionado.getDescripcion());
+                serviciosDisponibles.setAll(alojamientoSeleccionado.getServicios());
+                try{
+                    imgViewFotoAlojamientoHotel.setImage(RepositorioImagenes.cargarImagen(alojamientoSeleccionado.getRutaFoto()));
+                }catch(Exception e){
+                    ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                }
+                cargarDatosTablaHabitaciones();
             }
         });
     }
@@ -712,7 +771,7 @@ public class ServicioAlojamientosViewController implements Initializable {
 
             tbAlojamientos.setItems(FXCollections.observableArrayList(listaActivos));
         } catch (Exception e) {
-            e.printStackTrace(); // puedes mostrar alerta si prefieres
+            e.printStackTrace();
         }
     }
 
@@ -726,6 +785,41 @@ public class ServicioAlojamientosViewController implements Initializable {
     }
 
     //Hoteles y Habitaciones
+
+
+
+
+    /**
+     * Metodo que carga los datos de los hoteles en la tabla desde el repositorio.
+     */
+    public void cargarDatosTablaHotel(){
+        try {
+            List<Alojamiento> lista = ventanasController.getPlataforma().listarHoteles();
+
+            List<Alojamiento> listaActivos = lista.stream()
+                    .filter(Alojamiento::isActivo)
+                    .collect(Collectors.toList());
+            tbHoteles.setItems(FXCollections.observableArrayList(listaActivos));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Metodo que carga los datos de las habitaciones en la tabla desde el repositorio.
+     */
+    public void cargarDatosTablaHabitaciones(){
+        try{
+            ProductoHotel hotel = (ProductoHotel) ventanasController.getPlataforma().buscarAlojamientoPorId(alojamientoSeleccionado.getId());
+
+            List<ProductoHabitacion> listaHabitacionesActivas = hotel.getHabitaciones().stream()
+                    .filter(ProductoHabitacion::isActivo)
+                    .collect(Collectors.toList());
+            tbHabitaciones.setItems(FXCollections.observableArrayList(listaHabitacionesActivas));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Metodo que abre una nueva ventana para la edición de habitaciónes.
@@ -744,11 +838,12 @@ public class ServicioAlojamientosViewController implements Initializable {
             // Crear un nuevo escenario (ventana)
             Stage stage = new Stage();
             stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.setTitle("Servicio Habitacion");
 
             // Mostrar la nueva ventana
-            stage.show();
+            stage.showAndWait();
 
         }catch (Exception e){
             e.printStackTrace();

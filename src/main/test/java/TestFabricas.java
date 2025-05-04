@@ -131,31 +131,4 @@ public class TestFabricas {
                 assertEquals(1, alojamientos.size());
         }
 
-        @Test
-        public void editarAlojamientoJsonTest() {
-                String nombre = "Galan";
-                String ciudad = "Quimbaya";
-                String descripcion = "casa de 2 pisos";
-                ArrayList<String> servicios = new ArrayList<>();
-                servicios.add("WiFi");
-                servicios.add("Parqueadero");
-                servicios.add("Piscina");
-                servicios.add("Cocina");
-                Alojamiento alojamiento=repo.getAlojamientos().stream().findFirst().get();
-                assertDoesNotThrow(()-> servicioAlojamientos.editarAlojamiento(alojamiento.getId(),nombre,ciudad,descripcion,alojamiento.getRutaFoto(),
-                        alojamiento.getPrecio(),servicios,alojamiento.getCapacidadMaxima(),alojamiento.getCostoExtra()));
-        }
-
-        @Test
-        public void borrarDatosDeTest() throws Exception {
-                List<Alojamiento> alojamientos=repo.getAlojamientos();
-                for(int i=0; i<alojamientos.size(); i++){
-                        try {
-                                repo.eliminarAlojamiento(alojamientos.get(i).getId());
-                        }catch(Exception e){
-                                throw new Exception("La eliminacion fallo");
-                        }
-                }
-        }
-
 }

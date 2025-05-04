@@ -18,4 +18,5 @@ module co.edu.uniquindio.poo.proyectofinal {
     opens co.edu.uniquindio.poo.proyectofinal.Enums to com.fasterxml.jackson.databind;
     exports co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory;
     opens co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory to com.fasterxml.jackson.databind;
+    opens co.edu.uniquindio.poo.proyectofinal.Servicios to com.fasterxml.jackson.databind;
 }

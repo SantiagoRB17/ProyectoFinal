@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 
+import java.util.UUID;
+
 @Builder
 @Getter
 @Setter
@@ -17,5 +19,10 @@ public class ProductoHabitacion {
     private String descripcion;
     @Builder.Default @Setter @Getter
     private boolean activo=true;
+    @Builder.Default @Getter
+    private UUID id=UUID.randomUUID();
 
+    public double calcularCosto() {
+        return 0.0;
+    }
 }

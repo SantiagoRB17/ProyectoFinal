@@ -10,13 +10,16 @@ import java.util.ArrayList;
 @Setter
 public class FabricaCasa extends FabricaAlojamiento {
 
+    private double precio;
+    private int capacidadMaxima;
     private double costoExtra;
-
     public FabricaCasa(String nombre, String ciudad, String descripcion, String rutaFoto,
                        double precio, ArrayList<String> servicios,
                        int capacidadMaxima, double costoExtra) {
-        super(nombre, ciudad, descripcion, rutaFoto, precio, servicios,capacidadMaxima);
+        super(nombre, ciudad, descripcion, rutaFoto, servicios);
         this.costoExtra = costoExtra;
+        this.capacidadMaxima = capacidadMaxima;
+        this.precio = precio;
     }
     @Override
     public Alojamiento crearProducto() {
@@ -25,9 +28,9 @@ public class FabricaCasa extends FabricaAlojamiento {
                 .ciudad(getCiudad())
                 .descripcion(getDescripcion())
                 .rutaFoto(getRutaFoto())
-                .precio(getPrecio())
+                .precio(precio)
                 .servicios(getServicios())
-                .capacidadMaxima(getCapacidadMaxima())
+                .capacidadMaxima(capacidadMaxima)
                 .costoExtra(costoExtra).build();
     }
 }

@@ -149,12 +149,29 @@ public class ServicioAlojamientos {
         repositorioImagenes.eliminarImagen(rutaRelativaImagen);
     }
 
+    /**
+     * Metodo que permite eliminar la imagen de un alojamiento
+     * @param rutaRelativaImagen ruta de la imagen a eliminar del alojamiento
+     * @throws Exception
+     */
     public void eliminarImagen(String rutaRelativaImagen) throws Exception{
         repositorioImagenes.eliminarImagen(rutaRelativaImagen);
     }
 
+    /**
+     * Metodo que recupera la lista de alojamientos almacenados en el repositorio
+     * @return
+     */
     public List<Alojamiento> listarAlojamientos(){
         return repositorioAlojamientos.getAlojamientos();
+    }
+
+    public List<Alojamiento> listarHoteles(){
+        return repositorioAlojamientos.getHoteles();
+    }
+
+    public Alojamiento obtenerPorId(UUID id){
+        return repositorioAlojamientos.obtenerPorId(id);
     }
 
     /**

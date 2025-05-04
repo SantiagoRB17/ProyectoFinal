@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -24,6 +25,8 @@ public class RepositorioAlojamientos {
     private final File archivo;
     @Getter
     private List<Alojamiento> alojamientos;
+    @Getter
+    private List<Alojamiento> hoteles;
 
     /**
      * Constructor privado (por el patrón Singleton).
@@ -34,6 +37,7 @@ public class RepositorioAlojamientos {
         this.objectMapper = new ObjectMapper();
         this.archivo=new File("src/main/data/alojamientos.json");
         this.alojamientos = cargarAlojamientos();
+        this.hoteles=cargarHoteles();
     }
 
     /**
@@ -121,6 +125,24 @@ public class RepositorioAlojamientos {
         return new ArrayList<>();
     }
 
+    /**
+     * Metodo que carga una lista de hoteles desde el arhivo JSON
+     * @return lista de hoteles cargados
+     */
+    private List<Alojamiento> cargarHoteles() {
+        try {
+            if (archivo.exists() && archivo.length() > 0) {
+                List<Alojamiento> todos = objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
+                });
+                return todos.stream()
+                        .filter(a -> a instanceof ProductoHotel)
+                        .toList();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
     /**
      * Metodo que elimina un alojamiento buscando por su UUID.
      * Si se encuentra, se borra y se guarda el cambio

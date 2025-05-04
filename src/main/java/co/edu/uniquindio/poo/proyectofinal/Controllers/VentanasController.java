@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.ServiciosPlataforma;
-import co.edu.uniquindio.poo.proyectofinal.PlataformaApp;
+import co.edu.uniquindio.poo.proyectofinal.Servicios.ServiciosPlataforma;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.proyectofinal.Model;
+package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
@@ -19,5 +19,13 @@ public interface IServiciosPlataforma {
     ArrayList<TipoAlojamiento> listarOpcionesAlojamiento();
     void eliminarImagen(String rutaRelativa)throws Exception;
     List<Alojamiento> listarAlojamientos();
-
+    List<Alojamiento> listarHoteles();
+    void agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto, double precio,
+                      ArrayList<String> servicios, int capacidadMaxima, int numeroHabitaciones) throws Exception;
+    void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto,
+                     double precio, ArrayList<String> servicios,
+                     int capacidadMaxima, double costoExtra);
+    void eliminarHotel(UUID id,String rutaRelativa);
+    void agregarHabitacion(int numeroHabitacion,double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception;
+    void eliminarHabitacion(UUID id,String rutaRelativa);
 }

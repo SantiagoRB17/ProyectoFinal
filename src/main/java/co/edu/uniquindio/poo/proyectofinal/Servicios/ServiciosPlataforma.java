@@ -1,8 +1,8 @@
-package co.edu.uniquindio.poo.proyectofinal.Model;
+package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioAlojamientos;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,4 +44,37 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     public List<Alojamiento> listarAlojamientos(){
         return servicioAlojamientos.listarAlojamientos();
     }
+    @Override
+    public List<Alojamiento> listarHoteles(){
+        return servicioAlojamientos.listarHoteles();
+    }
+
+    public Alojamiento buscarAlojamientoPorId(UUID id){
+        return servicioAlojamientos.obtenerPorId(id);
+    }
+
+    @Override
+    public void agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto, double precio, ArrayList<String> servicios, int capacidadMaxima, int numeroHabitaciones) throws Exception {
+
+    }
+
+    @Override
+    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, double precio, ArrayList<String> servicios, int capacidadMaxima, double costoExtra) {
+
+    }
+
+    @Override
+    public void eliminarHotel(UUID id, String rutaRelativa) {
+
+    }
+
+    @Override
+    public void agregarHabitacion(int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception {
+    }
+
+    @Override
+    public void eliminarHabitacion(UUID id, String rutaRelativa) {
+
+    }
+
 }

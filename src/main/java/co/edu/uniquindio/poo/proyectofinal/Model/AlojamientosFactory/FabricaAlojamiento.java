@@ -10,10 +10,7 @@ import java.util.ArrayList;
 public abstract class FabricaAlojamiento{
     private String nombre,ciudad,descripcion;
     private String rutaFoto;
-    private double precio;
     private ArrayList<String> servicios;
-    private int capacidadMaxima;
-
 
     public abstract Alojamiento crearProducto();
 }

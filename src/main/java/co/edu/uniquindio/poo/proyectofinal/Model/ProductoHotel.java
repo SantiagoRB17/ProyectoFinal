@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -22,20 +23,27 @@ public class ProductoHotel implements Alojamiento {
     private double valoracion=0.0;
     @Builder.Default @Setter @Getter
     private boolean activo=true;
-
+    @Builder.Default
+    private List<ProductoHabitacion> habitaciones=new ArrayList<>();
     private String nombre,ciudad,descripcion;
     private String rutaFoto;
-    private double precio;
     private ArrayList<String> servicios;
-    private int capacidadMaxima;
     private double costoExtra;
     private int numeroDeHabitaciones;
-    private ArrayList<ProductoHabitacion> habitaciones;
 
     @Override
     public double calcularCosto() {
         return 0;
     }
 
+    public boolean tieneTodasLasHabitaciones() {
+        return habitaciones.size() == numeroDeHabitaciones;
+    }
 
+    public void agregarHabitacion(ProductoHabitacion habitacion) throws Exception {
+        if (habitaciones.size() >= numeroDeHabitaciones) {
+            throw new Exception("No se pueden agregar más habitaciones. Límite alcanzado");
+        }
+        habitaciones.add(habitacion);
+    }
 }
