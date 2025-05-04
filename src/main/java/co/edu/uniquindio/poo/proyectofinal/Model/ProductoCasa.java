@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Model;
 
-import co.edu.uniquindio.poo.proyectofinal.Enums.Estado;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
@@ -18,8 +18,8 @@ public class ProductoCasa implements Alojamiento {
     private ArrayList<String>resenas = new ArrayList<>();
     @Builder.Default
     private double valoracion=0.0;
-    @Builder.Default
-    private Estado estado=Estado.DISPONIBLE;
+    @Builder.Default @Setter @Getter
+    private boolean activo=true;
 
     private String nombre,ciudad,descripcion;
     private String rutaFoto;

@@ -1,7 +1,8 @@
-package co.edu.uniquindio.poo.proyectofinal.Model;
+package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory;
 
 
-import co.edu.uniquindio.poo.proyectofinal.Enums.Estado;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -23,8 +24,6 @@ public interface Alojamiento {
 
     UUID getId();
 
-    Estado getEstado();
-
     String getNombre();
 
     String getCiudad();
@@ -36,6 +35,10 @@ public interface Alojamiento {
     double getPrecio();
 
     double getValoracion();
+
+    void setActivo(boolean activo);
+
+    boolean isActivo();
 
     ArrayList<String> getServicios();
 

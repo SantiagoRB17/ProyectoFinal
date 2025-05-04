@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -130,7 +130,7 @@ public class RepositorioAlojamientos {
     public void eliminarAlojamiento(UUID id) throws Exception {
         Alojamiento alojamientoAEliminar=alojamientos.stream().filter(a -> a.getId().equals(id)).findFirst().orElse(null);
         if (alojamientoAEliminar != null) {
-            alojamientos.remove(alojamientoAEliminar);
+            alojamientoAEliminar.setActivo(false);
             guardarAlojamiento();
         }else{
             throw new Exception("Alojamiento no encontrado");

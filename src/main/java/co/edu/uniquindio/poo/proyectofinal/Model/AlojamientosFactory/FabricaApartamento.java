@@ -1,11 +1,11 @@
-package co.edu.uniquindio.poo.proyectofinal.Model;
+package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory;
 
 
-import javafx.scene.image.Image;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
 
 import java.util.ArrayList;
 
-public class FabricaApartamento extends FabricaAlojamiento{
+public class FabricaApartamento extends FabricaAlojamiento {
     double costoExtra;
     public FabricaApartamento(String nombre, String ciudad, String descripcion, String rutaFoto,
                               double precio, ArrayList<String> servicios,

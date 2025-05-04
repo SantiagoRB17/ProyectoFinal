@@ -1,6 +1,9 @@
-import co.edu.uniquindio.poo.proyectofinal.Enums.Estado;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.*;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaCasa;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
 import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioAlojamientos;
 import org.junit.jupiter.api.Test;
@@ -51,7 +54,6 @@ public class TestFabricas {
                 assertEquals(precio, casa.getPrecio());
                 assertEquals(valoracion, casa.getValoracion());
                 assertEquals(2, casa.getServicios().size());
-                assertEquals(Estado.DISPONIBLE, casa.getEstado());
                 assertEquals(capacidadMaxima, casa.getCapacidadMaxima());
                 assertEquals(costoExtra, casa.getCostoExtra());
 
@@ -98,7 +100,6 @@ public class TestFabricas {
                 assertEquals(precio, apartamento.getPrecio());
                 assertEquals(valoracion, apartamento.getValoracion());
                 assertEquals(3, apartamento.getServicios().size());
-                assertEquals(Estado.DISPONIBLE, apartamento.getEstado());
                 assertEquals(capacidadMaxima, apartamento.getCapacidadMaxima());
                 assertEquals(costoExtra, apartamento.getCostoExtra());
 

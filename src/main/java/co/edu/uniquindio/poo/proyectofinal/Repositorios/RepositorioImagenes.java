@@ -45,7 +45,7 @@ public class RepositorioImagenes {
         //Construye la ruta completa del archivo destino como un Path
         Path destino = Paths.get(DIRECTORIO_IMAGENES + rutaRelativa);
 
-        
+
 
         //Copia el archivo original a la nueva ruta destino.
         //StandardCopyOption.REPLACE_EXISTING se usa para sobrescribir si ya existe una imagen con el mismo nombre.

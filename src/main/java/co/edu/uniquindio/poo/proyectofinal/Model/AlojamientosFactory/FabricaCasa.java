@@ -1,11 +1,10 @@
-package co.edu.uniquindio.poo.proyectofinal.Model;
+package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory;
 
-import javafx.scene.image.Image;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 @Getter
 @Setter

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.ServiciosPlataforma;
 import co.edu.uniquindio.poo.proyectofinal.PlataformaApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +13,11 @@ import lombok.*;
 public class VentanasController {
     private static VentanasController INSTANCE;
 
+    @Getter
+    private final ServiciosPlataforma plataforma;
+
     private VentanasController() {
+        plataforma = new ServiciosPlataforma();
     }
 
     public static VentanasController getInstancia(){

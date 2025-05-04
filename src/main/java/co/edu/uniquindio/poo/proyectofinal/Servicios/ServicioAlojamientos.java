@@ -2,14 +2,21 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.*;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaCasa;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
+import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class ServicioAlojamientos {
 
     private RepositorioAlojamientos repositorioAlojamientos=RepositorioAlojamientos.getInstancia();
+    private RepositorioImagenes repositorioImagenes=RepositorioImagenes.getInstancia();
 
     /**
      * Método que valida los campos necesarios para agregar o editar un alojamiento.
@@ -129,6 +136,25 @@ public class ServicioAlojamientos {
             throw new Exception("Tipo de alojamiento invalido");
         }
         repositorioAlojamientos.editarAlojamiento(alojamientoEditado);
+    }
+
+    /**
+     * Metodo que permite eliminar un alojamiento
+     * @param id id del alojamiento a eliminar
+     * @param rutaRelativaImagen ruta de la imagen del alojamiento
+     * @throws Exception
+     */
+    public void eliminarAlojamiento(UUID id,String rutaRelativaImagen) throws Exception{
+        repositorioAlojamientos.eliminarAlojamiento(id);
+        repositorioImagenes.eliminarImagen(rutaRelativaImagen);
+    }
+
+    public void eliminarImagen(String rutaRelativaImagen) throws Exception{
+        repositorioImagenes.eliminarImagen(rutaRelativaImagen);
+    }
+
+    public List<Alojamiento> listarAlojamientos(){
+        return repositorioAlojamientos.getAlojamientos();
     }
 
     /**
