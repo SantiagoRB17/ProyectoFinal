@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import jfxtras.scene.layout.VBox;
 
-public class ServicioEditarHabitacionViewController {
+public class ServicioEditarHabitacionViewController implements HotelDataOberserver {
 
     @FXML
     private JFXButton btnCargarFotoHabitacion;
@@ -106,5 +107,11 @@ public class ServicioEditarHabitacionViewController {
 
     }
 
+    private  ProductoHotel hotel;
+
+    @Override
+    public void datosHotel(ProductoHotel hotel) {
+        this.hotel = hotel;
+    }
 }
 

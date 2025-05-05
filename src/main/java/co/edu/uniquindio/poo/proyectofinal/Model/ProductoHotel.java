@@ -35,15 +35,4 @@ public class ProductoHotel implements Alojamiento {
     public double calcularCosto() {
         return 0;
     }
-
-    public boolean tieneTodasLasHabitaciones() {
-        return habitaciones.size() == numeroDeHabitaciones;
-    }
-
-    public void agregarHabitacion(ProductoHabitacion habitacion) throws Exception {
-        if (habitaciones.size() >= numeroDeHabitaciones) {
-            throw new Exception("No se pueden agregar más habitaciones. Límite alcanzado");
-        }
-        habitaciones.add(habitacion);
-    }
 }

@@ -54,12 +54,12 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto, double precio, ArrayList<String> servicios, int capacidadMaxima, int numeroHabitaciones) throws Exception {
-
+    public Alojamiento agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
+        return servicioAlojamientos.agregarHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
     }
 
     @Override
-    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, double precio, ArrayList<String> servicios, int capacidadMaxima, double costoExtra) {
+    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios, double costoExtra) {
 
     }
 
@@ -69,7 +69,8 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void agregarHabitacion(int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception {
+    public void agregarHabitacion(UUID id, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception {
+        servicioAlojamientos.crearHabitacion(id,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
     }
 
     @Override

@@ -145,11 +145,11 @@
                         <JFXButton fx:id="btnAgregarServicioHotel" onAction="#agregarServicioHotel" text="Agregar" />
                         <VBox VBox.vgrow="ALWAYS" />
                         <SearchableComboBox fx:id="cmbBoxListaServiciosHotel" editable="true" />
-                        <JFXButton fx:id="btnEliminarServicioHotel" onAction="#eliminarServicio" text="Eliminar Servicio" />
+                        <JFXButton fx:id="btnEliminarServicioHotel" onAction="#eliminarServicioHotel" text="Eliminar Servicio" />
                     </VBox>
                     <TextArea fx:id="txtAreaDescripcionHotel" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                <Label text="Número de habitaciones" GridPane.rowIndex="3" />
-               <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               <TextField fx:id="txtFieldNumeroHabitaciones" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 </GridPane>
                 <HBox alignment="CENTER" spacing="20.0">
                     <JFXButton fx:id="btnCrearHotel" onAction="#crearHotel" text="Crear" />

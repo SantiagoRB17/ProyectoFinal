@@ -328,6 +328,9 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TextField txtFieldFiltro;
 
     @FXML
+    private TextField txtFieldNumeroHabitaciones;
+
+    @FXML
     private TextField txtFieldFiltroAlojamientosEnOfertas;
 
     @FXML
@@ -376,25 +379,10 @@ public class ServicioAlojamientosViewController implements Initializable {
     private VBox vboxContenedorTablaFiltro;
 
     private File fotoSeleccionada;
-
-
-    @FXML
-    void agregarServicioHotel(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cargarFotoHotel(ActionEvent event) {
-
-    }
+    
 
     @FXML
     void cerrarSesion(ActionEvent event) {
-
-    }
-
-    @FXML
-    void crearHotel(ActionEvent event) {
 
     }
 
@@ -472,6 +460,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private final Image imagenAlojamientoPorDefecto=new Image(Objects.requireNonNull(getClass()
             .getResourceAsStream("/imagenes/imagenAlojamientoPorDefecto.png")));
     private ObservableList<String> serviciosDisponibles;
+    private ObservableList<String> serviciosDisponiblesHotel;
     private final VentanasController ventanasController=VentanasController.getInstancia();
     private Alojamiento alojamientoSeleccionado;
     /**
@@ -537,9 +526,11 @@ public class ServicioAlojamientosViewController implements Initializable {
         // Carga de tipos de alojamiento y configuración inicial de imagen
         cmbTipoAlojamiento.setItems(FXCollections.observableList(ventanasController.getPlataforma().listarOpcionesAlojamiento()));
         imgViewFotoAlojamiento.setImage(imagenAlojamientoPorDefecto);
+        imgViewFotoAlojamientoHotel.setImage(imagenAlojamientoPorDefecto);
         serviciosDisponibles = FXCollections.observableArrayList();
+        serviciosDisponiblesHotel = FXCollections.observableArrayList();
         cmbBoxListaServicios.setItems(serviciosDisponibles);
-        cmbBoxListaServiciosHotel.setItems(serviciosDisponibles);
+        cmbBoxListaServiciosHotel.setItems(serviciosDisponiblesHotel);
 
         cargarDatosTabla();
         cargarDatosTablaHotel();
@@ -611,6 +602,8 @@ public class ServicioAlojamientosViewController implements Initializable {
             ventanasController.mostrarAlerta("Debes seleccionar un tipo de alojamiento", Alert.AlertType.ERROR);
         }else if (hayCamposVacios(txtFieldNombre, txtFieldCiudad, txtAreaDescripcion, txtFieldPrecio, txtFieldCantidadHuespedes, txtFieldCostoExtra)) {
             ventanasController.mostrarAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
+        }else if (fotoSeleccionada == null) {
+            ventanasController.mostrarAlerta("Debes seleccionar una imagen", Alert.AlertType.ERROR);
         } else {
             try {
 
@@ -630,8 +623,6 @@ public class ServicioAlojamientosViewController implements Initializable {
                 cargarDatosTabla();
                 limpiarCampos();
             } catch (Exception e) {
-                System.out.println("EXCEPCIÓN CAPTURADA: " + e);
-                System.out.println("MENSAJE DE LA EXCEPCIÓN: '" + e.getMessage() + "'");
                 ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             }
         }
@@ -786,8 +777,79 @@ public class ServicioAlojamientosViewController implements Initializable {
 
     //Hoteles y Habitaciones
 
+    public void crearHotel(ActionEvent event) throws Exception {
+        ArrayList<String> servicios = new ArrayList<>(serviciosDisponibles);
+        if(hayCamposVacios(txtFieldNombreHotel,txtFieldCiudadHotel,txtAreaDescripcionHotel,txtFieldNumeroHabitaciones)){
+            ventanasController.mostrarAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
+        }else if(fotoSeleccionada==null){
+            ventanasController.mostrarAlerta("Debes seleccionar una imagen", Alert.AlertType.ERROR);
+        }else {
+            try {
+                String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
+                String rutaFotoGuardada = new File(rutaRelativa).getName();
+
+                ventanasController.getPlataforma().agregarHotel(txtFieldNombreHotel.getText(), txtFieldCiudadHotel.getText(),
+                        txtAreaDescripcionHotel.getText(), rutaFotoGuardada, servicios,
+                        Integer.parseInt(txtFieldNumeroHabitaciones.getText()));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    /**
+     * Metodo que agrega un servicio ingresado al listado de servicios del alojamiento.
+     */
+    public void agregarServicioHotel(ActionEvent event) {
+        String servicio = txtServicioHotel.getText().trim();
+        if (!servicio.isEmpty() && !serviciosDisponiblesHotel.contains(servicio)) {
+            serviciosDisponiblesHotel.add(servicio);
+            txtServicioHotel.clear();
+        }
+    }
+
+    /**
+     * Metodo que elimina un servicio seleccionado del listado de servicios.
+     */
+    public void eliminarServicioHotel(ActionEvent event) {
+        String servicioSeleccionado = cmbBoxListaServiciosHotel.getValue();
+
+        if (servicioSeleccionado != null) {
+            serviciosDisponiblesHotel.remove(servicioSeleccionado);
+        }
+    }
 
 
+    /**
+     * Metodo que carga una imagen desde el sistema de archivos y la asocia al hotel.
+     * @param e
+     * @throws Exception
+     */
+    public void cargarFotoHotel(ActionEvent e) throws Exception{
+        //Creacion de la instancia de la clase file chooser
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Cargar Imagen");
+        //Creacion del fitro para solo imagenes
+        FileChooser.ExtensionFilter filtro = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg","*.png");
+        fc.getExtensionFilters().add(filtro);
+
+        //Obtener la ventana del boton para asociarla al file chooser
+        Window ventana=btnCargarFotoHotel.getScene().getWindow();
+
+        File file = fc.showOpenDialog(ventana);
+
+        if (file != null) {
+            try{
+                this.fotoSeleccionada = file;
+                imgViewFotoAlojamientoHotel.setImage(new Image(file.toURI().toString()));
+
+            }catch (Exception ex){
+                throw new Exception(ex.getMessage());
+            }
+
+        }
+    }
 
     /**
      * Metodo que carga los datos de los hoteles en la tabla desde el repositorio.
@@ -831,6 +893,9 @@ public class ServicioAlojamientosViewController implements Initializable {
             // Cargar la vista
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/servicioEditarHabitacionView.fxml"));
             Parent root = loader.load();
+
+            ServicioEditarHabitacionViewController controller = loader.getController();
+            controller.datosHotel((ProductoHotel) alojamientoSeleccionado);
 
             // Crear la escena
             Scene scene = new Scene(root);

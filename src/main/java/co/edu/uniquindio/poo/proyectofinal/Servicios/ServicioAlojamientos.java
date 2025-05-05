@@ -2,10 +2,7 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.*;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaAlojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaApartamento;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.*;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 
@@ -173,6 +170,69 @@ public class ServicioAlojamientos {
     public Alojamiento obtenerPorId(UUID id){
         return repositorioAlojamientos.obtenerPorId(id);
     }
+
+    public Alojamiento agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto,
+                             ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
+        validarCamposHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
+        FabricaAlojamiento fabricaHotel= new FabricaHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
+        Alojamiento alojamiento = fabricaHotel.crearProducto();
+        repositorioAlojamientos.agregarAlojamiento(alojamiento);
+        return alojamiento;
+    }
+
+
+    public void crearHabitacion(UUID id, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion
+            ,String descripcion) throws Exception{
+        if(numeroHabitacion <= 1){
+            throw new Exception("El numero de habitaciones debe ser mayor a 0");
+        }
+        if(precio < 0){
+            throw new Exception("El precio debe ser mayor que 0");
+        }
+        if(capacidad < 0){
+            throw new Exception("La capacidad debe ser mayor que 0");
+        }
+        if(rutaImagenHabitacion==null || rutaImagenHabitacion.isEmpty() || descripcion==null || descripcion.isEmpty()){
+            throw new Exception("Debe agregar una imagen y descripcion de la habitacion");
+        }
+
+        ProductoHotel alojamiento = (ProductoHotel) repositorioAlojamientos.obtenerPorId(id);
+
+        if(alojamiento.getHabitaciones().stream().anyMatch(h -> h.getNumeroHabitacion() == numeroHabitacion)){
+            throw new Exception("Ya existe una habitacion con ese numero");
+        }
+        int limiteHabitaciones = alojamiento.getNumeroDeHabitaciones();
+        while(alojamiento.getHabitaciones().size() <= limiteHabitaciones){
+            ProductoHabitacion habitacion = ProductoHabitacion.builder()
+                    .numeroHabitacion(numeroHabitacion)
+                    .precio(precio)
+                    .capacidad(capacidad)
+                    .rutaImagenHabitacion(rutaImagenHabitacion)
+                    .descripcion(descripcion)
+                    .build();
+            alojamiento.getHabitaciones().add(habitacion);
+            repositorioAlojamientos.editarAlojamiento(alojamiento);
+            limiteHabitaciones--;
+        }
+    }
+
+    private void validarCamposHotel(String nombre, String ciudad, String descripcion, String rutaFoto,
+                                    ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
+        if(nombre == null || ciudad == null || descripcion == null ||
+                nombre.isEmpty() || ciudad.isEmpty() || descripcion.isEmpty()) {
+            throw new Exception("Todos los campos son obligatorios");
+        }
+        if(numeroHabitaciones <= 1) {
+            throw new Exception("El número de habitaciones debe ser mayor a 1");
+        }
+        if(servicios == null || servicios.isEmpty()) {
+            throw new Exception("Debe añadir al menos un servicio");
+        }
+        if(rutaFoto == null || rutaFoto.isEmpty()) {
+            throw new Exception("Debe añadir una foto del hotel");
+        }
+    }
+
 
     /**
      * Metodo para crear una lista con las opciones de alojamiento para el combo box
