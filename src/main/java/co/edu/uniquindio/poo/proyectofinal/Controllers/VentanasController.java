@@ -57,6 +57,7 @@ public class VentanasController {
         Alert alert = new Alert(tipo);
         alert.setTitle("Informacion");
         alert.setHeaderText(null);
+        alert.setResizable(true);
         alert.setContentText(mensaje);
         alert.show();
 

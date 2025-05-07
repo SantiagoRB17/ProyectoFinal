@@ -379,7 +379,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private VBox vboxContenedorTablaFiltro;
 
     private File fotoSeleccionada;
-    
+
 
     @FXML
     void cerrarSesion(ActionEvent event) {
@@ -579,7 +579,7 @@ public class ServicioAlojamientosViewController implements Initializable {
                 txtFieldNombreHotel.setText(alojamientoSeleccionado.getNombre());
                 txtFieldCiudadHotel.setText(alojamientoSeleccionado.getCiudad());
                 txtAreaDescripcionHotel.setText(alojamientoSeleccionado.getDescripcion());
-                serviciosDisponibles.setAll(alojamientoSeleccionado.getServicios());
+                serviciosDisponiblesHotel.setAll(alojamientoSeleccionado.getServicios());
                 try{
                     imgViewFotoAlojamientoHotel.setImage(RepositorioImagenes.cargarImagen(alojamientoSeleccionado.getRutaFoto()));
                 }catch(Exception e){
@@ -685,10 +685,14 @@ public class ServicioAlojamientosViewController implements Initializable {
      */
     public void eliminarAlojamiento(ActionEvent event) {
         try {
-            ventanasController.getPlataforma().eliminarAlojamiento(alojamientoSeleccionado.getId(),alojamientoSeleccionado.getRutaFoto());
-            cargarDatosTabla();
-            limpiarCampos();
-            ventanasController.mostrarAlerta("Alojamiento eliminado con exito", Alert.AlertType.INFORMATION);
+            if (alojamientoSeleccionado == null) {
+                ventanasController.mostrarAlerta("Debes seleccionar un alojamiento", Alert.AlertType.ERROR);
+            }else{
+                ventanasController.getPlataforma().eliminarAlojamiento(alojamientoSeleccionado.getId(),alojamientoSeleccionado.getRutaFoto());
+                cargarDatosTabla();
+                limpiarCampos();
+                ventanasController.mostrarAlerta("Alojamiento eliminado con exito", Alert.AlertType.INFORMATION);
+            }
         }catch (Exception e){
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -713,18 +717,23 @@ public class ServicioAlojamientosViewController implements Initializable {
                ventanasController.getPlataforma().eliminarImagen(alojamientoSeleccionado.getRutaFoto());
                 rutaFoto = alojamientoSeleccionado.getRutaFoto();
             }
-            ventanasController.getPlataforma().editarAlojamiento(alojamientoSeleccionado.getId()
-                    , txtFieldNombre.getText()
-                    , txtFieldCiudad.getText()
-                    , txtAreaDescripcion.getText()
-                    , rutaFoto
-                    , Double.parseDouble(txtFieldPrecio.getText())
-                    , serviciosActualizados
-                    , Integer.parseInt(txtFieldCantidadHuespedes.getText())
-                    , Double.parseDouble(txtFieldCostoExtra.getText()));
-            cargarDatosTabla();
-            limpiarCampos();
-            ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
+            if(alojamientoSeleccionado == null){
+                ventanasController.mostrarAlerta("Seleccione un alojamiento",Alert.AlertType.ERROR);
+            }else{
+                ventanasController.getPlataforma().editarAlojamiento(alojamientoSeleccionado.getId()
+                        , txtFieldNombre.getText()
+                        , txtFieldCiudad.getText()
+                        , txtAreaDescripcion.getText()
+                        , rutaFoto
+                        , Double.parseDouble(txtFieldPrecio.getText())
+                        , serviciosActualizados
+                        , Integer.parseInt(txtFieldCantidadHuespedes.getText())
+                        , Double.parseDouble(txtFieldCostoExtra.getText()));
+                cargarDatosTabla();
+                limpiarCampos();
+                ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
+            }
+
         }catch (Exception e){
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
@@ -747,7 +756,9 @@ public class ServicioAlojamientosViewController implements Initializable {
         lblTipo.setManaged(true);
         cmbTipoAlojamiento.setVisible(true);
         cmbTipoAlojamiento.setManaged(true);
+        alojamientoSeleccionado = null;
     }
+
 
     /**
      * Metodo que carga los datos de alojamiento en la tabla desde el repositorio.
@@ -758,6 +769,7 @@ public class ServicioAlojamientosViewController implements Initializable {
 
             List<Alojamiento> listaActivos = lista.stream()
                     .filter(Alojamiento::isActivo)
+                    .filter(a -> a instanceof ProductoCasa || a instanceof ProductoApartamento)
                     .collect(Collectors.toList());
 
             tbAlojamientos.setItems(FXCollections.observableArrayList(listaActivos));
@@ -778,21 +790,25 @@ public class ServicioAlojamientosViewController implements Initializable {
     //Hoteles y Habitaciones
 
     public void crearHotel(ActionEvent event) throws Exception {
-        ArrayList<String> servicios = new ArrayList<>(serviciosDisponibles);
+        ArrayList<String> servicios = new ArrayList<>(serviciosDisponiblesHotel);
         if(hayCamposVacios(txtFieldNombreHotel,txtFieldCiudadHotel,txtAreaDescripcionHotel,txtFieldNumeroHabitaciones)){
             ventanasController.mostrarAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
         }else if(fotoSeleccionada==null){
             ventanasController.mostrarAlerta("Debes seleccionar una imagen", Alert.AlertType.ERROR);
+
         }else {
             try {
+
                 String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
                 String rutaFotoGuardada = new File(rutaRelativa).getName();
 
-                ventanasController.getPlataforma().agregarHotel(txtFieldNombreHotel.getText(), txtFieldCiudadHotel.getText(),
+                ProductoHotel nuevoHotel=(ProductoHotel) ventanasController.getPlataforma().agregarHotel(txtFieldNombreHotel.getText(), txtFieldCiudadHotel.getText(),
                         txtAreaDescripcionHotel.getText(), rutaFotoGuardada, servicios,
                         Integer.parseInt(txtFieldNumeroHabitaciones.getText()));
+
+                abrirEditarHabitacion(nuevoHotel);
+
             } catch (Exception e) {
-                System.out.println(e.getMessage());
                 ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             }
         }
@@ -820,6 +836,9 @@ public class ServicioAlojamientosViewController implements Initializable {
         }
     }
 
+    public void limpiarFormularioHotel(ActionEvent event){
+        limpiarCamposHotel();
+    }
 
     /**
      * Metodo que carga una imagen desde el sistema de archivos y la asocia al hotel.
@@ -872,7 +891,8 @@ public class ServicioAlojamientosViewController implements Initializable {
      */
     public void cargarDatosTablaHabitaciones(){
         try{
-            ProductoHotel hotel = (ProductoHotel) ventanasController.getPlataforma().buscarAlojamientoPorId(alojamientoSeleccionado.getId());
+            ProductoHotel hotel = (ProductoHotel) ventanasController.getPlataforma()
+                    .buscarAlojamientoPorId(alojamientoSeleccionado.getId());
 
             List<ProductoHabitacion> listaHabitacionesActivas = hotel.getHabitaciones().stream()
                     .filter(ProductoHabitacion::isActivo)
@@ -885,17 +905,19 @@ public class ServicioAlojamientosViewController implements Initializable {
 
     /**
      * Metodo que abre una nueva ventana para la edición de habitaciónes.
-     * @param event Evento del botón.
      */
-    public void abrirEditarHabitacion(ActionEvent event){
+    public void abrirEditarHabitacion(ProductoHotel hotel){
         try {
-
+            if(alojamientoSeleccionado==null || !(alojamientoSeleccionado instanceof ProductoHotel)){
+                ventanasController.mostrarAlerta("Debes seleccionar un hotel", Alert.AlertType.ERROR);
+            }
             // Cargar la vista
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/servicioEditarHabitacionView.fxml"));
             Parent root = loader.load();
 
             ServicioEditarHabitacionViewController controller = loader.getController();
             controller.datosHotel((ProductoHotel) alojamientoSeleccionado);
+            controller.setObserver(this);
 
             // Crear la escena
             Scene scene = new Scene(root);
@@ -907,14 +929,41 @@ public class ServicioAlojamientosViewController implements Initializable {
             stage.setResizable(true);
             stage.setTitle("Servicio Habitacion");
 
+
+
+            stage.setOnCloseRequest(event -> {
+                // Validar si el número de habitaciones creadas es menor al número total requerido
+                if (hotel.getHabitaciones().size() < hotel.getNumeroDeHabitaciones()) {
+                    ventanasController.mostrarAlerta(
+                            "Debe completar la creación de todas las habitaciones antes de cerrar esta ventana."
+                            , Alert.AlertType.WARNING);
+                    event.consume();
+                }
+            });
+
             // Mostrar la nueva ventana
             stage.showAndWait();
+
+            cargarDatosTablaHotel();
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * Método que limpia todos los campos del formulario para crear hoteles.
+     */
+    public void limpiarCamposHotel(){
+        txtFieldNombreHotel.clear();
+        txtFieldCiudadHotel.clear();
+        txtAreaDescripcionHotel.clear();
+        txtFieldPrecioHotel.clear();
+        txtFieldNumeroHabitaciones.clear();
+        serviciosDisponiblesHotel.clear();
+        imgViewFotoAlojamientoHotel.setImage(imagenAlojamientoPorDefecto);
+        fotoSeleccionada = null;
+    }
 
     private boolean hayCamposVacios(TextInputControl... campos) {
         for (TextInputControl campo : campos) {

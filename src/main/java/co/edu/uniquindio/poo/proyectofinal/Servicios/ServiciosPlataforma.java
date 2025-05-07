@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 
 import java.util.ArrayList;
@@ -69,7 +70,8 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void agregarHabitacion(UUID id, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception {
+    public void crearHabitacion(UUID id, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion
+            ,String descripcion) throws Exception {
         servicioAlojamientos.crearHabitacion(id,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
     }
 

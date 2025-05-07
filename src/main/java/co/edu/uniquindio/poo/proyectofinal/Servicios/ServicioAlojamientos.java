@@ -157,20 +157,40 @@ public class ServicioAlojamientos {
 
     /**
      * Metodo que recupera la lista de alojamientos almacenados en el repositorio
-     * @return
+     * @return lista de alojamientos
      */
     public List<Alojamiento> listarAlojamientos(){
         return repositorioAlojamientos.getAlojamientos();
     }
 
+    /**
+     * Metodo que recupera la lista de hoteles almacenados en el repositorio
+     * @return lista de hoteles
+     */
     public List<Alojamiento> listarHoteles(){
         return repositorioAlojamientos.getHoteles();
     }
 
+    /**
+     * Metodo que permite buscar un alojamiento en el repositorio por su id
+     * @param id id del alojamiento
+     * @return alojamiento encontrado o null si no existe
+     */
     public Alojamiento obtenerPorId(UUID id){
         return repositorioAlojamientos.obtenerPorId(id);
     }
 
+    /**
+     * Método que crea un nuevo hotel y lo agrega en el repositorio de alojamientos.
+     * @param nombre El nombre del hotel.
+     * @param ciudad La ciudad donde se encuentra el hotel.
+     * @param descripcion Una descripción breve del hotel.
+     * @param rutaFoto La ruta de la foto que representa al hotel.
+     * @param servicios Una lista de servicios ofrecidos por el hotel.
+     * @param numeroHabitaciones El número de habitaciones disponibles en el hotel.
+     * @return El objeto del hotel creado y almacenado en el repositorio.
+     * @throws Exception Si algún campo es inválido o no cumple con los requisitos de validación.
+     */
     public Alojamiento agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto,
                              ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
         validarCamposHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
@@ -180,7 +200,17 @@ public class ServicioAlojamientos {
         return alojamiento;
     }
 
-
+    /**
+     * Crea una nueva habitación y la agrega al listado de habitaciones de un hotel existente.
+     * @param id El identificador único del hotel al que se le agregará la habitación.
+     * @param numeroHabitacion El número de la nueva habitación que se desea agregar.
+     * @param precio El precio por noche de la habitación.
+     * @param capacidad La capacidad máxima de personas que pueden hospedarse en la habitación.
+     * @param rutaImagenHabitacion La ruta de la imagen representativa de la habitación.
+     * @param descripcion Una breve descripción de las características de la habitación.
+     * @throws Exception Si el número de la habitación, precio, capacidad, descripción,
+     * o la ruta de imagen no cumplen con las validaciones definidas.
+     */
     public void crearHabitacion(UUID id, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion
             ,String descripcion) throws Exception{
         if(numeroHabitacion <= 1){
@@ -197,25 +227,33 @@ public class ServicioAlojamientos {
         }
 
         ProductoHotel alojamiento = (ProductoHotel) repositorioAlojamientos.obtenerPorId(id);
-
+        if(alojamiento.getHabitaciones().size() >= alojamiento.getNumeroDeHabitaciones()){
+            throw new Exception("No se pueden agregar mas habitaciones al hotel");
+        }
         if(alojamiento.getHabitaciones().stream().anyMatch(h -> h.getNumeroHabitacion() == numeroHabitacion)){
             throw new Exception("Ya existe una habitacion con ese numero");
         }
-        int limiteHabitaciones = alojamiento.getNumeroDeHabitaciones();
-        while(alojamiento.getHabitaciones().size() <= limiteHabitaciones){
-            ProductoHabitacion habitacion = ProductoHabitacion.builder()
-                    .numeroHabitacion(numeroHabitacion)
-                    .precio(precio)
-                    .capacidad(capacidad)
-                    .rutaImagenHabitacion(rutaImagenHabitacion)
-                    .descripcion(descripcion)
-                    .build();
-            alojamiento.getHabitaciones().add(habitacion);
-            repositorioAlojamientos.editarAlojamiento(alojamiento);
-            limiteHabitaciones--;
-        }
+        ProductoHabitacion habitacion = ProductoHabitacion.builder()
+                .numeroHabitacion(numeroHabitacion)
+                .precio(precio)
+                .capacidad(capacidad)
+                .rutaImagenHabitacion(rutaImagenHabitacion)
+                .descripcion(descripcion)
+                .build();
+        alojamiento.getHabitaciones().add(habitacion);
+        repositorioAlojamientos.editarAlojamiento(alojamiento);
     }
 
+    /**
+     * Método que valida los campos necesarios para la creación o modificación de un hotel.
+     * @param nombre El nombre del hotel. Debe ser no nulo y no estar vacío.
+     * @param ciudad La ciudad donde se encuentra el hotel. Debe ser no nula y no estar vacía.
+     * @param descripcion Una descripción breve del hotel. Debe ser no nula y no estar vacía.
+     * @param rutaFoto La ruta de la foto representativa del hotel. Debe ser no nula y no estar vacía.
+     * @param servicios Una lista de servicios ofrecidos por el hotel. Debe contener al menos un servicio y no ser nula.
+     * @param numeroHabitaciones El número de habitaciones disponibles en el hotel. Debe ser mayor a 1.
+     * @throws Exception
+     */
     private void validarCamposHotel(String nombre, String ciudad, String descripcion, String rutaFoto,
                                     ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
         if(nombre == null || ciudad == null || descripcion == null ||

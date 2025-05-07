@@ -86,6 +86,9 @@ public class RepositorioAlojamientos {
      * @return
      */
     public Alojamiento obtenerPorId(UUID id) {
+        if(id==null){
+            throw new IllegalArgumentException("Seleccione un alojamiento");
+        }
         return alojamientos.stream()
                 .filter(a -> a.getId().equals(id))
                 .findFirst().orElse(null);
@@ -150,7 +153,7 @@ public class RepositorioAlojamientos {
      * @throws Exception si no encuentra el alojamiento
      */
     public void eliminarAlojamiento(UUID id) throws Exception {
-        Alojamiento alojamientoAEliminar=alojamientos.stream().filter(a -> a.getId().equals(id)).findFirst().orElse(null);
+        Alojamiento alojamientoAEliminar=obtenerPorId(id);
         if (alojamientoAEliminar != null) {
             alojamientoAEliminar.setActivo(false);
             guardarAlojamiento();
