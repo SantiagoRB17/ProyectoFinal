@@ -1,0 +1,55 @@
+#hboxFiltroAlojamientosLabels{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 17px;
+}
+#vboxTarjetaAlojamiento .label{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-weight: bold;
+}
+#vboxTarjetaAlojamiento{
+    -fx-padding: 10;
+    -fx-background-color: #F7F7F7;
+    -fx-background-radius: 10;
+    -fx-border-color: #F5F5F7;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-border-style: solid;
+}
+#hboxInformacionAlojamientoTarjeta{
+    -fx-background-color: #F5F5F7;
+}
+#hboxUbicacionAlojamientoTarjeta{
+    -fx-background-color: #F5F5F7;
+}
+#vboxTarjetaAlojamientoOferta{
+    -fx-padding: 10;
+    -fx-background-color: #F7F7F7;
+    -fx-background-radius: 10;
+    -fx-border-color: #F5F5F7;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-border-style: solid;
+}
+#btnVerDetalles{
+    -fx-background-color: #E52020;
+    -fx-background-radius: 12;
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+    -fx-border-width: 1px;
+    -fx-border-color: #E52020;
+    -fx-border-radius: 10;
+}
+#btnVerDetalles:hover{
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+@font-face {
+    font-family: 'Satoshi-Bold';
+    src: url('/Fonts/Satoshi-Bold.otf');
+}
+@font-face {
+    font-family: 'Satoshi-Variable';
+    src: url('/Fonts/Satoshi-Variable.ttf');
+}
