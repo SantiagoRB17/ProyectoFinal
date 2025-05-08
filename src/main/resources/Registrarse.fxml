@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="605.0" spacing="30.0" style="-fx-padding: 30px" stylesheets="@styles/RegistrarseView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controladores.RegistrarseViewController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="605.0" spacing="30.0" style="-fx-padding: 30px" stylesheets="@style/RegistrarseView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.RegistrarseViewController">
     <Label alignment="CENTER" maxWidth="Infinity" minWidth="-Infinity" text="Registrarse" />
     <GridPane fx:id="gridPaneFormularioRegistrase" alignment="CENTER" hgap="10" prefHeight="84.0" prefWidth="420.0" vgap="10">
         <columnConstraints>

@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.proyectofinal.modelo.entidades;
+package co.edu.uniquindio.poo.proyectofinal.Model.entidades;
 
 import lombok.Getter;
 import lombok.Setter;

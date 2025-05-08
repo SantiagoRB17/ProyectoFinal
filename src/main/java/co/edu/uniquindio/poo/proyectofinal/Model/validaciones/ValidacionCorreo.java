@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.proyectofinal.modelo.validaciones;
+package co.edu.uniquindio.poo.proyectofinal.Model.validaciones;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

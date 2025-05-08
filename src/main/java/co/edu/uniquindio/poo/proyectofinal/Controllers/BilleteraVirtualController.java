@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.proyectofinal.Controladores;
+package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,15 +1,13 @@
-package co.edu.uniquindio.poo.proyectofinal.modelo.entidades;
+package co.edu.uniquindio.poo.proyectofinal.Model.entidades;
 
-import co.edu.uniquindio.poo.proyectofinal.modelo.enums.Rol;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Persona {
     private String nombre;
     private String apellidos;

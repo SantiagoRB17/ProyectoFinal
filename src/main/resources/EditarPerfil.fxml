@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="605.0" spacing="30.0" style="-fx-padding: 30px" stylesheets="@styles/EditarPerfil.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controladores.EditarPerfilController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="605.0" spacing="30.0" style="-fx-padding: 30px" stylesheets="@style/EditarPerfil.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.EditarPerfilController">
     <Label alignment="CENTER" maxWidth="Infinity" minWidth="-Infinity" text="Editar Perfil" />
     <GridPane fx:id="gridPaneFormularioEditarPerfil" alignment="CENTER" hgap="10" prefHeight="84.0" prefWidth="420.0" vgap="10">
         <columnConstraints>
