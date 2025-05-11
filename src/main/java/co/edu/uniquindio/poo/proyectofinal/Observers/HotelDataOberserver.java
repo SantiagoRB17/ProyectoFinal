@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.proyectofinal.Controllers;
+package co.edu.uniquindio.poo.proyectofinal.Observers;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 

@@ -12,18 +12,21 @@
   "servicios" : [ "Cocina", "Baño", "Terraza" ],
   "capacidadMaxima" : 4,
   "costoExtra" : 5000.0
-}, {
-  "tipo" : "apartamento",
-  "id" : "9b8f860b-a6f0-4268-9b0c-a279a3302dd8",
-  "resenas" : [ ],
-  "valoracion" : 0.0,
-  "activo" : true,
-  "nombre" : "villa lucas",
-  "ciudad" : "circasia",
-  "descripcion" : "dos habitaciones con cama doble capacidad maxima de ocupacion 4 personas, minima dos, dos baños, cocina equipada.",
-  "rutaFoto" : "c64d4e8c-dd3b-4715-9a06-b74c6753db4b_apartamentos.jpg",
-  "precio" : 360.0,
-  "servicios" : [ "lavanderia" ],
-  "capacidadMaxima" : 4,
-  "costoExtra" : 90.0
-} ]
+},
+  {
+    "tipo": "apartamento",
+    "id": "9b8f860b-a6f0-4268-9b0c-a279a3302dd8",
+    "resenas": [],
+    "valoracion": 0.0,
+    "activo": true,
+    "nombre": "villa lucas",
+    "ciudad": "circasia",
+    "descripcion": "dos habitaciones con cama doble capacidad maxima de ocupacion 4 personas, minima dos, dos baños, cocina equipada.",
+    "rutaFoto": "c64d4e8c-dd3b-4715-9a06-b74c6753db4b_apartamentos.jpg",
+    "precio": 360.0,
+    "servicios": [
+      "lavanderia"
+    ],
+    "capacidadMaxima": 4,
+    "costoExtra": 90.0
+  } ]

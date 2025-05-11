@@ -12,8 +12,8 @@ import java.util.UUID;
 
 public class ServicioAlojamientos {
 
-    private RepositorioAlojamientos repositorioAlojamientos=RepositorioAlojamientos.getInstancia();
-    private RepositorioImagenes repositorioImagenes=RepositorioImagenes.getInstancia();
+    private RepositorioAlojamientos repositorioAlojamientos=new RepositorioAlojamientos();
+    private RepositorioImagenes repositorioImagenes=new RepositorioImagenes();
 
     /**
      * Método que valida los campos necesarios para agregar o editar un alojamiento.

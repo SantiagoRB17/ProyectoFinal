@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.proyectofinal.Controllers;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
+import co.edu.uniquindio.poo.proyectofinal.Observers.HotelDataOberserver;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -206,14 +207,6 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
      * Metodo que carga las habitaciones en la tabla de habitaciones
      */
     public void cargarTablaHabitaciones(){
-        try{
-            List<ProductoHabitacion> habitaciones = hotel.getHabitaciones();
-            List<ProductoHabitacion> habitacionesActivas= habitaciones.stream()
-                    .filter(ProductoHabitacion::isActivo).toList();
-            tbHabitaciones.setItems(FXCollections.observableArrayList(habitacionesActivas));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     private boolean hayCamposVacios(TextInputControl... campos) {

@@ -1,11 +1,13 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
@@ -32,13 +34,14 @@ import org.controlsfx.control.SearchableComboBox;
 
 import java.io.File;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class ServicioAlojamientosViewController implements Initializable {
+public class ServicioAlojamientosViewController implements AlojamientosObserver, Initializable {
 
     @FXML
     private JFXButton btnAgregarServicio;
@@ -122,7 +125,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<Alojamiento, Integer> clCantidadHuespedes;
 
     @FXML
-    private TableColumn<?, ?> clCantidadHuespedesAlojamientoEnOfertas;
+    private TableColumn<Alojamiento, Integer> clCantidadHuespedesAlojamientoEnOfertas;
 
     @FXML
     private TableColumn<ProductoHabitacion, Integer> clCantidadHuespedesHabitacionHotel;
@@ -131,32 +134,32 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<Alojamiento, String> clCiudad;
 
     @FXML
-    private TableColumn<?, ?> clCiudadAlojamientoEnOfertas;
+    private TableColumn<Alojamiento, String> clCiudadAlojamientoEnOfertas;
 
     @FXML
     private TableColumn<Alojamiento, String> clCiudadHotel;
 
     @FXML
-    private TableColumn<?, ?> clDescuento;
+    private TableColumn<Oferta, Double> clDescuento;
 
     @FXML
     private TableColumn<Alojamiento, String> clTipoAlojamiento;
 
 
     @FXML
-    private TableColumn<?, ?> clInicioDescuento;
+    private TableColumn<Oferta, LocalDate> clInicioDescuento;
 
     @FXML
     private TableColumn<Alojamiento, String> clNombre;
 
     @FXML
-    private TableColumn<?, ?> clNombreAlojamientoEnOfertas;
+    private TableColumn<Alojamiento, String> clNombreAlojamientoEnOfertas;
 
     @FXML
     private TableColumn<Alojamiento, String> clNombreHotel;
 
     @FXML
-    private TableColumn<?, ?> clNombreOferta;
+    private TableColumn<Oferta, String> clNombreOferta;
 
     @FXML
     private TableColumn<ProductoHabitacion, Integer> clNumeroHabitacionHotel;
@@ -168,7 +171,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<Alojamiento, Integer> clNumeroServicios;
 
     @FXML
-    private TableColumn<?, ?> clNumeroServiciosAlojamientoEnOfertas;
+    private TableColumn<Alojamiento, Integer> clNumeroServiciosAlojamientoEnOfertas;
 
     @FXML
     private TableColumn<Alojamiento, Integer> clNumeroServiciosHotel;
@@ -177,13 +180,13 @@ public class ServicioAlojamientosViewController implements Initializable {
     private TableColumn<Alojamiento, Double> clPrecio;
 
     @FXML
-    private TableColumn<?, ?> clPrecioAlojamientoEnOfertas;
+    private TableColumn<Alojamiento, Double> clPrecioAlojamientoEnOfertas;
 
     @FXML
     private TableColumn<ProductoHabitacion, Double> clPrecioHabitacionHotel;
 
     @FXML
-    private TableColumn<?, ?> clfinDescuento;
+    private TableColumn<Oferta, LocalDate> clfinDescuento;
 
     @FXML
     private ComboBox<?> cmbBoxFiltroOpciones;
@@ -292,10 +295,10 @@ public class ServicioAlojamientosViewController implements Initializable {
 
 
     @FXML
-    private TableView<?> tbAlojamientosEnOfertas;
+    private TableView<Alojamiento> tbAlojamientosEnOfertas;
 
     @FXML
-    private TableView<?> tbOfertas;
+    private TableView<Oferta> tbOfertas;
 
     @FXML
     private TextArea txtAreaDescripcion;
@@ -387,11 +390,6 @@ public class ServicioAlojamientosViewController implements Initializable {
     }
 
     @FXML
-    void crearOferta(ActionEvent event) {
-
-    }
-
-    @FXML
     void editarHotel(ActionEvent event) {
 
     }
@@ -411,19 +409,8 @@ public class ServicioAlojamientosViewController implements Initializable {
 
     }
 
-
     @FXML
     void guardarCambios(ActionEvent event) {
-
-    }
-
-    @FXML
-    void limpiarCampos(ActionEvent event) {
-
-    }
-
-    @FXML
-    void limpiarCamposHotel(ActionEvent event) {
 
     }
 
@@ -463,6 +450,7 @@ public class ServicioAlojamientosViewController implements Initializable {
     private ObservableList<String> serviciosDisponiblesHotel;
     private final VentanasController ventanasController=VentanasController.getInstancia();
     private Alojamiento alojamientoSeleccionado;
+    private Oferta ofertaSeleccionado;
     /**
      * Inicializa el controlador cargando datos iniciales, configurando columnas de la tabla
      * y eventos asociados a la selección de un alojamiento.
@@ -471,6 +459,7 @@ public class ServicioAlojamientosViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ventanasController.getPlataforma().registrarObservador(this);
         // Configuración de columnas de la tabla de casas y apartamentos
         clTipoAlojamiento.setCellValueFactory(cellData -> {
             Alojamiento alojamiento = cellData.getValue();
@@ -522,6 +511,43 @@ public class ServicioAlojamientosViewController implements Initializable {
         clNumeroHabitacionHotel.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNumeroHabitacion()));
         clPrecioHabitacionHotel.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
         clCantidadHuespedesHabitacionHotel.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
+        //Configuracion de columnas de la tabla de ofertas
+        clNombreOferta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        clDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPorcentajeDescuento()));
+        clInicioDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFechaInicio()));
+        clfinDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFechaFin()));
+        //Configuracion de columnas de la tabla de alojamientos en ofertas
+        clNombreAlojamientoEnOfertas.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        clCiudadAlojamientoEnOfertas.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCiudad()));
+        clPrecioAlojamientoEnOfertas.setCellValueFactory(cellData -> {
+            Alojamiento alojamiento = cellData.getValue();
+            double precio = 0;
+            if (alojamiento instanceof ProductoCasa) {
+                ProductoCasa productoCasa = (ProductoCasa) alojamiento;
+                precio = productoCasa.getPrecio();
+            } else if (alojamiento instanceof ProductoApartamento) {
+                ProductoApartamento productoApartamento = (ProductoApartamento) alojamiento;
+                precio = productoApartamento.getPrecio();
+            }else if (alojamiento instanceof ProductoHotel){
+                precio=0.0;
+            }
+            return new SimpleObjectProperty<>(precio);
+        });
+        clCantidadHuespedesAlojamientoEnOfertas.setCellValueFactory(cellData ->{
+            Alojamiento alojamiento = cellData.getValue();
+            int cantidadHuespedes = 0;
+            if (alojamiento instanceof ProductoCasa) {
+                ProductoCasa productoCasa = (ProductoCasa) alojamiento;
+                cantidadHuespedes = productoCasa.getCapacidadMaxima();
+            } else if (alojamiento instanceof ProductoApartamento) {
+                ProductoApartamento productoApartamento = (ProductoApartamento) alojamiento;
+                cantidadHuespedes = productoApartamento.getCapacidadMaxima();
+            }else if (alojamiento instanceof ProductoHotel){
+                cantidadHuespedes=0;
+            }
+            return  new SimpleObjectProperty<>(cantidadHuespedes);
+        });
+        clNumeroServiciosAlojamientoEnOfertas.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getServicios().size()));
 
         // Carga de tipos de alojamiento y configuración inicial de imagen
         cmbTipoAlojamiento.setItems(FXCollections.observableList(ventanasController.getPlataforma().listarOpcionesAlojamiento()));
@@ -534,6 +560,7 @@ public class ServicioAlojamientosViewController implements Initializable {
 
         cargarDatosTabla();
         cargarDatosTablaHotel();
+        cargarDatosAlojamientoEnOfertas();
 
 
         // Evento de clic sobre la tabla de apartamentos y casas
@@ -588,6 +615,19 @@ public class ServicioAlojamientosViewController implements Initializable {
                 cargarDatosTablaHabitaciones();
             }
         });
+
+        tbAlojamientosEnOfertas.setOnMouseClicked(mouseEvent -> {
+           alojamientoSeleccionado= tbAlojamientosEnOfertas.getSelectionModel().getSelectedItem();
+        });
+        tbOfertas.setOnMouseClicked(mouseEvent -> {
+            ofertaSeleccionado=tbOfertas.getSelectionModel().getSelectedItem();
+            if(ofertaSeleccionado!=null){
+                txtFieldDescuento.setText(String.valueOf(ofertaSeleccionado.getPorcentajeDescuento()));
+                txtAreaDescripcion.setText(ofertaSeleccionado.getDescripcion());
+                datePickerInicioOferta.setValue(ofertaSeleccionado.getFechaInicio());
+                datePickerFinOferta.setValue(ofertaSeleccionado.getFechaFin());
+            }
+        });
     }
     //Casa y Apartamentos
     /**
@@ -620,7 +660,6 @@ public class ServicioAlojamientosViewController implements Initializable {
                         , Integer.parseInt(txtFieldCantidadHuespedes.getText())
                         , Double.parseDouble(txtFieldCostoExtra.getText()));
                 ventanasController.mostrarAlerta("Alojamiento creado con exito", Alert.AlertType.INFORMATION);
-                cargarDatosTabla();
                 limpiarCampos();
             } catch (Exception e) {
                 ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -689,7 +728,6 @@ public class ServicioAlojamientosViewController implements Initializable {
                 ventanasController.mostrarAlerta("Debes seleccionar un alojamiento", Alert.AlertType.ERROR);
             }else{
                 ventanasController.getPlataforma().eliminarAlojamiento(alojamientoSeleccionado.getId(),alojamientoSeleccionado.getRutaFoto());
-                cargarDatosTabla();
                 limpiarCampos();
                 ventanasController.mostrarAlerta("Alojamiento eliminado con exito", Alert.AlertType.INFORMATION);
             }
@@ -729,7 +767,6 @@ public class ServicioAlojamientosViewController implements Initializable {
                         , serviciosActualizados
                         , Integer.parseInt(txtFieldCantidadHuespedes.getText())
                         , Double.parseDouble(txtFieldCostoExtra.getText()));
-                cargarDatosTabla();
                 limpiarCampos();
                 ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
             }
@@ -836,7 +873,7 @@ public class ServicioAlojamientosViewController implements Initializable {
         }
     }
 
-    public void limpiarFormularioHotel(ActionEvent event){
+    public void limpiarCamposHotel(ActionEvent event){
         limpiarCamposHotel();
     }
 
@@ -974,5 +1011,67 @@ public class ServicioAlojamientosViewController implements Initializable {
         return false;
     }
 
+    //Ofertas
+
+    public void crearOferta(ActionEvent event) {
+        if (alojamientoSeleccionado == null) {
+            ventanasController.mostrarAlerta("Debe seleccionar un alojamiento", Alert.AlertType.ERROR);
+        }
+        if (hayCamposVacios(txtFieldDescuento, txtAreaDescripcionOferta)) {
+            ventanasController.mostrarAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
+        }
+        try {
+            ventanasController.getPlataforma().crearOferta(alojamientoSeleccionado, Double.parseDouble(txtFieldDescuento.getText()),
+                    txtAreaDescripcionOferta.getText(),
+                    datePickerInicioOferta.getValue(), datePickerFinOferta.getValue());
+            ventanasController.mostrarAlerta("Oferta creada con exito",Alert.AlertType.INFORMATION);
+            limpiarCamposOferta();
+
+        } catch (Exception e) {
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    public void cargarDatosAlojamientoEnOfertas(){
+        try{
+            List<Alojamiento> alojamientos = ventanasController.getPlataforma().listarAlojamientos();
+            List<Alojamiento> alojamientosActivos= alojamientos.stream().filter(Alojamiento::isActivo).collect(Collectors.toList());
+            tbAlojamientosEnOfertas.setItems(FXCollections.observableArrayList(alojamientosActivos));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void cargarDatosTablaOfertas(){
+        try{
+            List<Oferta> ofertas=ventanasController.getPlataforma().listarOfertas();
+            tbOfertas.setItems(FXCollections.observableArrayList(ofertas));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Limpia los campos del formulario de ofertas
+     */
+    public void limpiarCamposOferta() {
+        txtFieldDescuento.clear();
+        txtAreaDescripcionOferta.clear();
+        datePickerInicioOferta.setValue(null);
+        datePickerFinOferta.setValue(null);
+        alojamientoSeleccionado = null;
+    }
+
+    @Override
+    public void actualizar() {
+        cargarDatosTabla();
+        cargarDatosTablaHotel();
+        cargarDatosTablaOfertas();
+        cargarDatosAlojamientoEnOfertas();
+
+        if(alojamientoSeleccionado instanceof ProductoHotel){
+            cargarDatosTablaHabitaciones();
+        }
+    }
 }
 

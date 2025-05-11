@@ -1,9 +1,11 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -28,4 +30,7 @@ public interface IServiciosPlataforma {
     void eliminarHotel(UUID id,String rutaRelativa);
     void crearHabitacion(UUID id, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion,String descripcion) throws Exception;
     void eliminarHabitacion(UUID id,String rutaRelativa);
+    void crearOferta(Alojamiento alojamiento, double porcentajeDesuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin)
+        throws Exception;
+    List<Oferta> listarOfertas();
 }

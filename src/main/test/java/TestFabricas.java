@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestFabricas {
         public ServicioAlojamientos servicioAlojamientos = new ServicioAlojamientos();
-        public RepositorioAlojamientos repo = RepositorioAlojamientos.getInstancia();
+        public RepositorioAlojamientos repo = new RepositorioAlojamientos();
 
         @Test
         public void crearAlojamientoCasaTest() {

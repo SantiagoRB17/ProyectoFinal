@@ -17,8 +17,6 @@ import java.util.UUID;
  * Clase encargada de manejar la persistencia de los alojamientos
  */
 public class RepositorioAlojamientos {
-    //Insancia para singleton
-    private static RepositorioAlojamientos INSTANCE;
     //Instancia de Jackson que convierte objetos a JSON y viceversa.
     private final ObjectMapper objectMapper;
     // Representa el archivo físico donde se guarda la lista de alojamientos (alojamientos.json).
@@ -33,22 +31,11 @@ public class RepositorioAlojamientos {
      * Crea el ObjectMapper, define el archivo JSON
      * carga los alojamientos existentes desde ese archivo.
      */
-    private RepositorioAlojamientos() {
+    public RepositorioAlojamientos() {
         this.objectMapper = new ObjectMapper();
         this.archivo=new File("src/main/data/alojamientos.json");
         this.alojamientos = cargarAlojamientos();
         this.hoteles=cargarHoteles();
-    }
-
-    /**
-     * Método para acceder a la única instancia de la clase (Singleton). Si no existe, la crea.
-     * @return instancia singleton de la clase
-     */
-    public static RepositorioAlojamientos getInstancia() {
-        if (INSTANCE == null) {
-            INSTANCE = new RepositorioAlojamientos();
-        }
-        return INSTANCE;
     }
 
     /**

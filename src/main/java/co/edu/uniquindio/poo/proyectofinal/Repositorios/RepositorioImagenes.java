@@ -13,14 +13,7 @@ import javafx.scene.image.Image;
  * Clase encargada de manejar la persistnecia de las imagenes
  */
 public class RepositorioImagenes {
-    private static RepositorioImagenes INSTANCE;
-    private RepositorioImagenes(){
-    }
-    public static RepositorioImagenes getInstancia(){
-        if(INSTANCE == null){
-            INSTANCE = new RepositorioImagenes();
-        }
-        return INSTANCE;
+    public RepositorioImagenes(){
     }
 
     /*constante con el nombre de la carpeta donde se guardarán las imágenes
