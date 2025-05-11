@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal;
 
 import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanasController;
+import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioPersonas;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,17 +13,14 @@ public class PlataformaApp extends Application {
 
     VentanasController ventanasController = VentanasController.getInstancia();
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        ventanasController.setPrimaryStage(primaryStage);
-        //ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
-        ventanasController.navegarVentanas("/servicioAlojamientosView.fxml","Inicio",true,true);
+    public void start(Stage stage) throws Exception {
+        VentanasController controladorVentanas = VentanasController.getInstancia();
+        controladorVentanas.setPrimaryStage(stage);
+        controladorVentanas.navegarVentanas("/InicioView.fxml", "Inicio de sesión", false, false);
     }
-import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanasController;
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 
-public class PlataformaApp extends Application {
+
     public static PlataformaApp INSTANCE;
 
     public PlataformaApp() {
@@ -36,18 +34,7 @@ public class PlataformaApp extends Application {
         return INSTANCE;
     }
 
-    VentanasController ventanasController = VentanasController.getInstancia();
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        ventanasController.setPrimaryStage(primaryStage);
-        ventanasController.navegarVentanas("/IniciarSesion.fxml","Inicio",true,true);
-    }
-
     public static void main(String[] args) {
         launch(args);
 }
-}
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

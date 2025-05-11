@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
+import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanasController;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,8 +23,8 @@ public class RepositorioPersonas {
 
     private RepositorioPersonas() {
         this.objectMapper = new ObjectMapper();
-        this.archivo = new File("src/main/data/personas.json"); // ← archivo corregido
-        this.personas = cargarPersonas(); // ← correctamente inicializada
+        this.archivo = new File("src/main/data/personas.json"); //;
+        this.personas= cargarPersonas();
     }
 
     public static RepositorioPersonas getInstancia() {
@@ -36,21 +38,36 @@ public class RepositorioPersonas {
         if (obtenerPorId(persona.getCedula()) == null) {
             personas.add(persona);
             guardarPersonas();
+            System.out.println("Persona agregada: " + persona); // <-- AQUÍ imprime los datos
         } else {
             throw new Exception("Ya existe una persona con la cédula " + persona.getCedula());
         }
     }
 
-    private void guardarPersonas() throws Exception {
+
+    private void guardarPersonas() throws Exception{
         try {
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             objectMapper.writerFor(new TypeReference<List<Persona>>() {})
                     .writeValue(archivo, personas);
         } catch (IOException e) {
-            throw new Exception("Error guardando personas", e);
+            e.printStackTrace();
         }
     }
 
+
+    private List<Persona> cargarPersonas() {
+        try {
+            if (archivo.exists() && archivo.length() > 0) {
+                return objectMapper.readValue(archivo, new TypeReference<List<Persona>>() {
+                });
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
 
     public Persona obtenerPorId(String cedula) {
         return personas.stream()

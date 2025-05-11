@@ -46,25 +46,35 @@ public class IniciarSesionViewController {
 
         Persona personaEncontrada = repositorioPersonas.obtenerPorId(cedula);
 
-        if (personaEncontrada == null || !personaEncontrada.getPassword().equals(password)) {
-            ventanasController.mostrarAlerta("Usuario o contraseña incorrectos", Alert.AlertType.ERROR);
-        } else {
+        if (personaEncontrada == null  ) {
+            ventanasController.mostrarAlerta("El Usuario no se encuentra registrado", Alert.AlertType.ERROR);
+        }
+        else if (!personaEncontrada.getPassword().equals(password)) {
+            ventanasController.mostrarAlerta("Password incorrectos", Alert.AlertType.ERROR);
+        }
+        else {
             Sesion.getInstancia().setPersona(personaEncontrada);
             ventanasController.mostrarAlerta("Bienvenido " + personaEncontrada.getNombre(), Alert.AlertType.INFORMATION);
 
             // Redirección basada en el tipo de persona
             if (personaEncontrada.getRol()== Rol.ADMINISTRADOR) {
-                ventanasController.navegarVentanas("/EditarPerfil.fxml", "panelEditar", false, false); // Debes implementar este método
-            } else if (personaEncontrada.getRol()==Rol.USUARIO) {
-                ventanasController.navegarVentanas("/", "", false, false); // Debes implementar este método
+                ventanasController.navegarVentanas("/ServicioAlojamientosView.fxml", "inicio", false, false); // Debes implementar este método
+            }
+            else if (personaEncontrada.getRol()==Rol.USUARIO) {
+                ventanasController.navegarVentanas("/InicioView.fxml", "Inicio", false, false); // Debes implementar este método
             }
         }
     }
 
 
     @FXML
-    void volverAInicio(ActionEvent event) {
+    void volverAInicio(ActionEvent event) throws Exception {
+            ventanasController.navegarVentanas("/InicioView.fxml","Inicio",false,false);
+    }
 
+    @FXML
+    void irRegistrarse(ActionEvent event) throws Exception {
+        ventanasController.navegarVentanas("/Registrarse.fxml","Registrarse",false,false);
     }
 }
 

@@ -8,11 +8,18 @@ import static co.edu.uniquindio.poo.proyectofinal.Model.validaciones.ValidacionC
 import static co.edu.uniquindio.poo.proyectofinal.Model.validaciones.ValidarTelefono.validarTelefono;
 public class ServicioPersonas {
     
+        private  static  RepositorioPersonas repositorioPersonas=RepositorioPersonas.getInstancia();
 
 
+        private static ServicioPersonas INSTANCE;
 
+        public  static  ServicioPersonas getInstancia() {
+            if(INSTANCE==null){
+                INSTANCE= new ServicioPersonas();
+            }
+            return INSTANCE;
 
-        private RepositorioPersonas repositorioPersonas=RepositorioPersonas.getInstancia();
+        }
 
 
         private void validarCampos(String nombre,String apellidos, String cedula,String email,String telefono,String password,Rol rol)throws Exception{
@@ -22,8 +29,8 @@ public class ServicioPersonas {
             if(!validarExpresionRegular(email)  ){
                 throw new Exception("El formato de su email es incorrecto");
             }
-            if(validarTelefono(telefono)) {
-                throw new Exception("El formato de su telefono es inocrrecto");
+            if(!validarTelefono(telefono)) {
+                throw new Exception("El formato de su telefono es incorrecto");
             }
             if(rol==null){
                 throw new Exception("Debe Seleccionar el rol");
@@ -34,7 +41,25 @@ public class ServicioPersonas {
         public void agregarPersona(String nombre,String apellidos, String cedula,String email,String telefono,String password,Rol rol) throws Exception {
 
             validarCampos(nombre, apellidos, cedula, email, telefono, password, rol);
-            Persona persona= new Persona();
+
+            if(rol==Rol.ADMINISTRADOR) {
+                boolean yaExisteAdministrador = repositorioPersonas.getPersonas().stream()
+                        .anyMatch(persona -> persona.getRol() == Rol.ADMINISTRADOR);
+
+                if (yaExisteAdministrador) {
+                    throw new Exception("Ya existe un administrador");
+                }
+            }
+            Persona persona = Persona.builder()
+                    .nombre(nombre)
+                    .apellidos(apellidos)
+                    .cedula(cedula)
+                    .email(email)
+                    .telefono(telefono)
+                    .password(password)
+                    .rol(rol)
+                    .cuentaActiva(true)
+                    .build();  // Llama
             repositorioPersonas.agregarPersona(persona);
         }
 
@@ -47,8 +72,5 @@ public class ServicioPersonas {
             validarCampos(nombre, apellidos, cedula, email, telefono, password, rol);
 
         }
-
-
-
     }
 
