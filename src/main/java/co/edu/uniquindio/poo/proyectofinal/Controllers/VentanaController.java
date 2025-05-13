@@ -9,19 +9,19 @@ import javafx.stage.Stage;
 import lombok.*;
 
 @Setter
-public class VentanasController {
-    private static VentanasController INSTANCE;
+public class VentanaController {
+    private static VentanaController INSTANCE;
 
     @Getter
     private final ServiciosPlataforma plataforma;
 
-    private VentanasController() {
+    private VentanaController() {
         plataforma = new ServiciosPlataforma();
     }
 
-    public static VentanasController getInstancia(){
+    public static VentanaController getInstancia(){
         if(INSTANCE == null){
-            INSTANCE = new VentanasController();
+            INSTANCE = new VentanaController();
         }
         return INSTANCE;
     }

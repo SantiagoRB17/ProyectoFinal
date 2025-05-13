@@ -5,12 +5,14 @@ import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RepositorioOfertas {
     //Instancia de Jackson que convierte objetos a JSON y viceversa.
@@ -23,6 +25,9 @@ public class RepositorioOfertas {
     public RepositorioOfertas() {
         this.archivo = new File("src/main/data/ofertas.json");
         this.objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
         this.ofertas = cargarOfertas();
     }
 
@@ -68,4 +73,7 @@ public class RepositorioOfertas {
         return new ArrayList<>();
     }
 
+    public void eliminarOferta(UUID Oferta) throws Exception {
+
+    }
 }

@@ -1,5 +1,9 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
+import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +18,10 @@ import jfxtras.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class InicioViewcontroller implements Initializable {
+public class InicioViewcontroller implements Initializable, AlojamientosObserver {
 
     @FXML
     private JFXButton btnIniciarSesion;
@@ -28,16 +33,17 @@ public class InicioViewcontroller implements Initializable {
     private JFXButton btnVerMas;
 
     @FXML
-    private DatePicker datePickerLLegada;
-
-    @FXML
-    private DatePicker datePickerSalida;
+    private ComboBox<TipoAlojamiento> cmbTipoAlojamiento;
 
     @FXML
     private FlowPane flowPaneVistaTarjetasAlojamiento;
 
     @FXML
     private HBox hboxFiltroAlojamientosFields;
+
+    @FXML
+    private Label lblBienvenidoUsuario;
+
 
     @FXML
     private HBox hboxFiltroAlojamientosLabels;
@@ -47,6 +53,9 @@ public class InicioViewcontroller implements Initializable {
 
     @FXML
     private HBox hboxSaludoIniSesionRegistro;
+
+    @FXML
+    private HBox hboxUsuarioLogeado;
 
     @FXML
     private HBox hboxVistaTarjetaOfertas;
@@ -64,6 +73,9 @@ public class InicioViewcontroller implements Initializable {
     private Label lblOfertas;
 
     @FXML
+    private MenuButton menItemOpcionesUsuario;
+
+    @FXML
     private ScrollPane scrollPaneAlojamientos;
 
     @FXML
@@ -79,13 +91,13 @@ public class InicioViewcontroller implements Initializable {
     private Separator sepSeparadorSaludoYAlojamientos;
 
     @FXML
-    private ComboBox<?> textFieldFiltroEstrellas;
-
-    @FXML
-    private TextField txtFieldFiltroCantidadHuespedes;
+    private ComboBox<Double> textFieldFiltroPrecio;
 
     @FXML
     private TextField txtFieldFiltroCiudad;
+
+    @FXML
+    private TextField txtFieldNombre;
 
     @FXML
     private VBox vboxAlojamientos;
@@ -102,11 +114,15 @@ public class InicioViewcontroller implements Initializable {
     @FXML
     private VBox vboxPrincipal;
 
+    private final VentanaController ventanasController= VentanaController.getInstancia();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ventanasController.getPlataforma().registrarObservador(this);
+        cmbTipoAlojamiento.getItems().addAll(TipoAlojamiento.values());
         cargarAlojamientos();
         cargarOfertas();
+
     }
 
     public void abrirVistaIniciarSesion(ActionEvent actionEvent) {
@@ -119,20 +135,24 @@ public class InicioViewcontroller implements Initializable {
     public void verMasAlojamientos(ActionEvent actionEvent) {
     }
     private void cargarAlojamientos() {
-        for (int i = 0; i < 8; i++) {
+        List<Alojamiento> alojamientos=ventanasController.getPlataforma().listarAlojamientos();
+        for (Alojamiento alojamiento : alojamientos) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoView.fxml"));
                 Node nodoTarjeta = loader.load();
 
                 Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamiento");
                 Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamiento");
-                Label lblEstrellas = (Label) nodoTarjeta.lookup("#lblEstrellasAlojamiento");
+                Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamiento");
                 ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamiento");
 
-                lblNombre.setText("Alojamiento " + (i + 1));
-                lblUbicacion.setText("Ubicacion " + (i + 1));
-                lblEstrellas.setText((i % 5 + 1) +"★" );
-                img.setImage(img.getImage());
+                lblNombre.setText("Alojamiento " + (alojamiento.getNombre()));
+                lblUbicacion.setText("Ubicacion " + (alojamiento.getCiudad()));
+                try{
+                    img.setImage(RepositorioImagenes.cargarImagen(alojamiento.getRutaFoto()));
+                }catch(Exception e){
+                    ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                }
 
                 flowPaneVistaTarjetasAlojamiento.getChildren().add(nodoTarjeta);
             } catch (IOException e) {
@@ -156,6 +176,12 @@ public class InicioViewcontroller implements Initializable {
             }
         }
 
+    }
+
+    @Override
+    public void actualizar() {
+        cargarAlojamientos();
+        cargarOfertas();
     }
 }
 

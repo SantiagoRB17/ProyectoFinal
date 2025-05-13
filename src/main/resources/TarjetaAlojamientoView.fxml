@@ -12,7 +12,7 @@
     <HBox fx:id="hboxInformacionAlojamientoTarjeta">
         <Label fx:id="lblNombreAlojamiento" text="Nombre Alojamiento" />
         <Region HBox.hgrow="ALWAYS" />
-        <Label fx:id="lblEstrellasAlojamiento" text="Estrellas" />
+        <Label fx:id="lblPrecioAlojamiento" text="Precio" />
     </HBox>
     <HBox fx:id="hboxUbicacionAlojamientoTarjeta">
         <Label fx:id="lblUbicacionAlojamiento" text="Ubicacion Alojamiento" />

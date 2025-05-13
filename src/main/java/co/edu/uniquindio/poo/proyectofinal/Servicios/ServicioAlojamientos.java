@@ -195,14 +195,12 @@ public class ServicioAlojamientos {
                              ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
         validarCamposHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
         FabricaAlojamiento fabricaHotel= new FabricaHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
-        Alojamiento alojamiento = fabricaHotel.crearProducto();
-        repositorioAlojamientos.agregarAlojamiento(alojamiento);
-        return alojamiento;
+        ProductoHotel nuevoHotel=(ProductoHotel) fabricaHotel.crearProducto();
+        return nuevoHotel;
     }
 
     /**
      * Crea una nueva habitación y la agrega al listado de habitaciones de un hotel existente.
-     * @param id El identificador único del hotel al que se le agregará la habitación.
      * @param numeroHabitacion El número de la nueva habitación que se desea agregar.
      * @param precio El precio por noche de la habitación.
      * @param capacidad La capacidad máxima de personas que pueden hospedarse en la habitación.
@@ -211,10 +209,10 @@ public class ServicioAlojamientos {
      * @throws Exception Si el número de la habitación, precio, capacidad, descripción,
      * o la ruta de imagen no cumplen con las validaciones definidas.
      */
-    public void crearHabitacion(UUID id, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion
+    public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion
             ,String descripcion) throws Exception{
-        if(numeroHabitacion <= 1){
-            throw new Exception("El numero de habitaciones debe ser mayor a 0");
+        if(numeroHabitacion < 1){
+            throw new Exception("El numero de la habitation debe ser mayor a 0");
         }
         if(precio < 0){
             throw new Exception("El precio debe ser mayor que 0");
@@ -226,22 +224,40 @@ public class ServicioAlojamientos {
             throw new Exception("Debe agregar una imagen y descripcion de la habitacion");
         }
 
-        ProductoHotel alojamiento = (ProductoHotel) repositorioAlojamientos.obtenerPorId(id);
-        if(alojamiento.getHabitaciones().size() >= alojamiento.getNumeroDeHabitaciones()){
-            throw new Exception("No se pueden agregar mas habitaciones al hotel");
+        ProductoHotel alojamiento = (ProductoHotel) repositorioAlojamientos.obtenerPorId(hotel.getId());
+        if(alojamiento == null){
+            repositorioAlojamientos.agregarAlojamiento(hotel);
+        }else {
+            if (alojamiento.getHabitaciones().size() >= alojamiento.getNumeroDeHabitaciones()) {
+                throw new Exception("No se pueden agregar mas habitaciones al hotel");
+            }
+            if (alojamiento.getHabitaciones().stream().anyMatch(h -> h.getNumeroHabitacion() == numeroHabitacion)) {
+                throw new Exception("Ya existe una habitacion con ese numero");
+            }
+            ProductoHabitacion habitacion = ProductoHabitacion.builder()
+                    .numeroHabitacion(numeroHabitacion)
+                    .precio(precio)
+                    .capacidad(capacidad)
+                    .rutaImagenHabitacion(rutaImagenHabitacion)
+                    .descripcion(descripcion)
+                    .build();
+            alojamiento.getHabitaciones().add(habitacion);
+            repositorioAlojamientos.editarAlojamiento(alojamiento);
         }
-        if(alojamiento.getHabitaciones().stream().anyMatch(h -> h.getNumeroHabitacion() == numeroHabitacion)){
-            throw new Exception("Ya existe una habitacion con ese numero");
+    }
+
+    /**
+     * Metodo que permite borrar un hotel junto con sus habitacion
+     * @param id id del hotel
+     * @param rutaRelativa ruta relativa de la imagen del hotel a eliminar
+     * @throws Exception
+     */
+    public void eliminarHotel(UUID id, String rutaRelativa) throws Exception{
+        ProductoHotel hotel= (ProductoHotel) repositorioAlojamientos.obtenerPorId(id);
+        for(ProductoHabitacion habitacion: hotel.getHabitaciones()){
+            repositorioImagenes.eliminarImagen(habitacion.getRutaImagenHabitacion());
         }
-        ProductoHabitacion habitacion = ProductoHabitacion.builder()
-                .numeroHabitacion(numeroHabitacion)
-                .precio(precio)
-                .capacidad(capacidad)
-                .rutaImagenHabitacion(rutaImagenHabitacion)
-                .descripcion(descripcion)
-                .build();
-        alojamiento.getHabitaciones().add(habitacion);
-        repositorioAlojamientos.editarAlojamiento(alojamiento);
+        repositorioAlojamientos.eliminarHotel(id);
     }
 
     /**

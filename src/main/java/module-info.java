@@ -7,6 +7,7 @@ module co.edu.uniquindio.poo.proyectofinal {
     requires static lombok;
     requires com.dlsc.gemsfx;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
     opens co.edu.uniquindio.poo.proyectofinal.Model to com.fasterxml.jackson.databind;
     opens co.edu.uniquindio.poo.proyectofinal.Controllers to javafx.fxml;

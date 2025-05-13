@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.*;
 
 import java.util.ArrayList;

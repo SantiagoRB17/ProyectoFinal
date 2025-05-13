@@ -8,6 +8,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
+import co.edu.uniquindio.poo.proyectofinal.Observers.HotelDataOberserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
@@ -41,7 +42,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class ServicioAlojamientosViewController implements AlojamientosObserver, Initializable {
+public class ServicioAlojamientosViewController implements AlojamientosObserver, Initializable, HotelDataOberserver {
 
     @FXML
     private JFXButton btnAgregarServicio;
@@ -114,12 +115,6 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
 
     @FXML
     private JFXButton btnRefrescartablaOfertas;
-
-    @FXML
-    private CheckBox chkBoxDisponible;
-
-    @FXML
-    private CheckBox chkBoxDisponibleHotel;
 
     @FXML
     private TableColumn<Alojamiento, Integer> clCantidadHuespedes;
@@ -313,9 +308,6 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
     private TextField txtFieldCantidadHuespedes;
 
     @FXML
-    private TextField txtFieldCantidadHuespedesHotel;
-
-    @FXML
     private TextField txtFieldCiudad;
 
     @FXML
@@ -353,9 +345,6 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
 
     @FXML
     private TextField txtFieldPrecio;
-
-    @FXML
-    private TextField txtFieldPrecioHotel;
 
     @FXML
     private TextField txtServicio;
@@ -396,11 +385,6 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
 
     @FXML
     void editarOferta(ActionEvent event) {
-
-    }
-
-    @FXML
-    void eliminarHotel(ActionEvent event) {
 
     }
 
@@ -448,7 +432,7 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
             .getResourceAsStream("/imagenes/imagenAlojamientoPorDefecto.png")));
     private ObservableList<String> serviciosDisponibles;
     private ObservableList<String> serviciosDisponiblesHotel;
-    private final VentanasController ventanasController=VentanasController.getInstancia();
+    private final VentanaController ventanasController= VentanaController.getInstancia();
     private Alojamiento alojamientoSeleccionado;
     private Oferta ofertaSeleccionado;
     /**
@@ -561,6 +545,7 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
         cargarDatosTabla();
         cargarDatosTablaHotel();
         cargarDatosAlojamientoEnOfertas();
+        cargarDatosTablaOfertas();
 
 
         // Evento de clic sobre la tabla de apartamentos y casas
@@ -623,7 +608,7 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
             ofertaSeleccionado=tbOfertas.getSelectionModel().getSelectedItem();
             if(ofertaSeleccionado!=null){
                 txtFieldDescuento.setText(String.valueOf(ofertaSeleccionado.getPorcentajeDescuento()));
-                txtAreaDescripcion.setText(ofertaSeleccionado.getDescripcion());
+                txtAreaDescripcion.setText(ofertaSeleccionado.getDescripcionOferta());
                 datePickerInicioOferta.setValue(ofertaSeleccionado.getFechaInicio());
                 datePickerFinOferta.setValue(ofertaSeleccionado.getFechaFin());
             }
@@ -707,6 +692,35 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
             txtServicio.clear();
         }
     }
+            
+            /**
+             * Método que actualiza la información del hotel en la interfaz
+             */
+            private void cargarDatosHotel() {
+        if (alojamientoSeleccionado != null && alojamientoSeleccionado instanceof ProductoHotel) {
+            ProductoHotel hotel = (ProductoHotel) alojamientoSeleccionado;
+            
+            txtFieldNombreHotel.setText(hotel.getNombre());
+            txtFieldCiudadHotel.setText(hotel.getCiudad());
+            txtFieldNumeroHabitaciones.setText(String.valueOf(hotel.getNumeroDeHabitaciones()));
+            txtAreaDescripcionHotel.setText(hotel.getDescripcion());
+            
+            // Cargar los servicios del hotel
+            serviciosDisponiblesHotel.clear();
+            serviciosDisponiblesHotel.addAll(hotel.getServicios());
+            
+            try {
+                if (hotel.getRutaFoto() != null && !hotel.getRutaFoto().isEmpty()) {
+                    imgViewFotoAlojamientoHotel.setImage(RepositorioImagenes.cargarImagen(hotel.getRutaFoto()));
+                } else {
+                    imgViewFotoAlojamientoHotel.setImage(imagenAlojamientoPorDefecto);
+                }
+            } catch (Exception e) {
+                ventanasController.mostrarAlerta("Error al cargar la imagen del hotel: " + e.getMessage(), Alert.AlertType.ERROR);
+                imgViewFotoAlojamientoHotel.setImage(imagenAlojamientoPorDefecto);
+            }
+        }
+            }
 
     /**
      * Metodo que elimina un servicio seleccionado del listado de servicios.
@@ -789,6 +803,7 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
         imgViewFotoAlojamiento.setImage(imagenAlojamientoPorDefecto);
         fotoSeleccionada = null;
         serviciosDisponibles.clear();
+        cmbBoxListaServicios.setItems(serviciosDisponibles);
         lblTipo.setVisible(true);
         lblTipo.setManaged(true);
         cmbTipoAlojamiento.setVisible(true);
@@ -826,6 +841,11 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
 
     //Hoteles y Habitaciones
 
+    /**
+     * Metodo que permite crear un hotel
+     * @param event
+     * @throws Exception
+     */
     public void crearHotel(ActionEvent event) throws Exception {
         ArrayList<String> servicios = new ArrayList<>(serviciosDisponiblesHotel);
         if(hayCamposVacios(txtFieldNombreHotel,txtFieldCiudadHotel,txtAreaDescripcionHotel,txtFieldNumeroHabitaciones)){
@@ -842,13 +862,19 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
                 ProductoHotel nuevoHotel=(ProductoHotel) ventanasController.getPlataforma().agregarHotel(txtFieldNombreHotel.getText(), txtFieldCiudadHotel.getText(),
                         txtAreaDescripcionHotel.getText(), rutaFotoGuardada, servicios,
                         Integer.parseInt(txtFieldNumeroHabitaciones.getText()));
-
-                abrirEditarHabitacion(nuevoHotel);
+                actualizardatosHotel(nuevoHotel);
+                abrirEditarHabitacion(event);
 
             } catch (Exception e) {
                 ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             }
         }
+    }
+    @Override
+    public void actualizardatosHotel(ProductoHotel productoHotel) {
+        this.alojamientoSeleccionado = productoHotel;
+        cargarDatosTablaHabitaciones();
+        cargarDatosHotel();
     }
 
     /**
@@ -873,6 +899,10 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
         }
     }
 
+    /**
+     * Metodo que limpia los campos del formulario de hotel
+     * @param event
+     */
     public void limpiarCamposHotel(ActionEvent event){
         limpiarCamposHotel();
     }
@@ -943,48 +973,66 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
     /**
      * Metodo que abre una nueva ventana para la edición de habitaciónes.
      */
-    public void abrirEditarHabitacion(ProductoHotel hotel){
+    public void abrirEditarHabitacion(ActionEvent e){
         try {
             if(alojamientoSeleccionado==null || !(alojamientoSeleccionado instanceof ProductoHotel)){
                 ventanasController.mostrarAlerta("Debes seleccionar un hotel", Alert.AlertType.ERROR);
+            }else {
+                ProductoHotel productoHotel = (ProductoHotel) alojamientoSeleccionado;
+                // Cargar la vista
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/servicioEditarHabitacionView.fxml"));
+                Parent root = loader.load();
+
+                ServicioEditarHabitacionViewController controller = loader.getController();
+                controller.actualizardatosHotel(productoHotel);
+                controller.setObserver(this);
+
+                // Crear la escena
+                Scene scene = new Scene(root);
+
+                // Crear un nuevo escenario (ventana)
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setResizable(true);
+                stage.setTitle("Editar Habitación");
+
+                stage.setOnCloseRequest(event -> {
+                    // Validar si el número de habitaciones creadas es menor al número total requerido
+                    if (productoHotel.getHabitaciones().size() < productoHotel.getNumeroDeHabitaciones()) {
+                        ventanasController.mostrarAlerta(
+                                "Debe completar la creación de todas las habitaciones antes de cerrar esta ventana."
+                                , Alert.AlertType.WARNING);
+                        event.consume();
+                    }
+                });
+
+                // Mostrar la nueva ventana
+                stage.showAndWait();
+
+                cargarDatosTablaHotel();
             }
-            // Cargar la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/servicioEditarHabitacionView.fxml"));
-            Parent root = loader.load();
 
-            ServicioEditarHabitacionViewController controller = loader.getController();
-            controller.datosHotel((ProductoHotel) alojamientoSeleccionado);
-            controller.setObserver(this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
-            // Crear la escena
-            Scene scene = new Scene(root);
-
-            // Crear un nuevo escenario (ventana)
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(true);
-            stage.setTitle("Servicio Habitacion");
-
-
-
-            stage.setOnCloseRequest(event -> {
-                // Validar si el número de habitaciones creadas es menor al número total requerido
-                if (hotel.getHabitaciones().size() < hotel.getNumeroDeHabitaciones()) {
-                    ventanasController.mostrarAlerta(
-                            "Debe completar la creación de todas las habitaciones antes de cerrar esta ventana."
-                            , Alert.AlertType.WARNING);
-                    event.consume();
-                }
-            });
-
-            // Mostrar la nueva ventana
-            stage.showAndWait();
-
-            cargarDatosTablaHotel();
-
+    /**
+     * Controlador para evento de eliminar hotel
+     * @param event
+     */
+    public void eliminarHotel(ActionEvent event){
+        try {
+            if (alojamientoSeleccionado == null) {
+                ventanasController.mostrarAlerta("Debes seleccionar un alojamiento", Alert.AlertType.ERROR);
+            }else{
+                ventanasController.getPlataforma().eliminarHotel(alojamientoSeleccionado.getId(),alojamientoSeleccionado.getRutaFoto());
+                limpiarCamposHotel();
+                ventanasController.mostrarAlerta("Hotel eliminado con exito", Alert.AlertType.INFORMATION);
+            }
         }catch (Exception e){
-            e.printStackTrace();
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -995,13 +1043,18 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
         txtFieldNombreHotel.clear();
         txtFieldCiudadHotel.clear();
         txtAreaDescripcionHotel.clear();
-        txtFieldPrecioHotel.clear();
         txtFieldNumeroHabitaciones.clear();
         serviciosDisponiblesHotel.clear();
         imgViewFotoAlojamientoHotel.setImage(imagenAlojamientoPorDefecto);
+        tbHabitaciones.getItems().clear();
         fotoSeleccionada = null;
     }
 
+    /**
+     * Metodo que valida si los campos estan vacios en el formulario.
+     * @param campos campos del formulario.
+     * @return true si hay campos vacios, false en caso contrario.
+     */
     private boolean hayCamposVacios(TextInputControl... campos) {
         for (TextInputControl campo : campos) {
             if (campo.getText() == null || campo.getText().trim().isEmpty()) {
@@ -1013,6 +1066,10 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
 
     //Ofertas
 
+    /**
+     * Metodo que permite crear una oferta
+     * @param event
+     */
     public void crearOferta(ActionEvent event) {
         if (alojamientoSeleccionado == null) {
             ventanasController.mostrarAlerta("Debe seleccionar un alojamiento", Alert.AlertType.ERROR);
@@ -1032,6 +1089,9 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
         }
     }
 
+    /**
+     * Metodo que carga los alojamientos en la tabla de alojamientos de la vista de ofertas
+     */
     public void cargarDatosAlojamientoEnOfertas(){
         try{
             List<Alojamiento> alojamientos = ventanasController.getPlataforma().listarAlojamientos();
@@ -1042,6 +1102,9 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
         }
     }
 
+    /**
+     * Metodo que carga las ofertas en la tabla de ofertas
+     */
     public void cargarDatosTablaOfertas(){
         try{
             List<Oferta> ofertas=ventanasController.getPlataforma().listarOfertas();
@@ -1062,6 +1125,9 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
         alojamientoSeleccionado = null;
     }
 
+    /**
+     * Metodo que actualiza los datos de las tablas
+     */
     @Override
     public void actualizar() {
         cargarDatosTabla();
@@ -1073,5 +1139,6 @@ public class ServicioAlojamientosViewController implements AlojamientosObserver,
             cargarDatosTablaHabitaciones();
         }
     }
+    
 }
 

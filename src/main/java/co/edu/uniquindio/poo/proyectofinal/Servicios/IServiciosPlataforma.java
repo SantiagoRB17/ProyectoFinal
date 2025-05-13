@@ -3,7 +3,7 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,8 +27,8 @@ public interface IServiciosPlataforma {
                       ArrayList<String> servicios, int numeroHabitaciones) throws Exception;
     void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios,
                      double costoExtra);
-    void eliminarHotel(UUID id,String rutaRelativa);
-    void crearHabitacion(UUID id, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion,String descripcion) throws Exception;
+    void eliminarHotel(UUID id,String rutaRelativa) throws Exception;
+    void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception;
     void eliminarHabitacion(UUID id,String rutaRelativa);
     void crearOferta(Alojamiento alojamiento, double porcentajeDesuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin)
         throws Exception;

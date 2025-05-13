@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -147,5 +148,24 @@ public class RepositorioAlojamientos {
         }else{
             throw new Exception("Alojamiento no encontrado");
         }
+    }
+
+    /**
+     * Metodo que elimina un hotel y sus habitacion buscando por su UUID.
+     * @param id id del alojamiento a borrar
+     * @throws Exception
+     */
+    public void eliminarHotel(UUID id)throws Exception{
+        Alojamiento alojamientoAEliminar=obtenerPorId(id);
+        if (alojamientoAEliminar == null) {
+            throw new Exception("Alojamiento no encontrado");
+        }
+        ProductoHotel hotelAEliminar=(ProductoHotel) alojamientoAEliminar;
+        for(ProductoHabitacion habitacion:hotelAEliminar.getHabitaciones()){
+            habitacion.setActivo(false);
+            guardarAlojamiento();
+        }
+        alojamientoAEliminar.setActivo(false);
+        guardarAlojamiento();
     }
 }

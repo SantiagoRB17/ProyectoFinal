@@ -13,7 +13,7 @@ import jfxtras.scene.layout.HBox;
 import jfxtras.scene.layout.VBox;
 
 public class TarjetaAlojamientoViewController {
-    private VentanasController ventanasController= VentanasController.getInstancia();
+    private VentanaController ventanasController= VentanaController.getInstancia();
     @FXML
     private JFXButton btnVerDetalles;
 
@@ -27,7 +27,7 @@ public class TarjetaAlojamientoViewController {
     private ImageView imgViewFotoAlojamiento;
 
     @FXML
-    private Label lblEstrellasAlojamiento;
+    private Label lblPrecioAlojamiento;
 
     @FXML
     private Label lblNombreAlojamiento;
@@ -53,7 +53,7 @@ public class TarjetaAlojamientoViewController {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(true);
-            stage.setTitle("Servicio Habitacion");
+            stage.setTitle("Detalle alojamiento");
 
             // Mostrar la nueva ventana
             stage.show();

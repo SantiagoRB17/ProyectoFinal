@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 
 import java.time.LocalDate;
@@ -83,14 +84,15 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void eliminarHotel(UUID id, String rutaRelativa) {
-
+    public void eliminarHotel(UUID id, String rutaRelativa) throws Exception {
+        servicioAlojamientos.eliminarHotel(id,rutaRelativa);
     }
 
     @Override
-    public void crearHabitacion(UUID id, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion
-            ,String descripcion) throws Exception {
-        servicioAlojamientos.crearHabitacion(id,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
+    public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
+            , String descripcion) throws Exception {
+        servicioAlojamientos.crearHabitacion(hotel,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
+        notificarObservadores();
     }
 
     @Override

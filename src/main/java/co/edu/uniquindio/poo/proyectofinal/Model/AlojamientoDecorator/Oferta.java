@@ -1,17 +1,18 @@
 package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.time.LocalDate;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Oferta extends AlojamientoDecorator {
 
     @Getter
     private final double porcentajeDescuento;
-    @Setter
-    private String descripcionOferta;
+    @Getter
+    private final String descripcionOferta;
     @Getter
     private LocalDate fechaInicio,fechaFin;
 

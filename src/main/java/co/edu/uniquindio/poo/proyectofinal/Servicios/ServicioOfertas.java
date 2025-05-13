@@ -7,6 +7,7 @@ import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioOfertas;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class ServicioOfertas {
 
@@ -35,4 +36,7 @@ public class ServicioOfertas {
         return repositorioOfertas.getOfertas();
     }
 
+    public void eliminarOferta(UUID id){
+
+    }
 }
