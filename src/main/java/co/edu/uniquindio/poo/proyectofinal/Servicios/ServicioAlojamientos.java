@@ -195,8 +195,7 @@ public class ServicioAlojamientos {
                              ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
         validarCamposHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
         FabricaAlojamiento fabricaHotel= new FabricaHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
-        ProductoHotel nuevoHotel=(ProductoHotel) fabricaHotel.crearProducto();
-        return nuevoHotel;
+        return fabricaHotel.crearProducto();
     }
 
     /**
@@ -258,6 +257,7 @@ public class ServicioAlojamientos {
             repositorioImagenes.eliminarImagen(habitacion.getRutaImagenHabitacion());
         }
         repositorioAlojamientos.eliminarHotel(id);
+        repositorioImagenes.eliminarImagen(rutaRelativa);
     }
 
     /**

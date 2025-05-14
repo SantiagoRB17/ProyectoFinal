@@ -86,13 +86,13 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     @Override
     public void eliminarHotel(UUID id, String rutaRelativa) throws Exception {
         servicioAlojamientos.eliminarHotel(id,rutaRelativa);
+        notificarObservadores();
     }
 
     @Override
     public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
             , String descripcion) throws Exception {
         servicioAlojamientos.crearHabitacion(hotel,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
-        notificarObservadores();
     }
 
     @Override

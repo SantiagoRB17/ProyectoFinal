@@ -6,6 +6,7 @@ import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import co.edu.uniquindio.poo.proyectofinal.Observers.HotelDataOberserver;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import lombok.Setter;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ServicioEditarHabitacionViewController implements HotelDataOberserver, Initializable {
@@ -90,24 +92,21 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
 
     }
 
-
-    @FXML
-    void limpiarCamposHabitacion(ActionEvent event) {
-
-    }
-
     private ProductoHotel hotel;
     @Setter
-    private ServicioAlojamientosViewController observer;
+    private HotelViewController observer;
     private final VentanaController ventanasController= VentanaController.getInstancia();
     ProductoHabitacion habitacionSeleccionada;
     private File fotoSeleccionada;
-
+    private final Image imagenPorDefecto=new Image(Objects.requireNonNull(getClass()
+            .getResourceAsStream("/imagenes/habitacion.png")));
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clNumeroHabitacion.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getNumeroHabitacion()));
         clPrecioHabitacion.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
         clCantidadHuespedesHabitacion.setCellValueFactory(cellData->new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
+
+        imgViewFotoAlojamiento.setImage(imagenPorDefecto);
 
         tbHabitaciones.setOnMouseClicked(mouseEvent -> {
             habitacionSeleccionada=tbHabitaciones.getSelectionModel().getSelectedItem();
@@ -134,7 +133,6 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
     @Override
     public void actualizardatosHotel(ProductoHotel hotel) {
         this.hotel = hotel;
-        cargarTablaHabitaciones();
     }
 
     @FXML
@@ -156,15 +154,16 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
                     Integer.parseInt(txtFieldPrecioHabitacion.getText()), Integer.parseInt(txtFieldCantidadHuespedesHabitacion.getText()),
                     rutaFotoGuardada, txtAreaDescripcionHabitacion.getText());
 
-
+            limpiarCampos();
             cargarTablaHabitaciones();
 
             ventanasController.mostrarAlerta("Habitación creada con éxito.", Alert.AlertType.INFORMATION);
 
             if(hotel.getHabitaciones().size()==hotel.getNumeroDeHabitaciones()){
                 ventanasController.mostrarAlerta("Hotel creado con exito",Alert.AlertType.INFORMATION);
-                observer.cargarDatosTablaHotel();
-                observer.cargarDatosTablaHabitaciones();
+                observer.limpiarCamposHotel();
+                observer.actualizar();
+                ventanasController.getPlataforma().notificarObservadores();
             }
         } catch (Exception e) {
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -206,11 +205,25 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
      */
     public void cargarTablaHabitaciones(){
         if (hotel != null && hotel.getHabitaciones() != null) {
-            tbHabitaciones.getItems().clear();
-            tbHabitaciones.getItems().addAll(hotel.getHabitaciones());
-            limpiarCamposHabitacion(null);
+            tbHabitaciones.setItems(FXCollections.observableArrayList(hotel.getHabitaciones()));
         }
     }
+
+    public void limpiarCamposHabitacion(ActionEvent event){
+        limpiarCampos();
+    }
+
+    /**
+     * Metodo que limpia los campos del formulario de habitaciones
+     */
+    public void limpiarCampos(){
+        txtFieldNumeroHabitacion.clear();
+        txtFieldPrecioHabitacion.clear();
+        txtAreaDescripcionHabitacion.clear();
+        txtFieldCantidadHuespedesHabitacion.clear();
+        imgViewFotoAlojamiento.setImage(imagenPorDefecto);
+    }
+
 
     private boolean hayCamposVacios(TextInputControl... campos) {
         for (TextInputControl campo : campos) {

@@ -2,14 +2,15 @@ package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-@AllArgsConstructor
 public abstract class AlojamientoDecorator implements Alojamiento {
-    private final Alojamiento alojamiento;
+    @JsonProperty("alojamiento")
+    private Alojamiento alojamiento;
 
     @Override
     public UUID getId() {
@@ -59,5 +60,14 @@ public abstract class AlojamientoDecorator implements Alojamiento {
     public double getCostoExtra(){
         return alojamiento.getCostoExtra();
     }
+
+    protected AlojamientoDecorator(Alojamiento alojamiento) {
+        this.alojamiento = alojamiento;
+    }
+
+    protected AlojamientoDecorator() {
+        // Deja el campo sin inicializar o asígnale null si lo necesitas
+    }
+
 
 }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import jfxtras.scene.layout.VBox?>
+
+
+    <HBox maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" stylesheets="@Style/servicioAlojamientosViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.OfertaViewController">
+        <VBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
+            <MenuButton fx:id="menButtonOpcionesOferta" alignment="TOP_LEFT" mnemonicParsing="false" text="¿Que desea hacer?">
+                <items>
+                    <MenuItem fx:id="menItemGuardarOferta" mnemonicParsing="false" onAction="#guardarCambios" text="Guardar" />
+                    <MenuItem fx:id="menItemCerrarSesionOferta" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
+                </items>
+            </MenuButton>
+            <GridPane fx:id="gridPaneFormularioOfertas" alignment="CENTER" hgap="10.0" maxWidth="Infinity" minWidth="-Infinity" style="-fx-padding: 10" vgap="10.0" HBox.hgrow="ALWAYS">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                </rowConstraints>
+                <Label text="Descuento" />
+                <Label text="Descripcion" GridPane.rowIndex="1" />
+                <Label text="Incio" GridPane.rowIndex="2" />
+                <Label text="Fin" GridPane.rowIndex="3" />
+                <TextField fx:id="txtFieldDescuento" GridPane.columnIndex="1" />
+                <TextArea fx:id="txtAreaDescripcionOferta" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <DatePicker fx:id="datePickerInicioOferta" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <DatePicker fx:id="datePickerFinOferta" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            </GridPane>
+            <HBox alignment="TOP_CENTER" spacing="10.0">
+                <JFXButton fx:id="btnCrearOferta" onAction="#crearOferta" text="Crear" />
+                <JFXButton fx:id="btnEliminarOferta" onAction="#eliminarOferta" text="Eliminar" />
+                <JFXButton fx:id="btnEditarOferta" onAction="#editarOferta" text="Editar" />
+                <JFXButton fx:id="btnLimpiarOferta" onAction="#limpiarCamposOferta" text="Limpiar" />
+            </HBox>
+        </VBox>
+        <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
+            <Label text="Alojamientos" />
+            <HBox fx:id="hboxContenedorFiltrosAlojamientosEnOfertas" alignment="CENTER" spacing="20.0">
+                <ComboBox fx:id="cmbBoxFiltroOpcionesAlojamientosEnOfertas" prefWidth="150.0" />
+                <TextField fx:id="txtFieldFiltroAlojamientosEnOfertas" />
+                <JFXButton fx:id="btnRefrescartablaAlojamientosEnOfertas" onAction="#refrescarTablaAlojamientosEnOfertas" text="Refrescar" />
+            </HBox>
+            <TableView fx:id="tbAlojamientosEnOfertas" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="clNombreAlojamientoEnOfertas" prefWidth="75.0" sortable="false" text="Nombre" />
+                    <TableColumn fx:id="clCiudadAlojamientoEnOfertas" prefWidth="75.0" sortable="false" text="Ciudad" />
+                    <TableColumn fx:id="clPrecioAlojamientoEnOfertas" prefWidth="75.0" sortable="false" text="Precio" />
+                    <TableColumn fx:id="clCantidadHuespedesAlojamientoEnOfertas" prefWidth="75.0" sortable="false" text="Cantidad maxima" />
+                    <TableColumn fx:id="clNumeroServiciosAlojamientoEnOfertas" prefWidth="75.0" sortable="false" text="Servicios" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+        <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
+            <Label text="Alojamientos en Oferta" />
+            <HBox fx:id="hboxContenedorFiltrosAlojamientos" alignment="CENTER" spacing="20.0">
+                <ComboBox fx:id="cmbBoxFiltroOpcionesOfertas" prefWidth="150.0" />
+                <TextField fx:id="txtFieldFiltroOfertas" />
+                <JFXButton fx:id="btnRefrescartablaOfertas" onAction="#refrescarTablaOfertas" text="Refrescar" />
+            </HBox>
+            <TableView fx:id="tbOfertas" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="clNombreOferta" prefWidth="75.0" text="Nombre" />
+                    <TableColumn fx:id="clDescuento" prefWidth="75.0" sortable="false" text="Descuento" />
+                    <TableColumn fx:id="clInicioDescuento" prefWidth="75.0" sortable="false" text="Inicio" />
+                    <TableColumn fx:id="clfinDescuento" prefWidth="75.0" sortable="false" text="Fin" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </HBox>
+

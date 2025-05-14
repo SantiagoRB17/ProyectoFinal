@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor(force = true)
 public class Oferta extends AlojamientoDecorator {
 
     @Getter

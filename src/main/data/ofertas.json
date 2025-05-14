@@ -3,14 +3,19 @@
   "porcentajeDescuento" : 20.0,
   "fechaInicio" : "2025-05-11",
   "fechaFin" : "2025-05-24",
-  "id" : "a7a86f41-a96e-408f-b6e6-a100939b1dc1",
-  "activo" : true,
-  "ciudad" : "armenia",
-  "nombre" : "casaPrueba",
-  "rutaFoto" : "3ec363c4-f6c6-477e-9d83-de817e2a8564_Capture001.png",
-  "descripcion" : "casadeprueba\t",
-  "costoExtra" : 5000.0,
-  "servicios" : [ "baño" ],
-  "valoracion" : 0.0,
-  "descripcionOferta" : "Dia de la madre"
+  "alojamiento": {
+    "tipo": "casa",
+    "id": "a7a86f41-a96e-408f-b6e6-a100939b1dc1",
+    "activo": true,
+    "ciudad": "armenia",
+    "nombre": "casaPrueba",
+    "rutaFoto": "3ec363c4-f6c6-477e-9d83-de817e2a8564_Capture001.png",
+    "descripcion": "casadeprueba\t",
+    "costoExtra": 5000.0,
+    "servicios": [
+      "baño"
+    ],
+    "valoracion": 0.0
+  },
+  "descripcionOferta": "Dia de la madre"
 } ]
