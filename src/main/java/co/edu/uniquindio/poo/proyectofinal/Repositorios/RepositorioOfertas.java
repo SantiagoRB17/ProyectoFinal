@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -73,7 +72,23 @@ public class RepositorioOfertas {
         return new ArrayList<>();
     }
 
-    public void eliminarOferta(UUID Oferta) throws Exception {
+    public Oferta obtenerOfertaPorId(UUID id) throws Exception{
+        if(id==null){
+            throw new IllegalArgumentException("Seleccione una oferta");
+        }
+        return ofertas.stream()
+                .filter(o -> o.getIdAlojamiento().equals(id))
+                .findFirst().orElse(null);
+    }
 
+
+    public void eliminarOferta(UUID idOferta) throws Exception {
+        Oferta ofertaAEliminar = obtenerOfertaPorId(idOferta);
+        if (ofertaAEliminar != null) {
+            ofertas.remove(ofertaAEliminar);
+            guardarOferta();
+        }else{
+            throw new Exception("Oferta no encontrada");
+        }
     }
 }

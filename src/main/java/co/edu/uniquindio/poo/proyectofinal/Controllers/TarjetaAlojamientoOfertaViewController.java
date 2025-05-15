@@ -23,7 +23,7 @@ public class TarjetaAlojamientoOfertaViewController {
     private Label lblDescripcionOferta;
 
     @FXML
-    private Label lblEstrellasAlojamientoOferta;
+    private Label lblPrecioAlojamientoOferta;
 
     @FXML
     private Label lblNombreAlojamientoOferta;

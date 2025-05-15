@@ -23,7 +23,7 @@
       </HBox>
       <Label fx:id="lblBienvenidoUsuario" text="Bienvenido" />
       <HBox fx:id="hboxUsuarioLogeado">
-         <MenuButton fx:id="menItemOpcionesUsuario" alignment="CENTER" contentDisplay="CENTER" maxWidth="Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40" prefWidth="120" text="Opciones" HBox.hgrow="ALWAYS">
+         <MenuButton fx:id="menItemOpcionesUsuario" alignment="CENTER" maxWidth="Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40" prefWidth="120" text="Opciones" HBox.hgrow="ALWAYS">
             <items>
                <MenuItem mnemonicParsing="false" text="Reservas" />
                <MenuItem mnemonicParsing="false" text="Editar Perfil" />

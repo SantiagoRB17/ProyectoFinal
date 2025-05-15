@@ -20,7 +20,6 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = ProductoCasa.class, name = "casa"),
         @JsonSubTypes.Type(value = ProductoApartamento.class, name = "apartamento"),
         @JsonSubTypes.Type(value = ProductoHotel.class, name = "hotel"),
-        @JsonSubTypes.Type(value = Oferta.class, name = "Oferta"),
 })
 
 public interface Alojamiento {

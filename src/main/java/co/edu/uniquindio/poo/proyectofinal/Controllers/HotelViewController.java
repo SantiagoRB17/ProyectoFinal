@@ -41,10 +41,7 @@ import javafx.stage.Window;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HotelViewController implements AlojamientosObserver, Initializable, HotelDataOberserver {
@@ -261,7 +258,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
                 }catch(Exception e){
                     ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
                 }
-                cargarDatosTablaHabitaciones();
+                cargarDatosTablaHabitaciones(alojamientoSeleccionado.getId());
             }
         });
 
@@ -271,7 +268,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
 
     //Hoteles y Habitaciones
-    
+
     /**
      * Metodo que permite crear un hotel
      * @param event
@@ -378,11 +375,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     public void cargarDatosTablaHotel(){
         try {
             List<Alojamiento> lista = ventanasController.getPlataforma().listarHoteles();
-
-            List<Alojamiento> listaActivos = lista.stream()
-                    .filter(Alojamiento::isActivo)
-                    .collect(Collectors.toList());
-            tbHoteles.setItems(FXCollections.observableArrayList(listaActivos));
+            tbHoteles.setItems(FXCollections.observableArrayList(lista));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -391,15 +384,10 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     /**
      * Metodo que carga los datos de las habitaciones en la tabla desde el repositorio.
      */
-    public void cargarDatosTablaHabitaciones(){
+    public void cargarDatosTablaHabitaciones(UUID idHotel){
         try{
-            ProductoHotel hotel = (ProductoHotel) ventanasController.getPlataforma()
-                    .buscarAlojamientoPorId(alojamientoSeleccionado.getId());
-
-            List<ProductoHabitacion> listaHabitacionesActivas = hotel.getHabitaciones().stream()
-                    .filter(ProductoHabitacion::isActivo)
-                    .collect(Collectors.toList());
-            tbHabitaciones.setItems(FXCollections.observableArrayList(listaHabitacionesActivas));
+            tbHabitaciones.setItems(FXCollections.observableArrayList
+                    ( ventanasController.getPlataforma().recuperarHabitacionesPorHotel(idHotel)));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -510,7 +498,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
         cargarDatosTablaHotel();
 
         if(alojamientoSeleccionado instanceof ProductoHotel){
-            cargarDatosTablaHabitaciones();
+            cargarDatosTablaHabitaciones(alojamientoSeleccionado.getId());
         }
     }
 

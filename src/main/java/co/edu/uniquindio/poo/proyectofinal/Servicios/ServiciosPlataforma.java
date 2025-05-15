@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 
@@ -93,6 +94,7 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
             , String descripcion) throws Exception {
         servicioAlojamientos.crearHabitacion(hotel,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
+        notificarObservadores();
     }
 
     @Override
@@ -101,9 +103,9 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void crearOferta(Alojamiento alojamiento, double porcentajeDescuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin)
+    public void crearOferta(UUID idAlojamiento, double porcentajeDescuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin)
         throws Exception {
-        servicioOfertas.crearOferta(alojamiento,porcentajeDescuento,descripcion,fechaInicio,fechaFin);
+        servicioOfertas.crearOferta(idAlojamiento,porcentajeDescuento,descripcion,fechaInicio,fechaFin);
         notificarObservadores();
     }
 
@@ -111,4 +113,17 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     public List<Oferta> listarOfertas(){
         return servicioOfertas.listarOfertas();
     }
+
+    @Override
+    public List<ProductoHabitacion> recuperarHabitacionesPorHotel(UUID idHotel) {
+        return servicioAlojamientos.recuperarHabitaciones(idHotel);
+    }
+
+    @Override
+    public void eliminarOferta(UUID id) throws Exception {
+        servicioOfertas.eliminarOferta(id);
+        notificarObservadores();
+    }
+
+
 }

@@ -450,12 +450,7 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
         try {
             List<Alojamiento> lista = ventanasController.getPlataforma().listarAlojamientos();
 
-            List<Alojamiento> listaActivos = lista.stream()
-                    .filter(Alojamiento::isActivo)
-                    .filter(a -> a instanceof ProductoCasa || a instanceof ProductoApartamento)
-                    .collect(Collectors.toList());
-
-            tbAlojamientos.setItems(FXCollections.observableArrayList(listaActivos));
+            tbAlojamientos.setItems(FXCollections.observableArrayList(lista));
         } catch (Exception e) {
             e.printStackTrace();
         }

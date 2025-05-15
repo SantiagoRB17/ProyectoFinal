@@ -2,37 +2,38 @@ package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 
 import java.time.LocalDate;
-@JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor(force = true)
-public class Oferta extends AlojamientoDecorator {
+import java.util.UUID;
+
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "tipo"
+)
+@NoArgsConstructor
+public class Oferta {
 
     @Getter
-    private final double porcentajeDescuento;
+    private UUID idAlojamiento;
     @Getter
-    private final String descripcionOferta;
+    private double porcentajeDescuento;
     @Getter
-    private LocalDate fechaInicio,fechaFin;
+    private String descripcionOferta;
+    @Getter
+    private LocalDate fechaInicio, fechaFin;
 
-    public Oferta(Alojamiento alojamiento, double porcentajeDescuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin){
-        super(alojamiento);
+
+    public Oferta(UUID idAlojamiento, double porcentajeDescuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin){
+        this.idAlojamiento = idAlojamiento;
         this.porcentajeDescuento = porcentajeDescuento;
         this.descripcionOferta = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
 
-    @Override
-    public double calcularCosto(){
-        double costoBase=super.calcularCosto();
-        return costoBase-(costoBase*porcentajeDescuento/100);
-    }
-
-    @Override
-    public String getDescripcion(){
-        return super.getDescripcion()+"\n"+descripcionOferta;
-    }
 }

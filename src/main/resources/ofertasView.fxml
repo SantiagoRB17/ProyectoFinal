@@ -10,19 +10,16 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import jfxtras.scene.layout.VBox?>
 
-
-    <HBox maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" stylesheets="@Style/servicioAlojamientosViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.OfertaViewController">
+<HBox maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" stylesheets="@Style/servicioAlojamientosViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.OfertaViewController">
         <VBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
             <MenuButton fx:id="menButtonOpcionesOferta" alignment="TOP_LEFT" mnemonicParsing="false" text="¿Que desea hacer?">
                 <items>
-                    <MenuItem fx:id="menItemGuardarOferta" mnemonicParsing="false" onAction="#guardarCambios" text="Guardar" />
                     <MenuItem fx:id="menItemCerrarSesionOferta" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
                 </items>
             </MenuButton>
@@ -93,4 +90,3 @@
             </TableView>
         </VBox>
     </HBox>
-

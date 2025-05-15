@@ -17,11 +17,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-    <HBox alignment="CENTER" maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" stylesheets="@Style/servicioAlojamientosViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.HotelViewController">
+<HBox alignment="CENTER" maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" stylesheets="@Style/servicioAlojamientosViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.HotelViewController">
         <VBox fx:id="vboxContenedorFormularioHoteles" HBox.hgrow="ALWAYS">
             <MenuButton fx:id="menButtonOpcionesHotel" alignment="TOP_LEFT" mnemonicParsing="false" text="¿Que desea hacer?">
                 <items>
-                    <MenuItem fx:id="menItemGuardarHotel" mnemonicParsing="false" onAction="#guardarCambios" text="Guardar" />
                     <MenuItem fx:id="menItemCerrarSesionHotel" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
                 </items>
             </MenuButton>

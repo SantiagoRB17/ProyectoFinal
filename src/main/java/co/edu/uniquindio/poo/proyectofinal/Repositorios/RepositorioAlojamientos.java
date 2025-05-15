@@ -105,10 +105,12 @@ public class RepositorioAlojamientos {
      * @return lista de alojamientos cargados
      */
     private List<Alojamiento> cargarAlojamientos() {
+        List<Alojamiento> todos;
         try {
             if (archivo.exists() && archivo.length() > 0) {
-                return objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
+                todos = objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
                 });
+                return todos.stream().filter(Alojamiento::isActivo).toList();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,7 +128,7 @@ public class RepositorioAlojamientos {
                 List<Alojamiento> todos = objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
                 });
                 return todos.stream()
-                        .filter(a -> a instanceof ProductoHotel)
+                        .filter(a -> a instanceof ProductoHotel && a.isActivo())
                         .toList();
             }
         } catch (IOException e) {
@@ -148,6 +150,14 @@ public class RepositorioAlojamientos {
         }else{
             throw new Exception("Alojamiento no encontrado");
         }
+    }
+
+    public List<ProductoHabitacion> cargarHabitaciones(UUID id){
+        ProductoHotel hotel= (ProductoHotel) obtenerPorId(id);
+        if(hotel!=null){
+            return hotel.getHabitaciones();
+        }
+        return new ArrayList<>();
     }
 
     /**

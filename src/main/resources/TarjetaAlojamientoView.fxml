@@ -3,19 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Region?>
-<?import jfxtras.scene.layout.HBox?>
 <?import jfxtras.scene.layout.VBox?>
 
-<VBox fx:id="vboxTarjetaAlojamiento" alignment="CENTER" spacing="2" stylesheets="@Style/TarjetaAlojamientoView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.TarjetaAlojamientoViewController">
+<VBox fx:id="vboxTarjetaAlojamiento" alignment="CENTER" maxWidth="Infinity" minWidth="-Infinity" spacing="2" stylesheets="@Style/TarjetaAlojamientoView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.TarjetaAlojamientoViewController">
     <ImageView fx:id="imgViewFotoAlojamiento" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-    <HBox fx:id="hboxInformacionAlojamientoTarjeta">
+    <VBox>
         <Label fx:id="lblNombreAlojamiento" text="Nombre Alojamiento" />
-        <Region HBox.hgrow="ALWAYS" />
         <Label fx:id="lblPrecioAlojamiento" text="Precio" />
-    </HBox>
-    <HBox fx:id="hboxUbicacionAlojamientoTarjeta">
         <Label fx:id="lblUbicacionAlojamiento" text="Ubicacion Alojamiento" />
-    </HBox>
+    </VBox>
     <JFXButton fx:id="btnVerDetalles" onAction="#abrirDetallesAlojamientos" text="Ver detalles" />
 </VBox>

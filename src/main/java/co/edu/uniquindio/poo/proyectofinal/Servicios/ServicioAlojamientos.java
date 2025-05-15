@@ -245,6 +245,11 @@ public class ServicioAlojamientos {
         }
     }
 
+    public List<ProductoHabitacion> recuperarHabitaciones(UUID id){
+        return repositorioAlojamientos.cargarHabitaciones(id);
+    }
+
+
     /**
      * Metodo que permite borrar un hotel junto con sus habitacion
      * @param id id del hotel
@@ -286,7 +291,6 @@ public class ServicioAlojamientos {
             throw new Exception("Debe añadir una foto del hotel");
         }
     }
-
 
     /**
      * Metodo para crear una lista con las opciones de alojamiento para el combo box

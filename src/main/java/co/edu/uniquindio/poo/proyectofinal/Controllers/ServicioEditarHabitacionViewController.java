@@ -166,6 +166,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
                 ventanasController.getPlataforma().notificarObservadores();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }

@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -30,7 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class OfertaViewController implements Initializable {
+public class OfertaViewController implements Initializable, AlojamientosObserver {
 
     @FXML
     private JFXButton btnCrearOferta;
@@ -137,21 +138,6 @@ public class OfertaViewController implements Initializable {
     }
 
     @FXML
-    void eliminarOferta(ActionEvent event) {
-
-    }
-
-    @FXML
-    void guardarCambios(ActionEvent event) {
-
-    }
-
-    @FXML
-    void limpiarCamposOferta(ActionEvent event) {
-
-    }
-
-    @FXML
     void refrescarTablaAlojamientosEnOfertas(ActionEvent event) {
 
     }
@@ -166,8 +152,18 @@ public class OfertaViewController implements Initializable {
     private Alojamiento alojamientoSeleccionado;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ventanasController.getPlataforma().registrarObservador(this);
         //Configuracion de columnas de la tabla de ofertas
-        clNombreOferta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        clNombreOferta.setCellValueFactory(cellData ->
+                {
+                    try {
+                        return new SimpleStringProperty(ventanasController.getPlataforma().buscarAlojamientoPorId(cellData.getValue().getIdAlojamiento()).getNombre());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+        );
         clDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getPorcentajeDescuento()));
         clInicioDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFechaInicio()));
         clfinDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFechaFin()));
@@ -236,11 +232,11 @@ public class OfertaViewController implements Initializable {
             ventanasController.mostrarAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
         }
         try {
-            ventanasController.getPlataforma().crearOferta(alojamientoSeleccionado, Double.parseDouble(txtFieldDescuento.getText()),
+            ventanasController.getPlataforma().crearOferta(alojamientoSeleccionado.getId(), Double.parseDouble(txtFieldDescuento.getText()),
                     txtAreaDescripcionOferta.getText(),
                     datePickerInicioOferta.getValue(), datePickerFinOferta.getValue());
             ventanasController.mostrarAlerta("Oferta creada con exito",Alert.AlertType.INFORMATION);
-            limpiarCamposOferta();
+            limpiarCampos();
 
         } catch (Exception e) {
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -253,10 +249,27 @@ public class OfertaViewController implements Initializable {
     public void cargarDatosAlojamientoEnOfertas(){
         try{
             List<Alojamiento> alojamientos = ventanasController.getPlataforma().listarAlojamientos();
-            List<Alojamiento> alojamientosActivos= alojamientos.stream().filter(Alojamiento::isActivo).collect(Collectors.toList());
-            tbAlojamientosEnOfertas.setItems(FXCollections.observableArrayList(alojamientosActivos));
+            tbAlojamientosEnOfertas.setItems(FXCollections.observableArrayList(alojamientos));
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Metodo que permite eliminar una oferta
+     * @param event
+     */
+    public void eliminarOferta(ActionEvent event){
+        try {
+            if (ofertaSeleccionado == null) {
+                ventanasController.mostrarAlerta("Debes seleccionar una oferta", Alert.AlertType.ERROR);
+            }else{
+                ventanasController.getPlataforma().eliminarOferta(ofertaSeleccionado.getIdAlojamiento());
+                limpiarCampos();
+                ventanasController.mostrarAlerta("Alojamiento eliminado con exito", Alert.AlertType.INFORMATION);
+            }
+        }catch (Exception e){
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -265,7 +278,7 @@ public class OfertaViewController implements Initializable {
      */
     public void cargarDatosTablaOfertas(){
         try{
-            List<Oferta> ofertas=ventanasController.getPlataforma().listarOfertas();
+            List<Oferta> ofertas = ventanasController.getPlataforma().listarOfertas();
             tbOfertas.setItems(FXCollections.observableArrayList(ofertas));
         }catch (Exception e){
             e.printStackTrace();
@@ -275,7 +288,7 @@ public class OfertaViewController implements Initializable {
     /**
      * Limpia los campos del formulario de ofertas
      */
-    public void limpiarCamposOferta() {
+    public void limpiarCampos() {
         txtFieldDescuento.clear();
         txtAreaDescripcionOferta.clear();
         datePickerInicioOferta.setValue(null);
@@ -295,6 +308,20 @@ public class OfertaViewController implements Initializable {
             }
         }
         return false;
+    }
+
+    /**
+     * Metodo que permite limpiar los campos del formulario de ofertas.
+     * @param event
+     */
+    public void limpiarCamposOferta(ActionEvent event){
+        limpiarCampos();
+    }
+
+    @Override
+    public void actualizar() {
+        cargarDatosAlojamientoEnOfertas();
+        cargarDatosTablaOfertas();
     }
 }
 

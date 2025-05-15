@@ -13,9 +13,9 @@ public class ServicioOfertas {
 
     private final RepositorioOfertas repositorioOfertas=new RepositorioOfertas();
 
-    public void crearOferta(Alojamiento alojamiento, double porcentajeDescuento,
+    public void crearOferta(UUID idAlojamiento, double porcentajeDescuento,
                             String descripcion, LocalDate fechaInicio, LocalDate fechaFin) throws Exception{
-        if(alojamiento==null){
+        if(idAlojamiento==null){
             throw new Exception("No se selecciono un alojamiento");
         }
         if(fechaInicio.isBefore(LocalDate.now())){
@@ -28,15 +28,16 @@ public class ServicioOfertas {
             throw new Exception("El porcentaje de descuento debe estar entre 0 y 100");
         }
         Oferta oferta=new
-                Oferta(alojamiento,porcentajeDescuento,descripcion,fechaInicio,fechaFin);
+                Oferta(idAlojamiento,porcentajeDescuento,descripcion,fechaInicio,fechaFin);
         repositorioOfertas.agregarOferta(oferta);
     }
 
     public List<Oferta> listarOfertas(){
+
         return repositorioOfertas.getOfertas();
     }
 
-    public void eliminarOferta(UUID id){
-
+    public void eliminarOferta(UUID id) throws Exception{
+        repositorioOfertas.eliminarOferta(id);
     }
 }

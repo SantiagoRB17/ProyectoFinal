@@ -1,7 +1,11 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.jfoenix.controls.JFXButton;
@@ -146,32 +150,52 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
                 Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamiento");
                 ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamiento");
 
-                lblNombre.setText("Alojamiento " + (alojamiento.getNombre()));
-                lblUbicacion.setText("Ubicacion " + (alojamiento.getCiudad()));
-                try{
-                    img.setImage(RepositorioImagenes.cargarImagen(alojamiento.getRutaFoto()));
-                }catch(Exception e){
-                    ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                double precioAlojamiento = 0;
+                if (alojamiento instanceof ProductoCasa casa) {
+                    precioAlojamiento = casa.getPrecio();
+                } else if (alojamiento instanceof ProductoApartamento apartamento) {
+                    precioAlojamiento = apartamento.getPrecio();
+                } else if (alojamiento instanceof ProductoHotel hotel) {
+                    precioAlojamiento = 0.0;
                 }
 
+
+                lblNombre.setText("Alojamiento " + (alojamiento.getNombre()));
+                lblUbicacion.setText("Ubicacion " + (alojamiento.getCiudad()));
+                lblPrecio.setText("Precio " + (precioAlojamiento));
+
+                img.setImage(RepositorioImagenes.cargarImagen(alojamiento.getRutaFoto()));
+
                 flowPaneVistaTarjetasAlojamiento.getChildren().add(nodoTarjeta);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void cargarOfertas() {
-        for (int i = 0; i < 10; i++) {
+        List<Oferta> ofertas=ventanasController.getPlataforma().listarOfertas();
+        for (Oferta oferta : ofertas) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoOfertaView.fxml"));
                 Node nodoTarjeta = loader.load();
 
                 Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamientoOferta");
-                lblNombre.setText("Oferta " + (i + 1));
+                Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamientoOferta");
+                Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamientoOferta");
+                ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamientoOferta");
+                Label lblDescripcionOferta = (Label) nodoTarjeta.lookup("#lblDescripcionOferta");
 
-                hboxVistaTarjetaOfertas.getChildren().add(nodoTarjeta);
-            } catch (IOException e) {
+                lblNombre.setText("Oferta " + ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()).getNombre() );
+                lblUbicacion.setText("Ubicacion "+ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()).getCiudad());
+                lblPrecio.setText("Descuento "+ oferta.getPorcentajeDescuento());
+                lblDescripcionOferta.setText("Oferta "+ oferta.getDescripcionOferta());
+
+                img.setImage(RepositorioImagenes.cargarImagen(ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()).getRutaFoto()));
+
+
+                    hboxVistaTarjetaOfertas.getChildren().add(nodoTarjeta);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
