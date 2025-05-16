@@ -448,7 +448,7 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
      */
     public void cargarDatosTabla(){
         try {
-            List<Alojamiento> lista = ventanasController.getPlataforma().listarAlojamientos();
+            List<Alojamiento> lista = ventanasController.getPlataforma().recuperarCasasYApartamentos();
 
             tbAlojamientos.setItems(FXCollections.observableArrayList(lista));
         } catch (Exception e) {

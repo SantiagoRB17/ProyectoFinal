@@ -70,6 +70,10 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
         return servicioAlojamientos.listarHoteles();
     }
 
+    public List<Alojamiento> recuperarCasasYApartamentos(){
+        return servicioAlojamientos.recuperarCasasYApartamentos();
+    }
+
     public Alojamiento buscarAlojamientoPorId(UUID id){
         return servicioAlojamientos.obtenerPorId(id);
     }

@@ -108,6 +108,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
 
         imgViewFotoAlojamiento.setImage(imagenPorDefecto);
 
+
         tbHabitaciones.setOnMouseClicked(mouseEvent -> {
             habitacionSeleccionada=tbHabitaciones.getSelectionModel().getSelectedItem();
             if(habitacionSeleccionada!=null){
@@ -120,7 +121,6 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
                 }catch(Exception e){
                     ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
                 }
-                cargarTablaHabitaciones();
             }
         });
 
@@ -133,6 +133,8 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
     @Override
     public void actualizardatosHotel(ProductoHotel hotel) {
         this.hotel = hotel;
+        cargarTablaHabitaciones();
+        System.out.println(hotel);
     }
 
     @FXML
@@ -142,7 +144,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
         }
         try {
 
-            if (hotel.getHabitaciones().size() > hotel.getNumeroDeHabitaciones()) {
+            if (hotel.getHabitaciones().size() >= hotel.getNumeroDeHabitaciones()) {
                 ventanasController.mostrarAlerta("Número máximo de habitaciones alcanzado.", Alert.AlertType.ERROR);
                 observer.limpiarCamposHotel();
             }
@@ -162,7 +164,6 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
             if(hotel.getHabitaciones().size()==hotel.getNumeroDeHabitaciones()){
                 ventanasController.mostrarAlerta("Hotel creado con exito",Alert.AlertType.INFORMATION);
                 observer.limpiarCamposHotel();
-                observer.actualizar();
                 ventanasController.getPlataforma().notificarObservadores();
             }
         } catch (Exception e) {
@@ -206,6 +207,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
      */
     public void cargarTablaHabitaciones(){
         if (hotel != null && hotel.getHabitaciones() != null) {
+            System.out.println(hotel.getHabitaciones().size() + " habitaciones encontradas");
             tbHabitaciones.setItems(FXCollections.observableArrayList(hotel.getHabitaciones()));
         }
     }

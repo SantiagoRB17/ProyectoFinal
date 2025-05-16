@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -110,12 +112,23 @@ public class RepositorioAlojamientos {
             if (archivo.exists() && archivo.length() > 0) {
                 todos = objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
                 });
-                return todos.stream().filter(Alojamiento::isActivo).toList();
+                return new ArrayList<>(todos.stream().filter(Alojamiento::isActivo).toList());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    public List<Alojamiento> listarCasasyApartamentos(){
+        return alojamientos.stream()
+                .filter(a -> a instanceof ProductoCasa && a.isActivo()
+                        || a.isActivo() && a instanceof ProductoApartamento && a.isActivo())
+                .toList();
+    }
+
+    public List<Alojamiento> listarHoteles(){
+        return alojamientos.stream().filter(a -> a instanceof ProductoHotel && a.isActivo()).toList();
     }
 
     /**

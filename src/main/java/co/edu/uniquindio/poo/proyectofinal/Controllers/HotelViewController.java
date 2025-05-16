@@ -224,7 +224,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
             .getResourceAsStream("/imagenes/imagenAlojamientoPorDefecto.png")));
     private ObservableList<String> serviciosDisponiblesHotel;
     private final VentanaController ventanasController= VentanaController.getInstancia();
-    private Alojamiento alojamientoSeleccionado;
+    private ProductoHotel hotelSeleccionado;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -243,22 +243,27 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
         serviciosDisponiblesHotel = FXCollections.observableArrayList();
         cmbBoxListaServiciosHotel.setItems(serviciosDisponiblesHotel);
 
+        btnEditarHabitacion.setVisible(false);
+        btnEditarHabitacion.setManaged(false);
+
         cargarDatosTablaHotel();
 
         //Evento de clic sobre la tabla de hoteles
         tbHoteles.setOnMouseClicked(mouseEvent -> {
-            alojamientoSeleccionado=tbHoteles.getSelectionModel().getSelectedItem();
-            if(alojamientoSeleccionado!=null){
-                txtFieldNombreHotel.setText(alojamientoSeleccionado.getNombre());
-                txtFieldCiudadHotel.setText(alojamientoSeleccionado.getCiudad());
-                txtAreaDescripcionHotel.setText(alojamientoSeleccionado.getDescripcion());
-                serviciosDisponiblesHotel.setAll(alojamientoSeleccionado.getServicios());
+            hotelSeleccionado=(ProductoHotel) tbHoteles.getSelectionModel().getSelectedItem();
+            if(hotelSeleccionado!=null){
+                txtFieldNombreHotel.setText(hotelSeleccionado.getNombre());
+                txtFieldCiudadHotel.setText(hotelSeleccionado.getCiudad());
+                txtAreaDescripcionHotel.setText(hotelSeleccionado.getDescripcion());
+                serviciosDisponiblesHotel.setAll(hotelSeleccionado.getServicios());
                 try{
-                    imgViewFotoAlojamientoHotel.setImage(RepositorioImagenes.cargarImagen(alojamientoSeleccionado.getRutaFoto()));
+                    imgViewFotoAlojamientoHotel.setImage(RepositorioImagenes.cargarImagen(hotelSeleccionado.getRutaFoto()));
                 }catch(Exception e){
                     ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
                 }
-                cargarDatosTablaHabitaciones(alojamientoSeleccionado.getId());
+                btnEditarHabitacion.setVisible(true);
+                btnEditarHabitacion.setManaged(true);
+                cargarDatosTablaHabitaciones(hotelSeleccionado.getId());
             }
         });
 
@@ -303,9 +308,9 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
     @Override
     public void actualizardatosHotel(ProductoHotel productoHotel) {
-        System.out.println(alojamientoSeleccionado);
-        if(alojamientoSeleccionado==null){
-            this.alojamientoSeleccionado = productoHotel;
+        if(hotelSeleccionado==null){
+            this.hotelSeleccionado = productoHotel;
+            System.out.println(hotelSeleccionado);
         }
     }
 
@@ -398,17 +403,16 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
      */
     public void abrirEditarHabitacion(ActionEvent e){
         try {
-            if(alojamientoSeleccionado==null || !(alojamientoSeleccionado instanceof ProductoHotel)){
+            if(hotelSeleccionado == null){
                 ventanasController.mostrarAlerta("Debes seleccionar un hotel", Alert.AlertType.ERROR);
             }else {
-                ProductoHotel productoHotel = (ProductoHotel) alojamientoSeleccionado;
 
                 // Cargar la vista
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/servicioEditarHabitacionView.fxml"));
                 Parent root = loader.load();
 
                 ServicioEditarHabitacionViewController controller = loader.getController();
-                controller.actualizardatosHotel(productoHotel);
+                controller.actualizardatosHotel(hotelSeleccionado);
                 controller.setObserver(this);
 
                 // Crear la escena
@@ -423,7 +427,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
                 stage.setOnCloseRequest(event -> {
                     // Validar si el número de habitaciones creadas es menor al número total requerido
-                    if (productoHotel.getHabitaciones().size() < productoHotel.getNumeroDeHabitaciones()) {
+                    if (hotelSeleccionado.getHabitaciones().size() < hotelSeleccionado.getNumeroDeHabitaciones()) {
                         ventanasController.mostrarAlerta(
                                 "Debe completar la creación de todas las habitaciones antes de cerrar esta ventana."
                                 , Alert.AlertType.WARNING);
@@ -447,10 +451,10 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
      */
     public void eliminarHotel(ActionEvent event){
         try {
-            if (alojamientoSeleccionado == null) {
+            if (hotelSeleccionado == null) {
                 ventanasController.mostrarAlerta("Debes seleccionar un Hotel", Alert.AlertType.ERROR);
-            }else{
-                ventanasController.getPlataforma().eliminarHotel(alojamientoSeleccionado.getId(),alojamientoSeleccionado.getRutaFoto());
+            }else {
+                ventanasController.getPlataforma().eliminarHotel(hotelSeleccionado.getId(), hotelSeleccionado.getRutaFoto());
                 limpiarCamposHotel();
                 ventanasController.mostrarAlerta("Hotel eliminado con exito", Alert.AlertType.INFORMATION);
             }
@@ -496,10 +500,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     @Override
     public void actualizar() {
         cargarDatosTablaHotel();
-
-        if(alojamientoSeleccionado instanceof ProductoHotel){
-            cargarDatosTablaHabitaciones(alojamientoSeleccionado.getId());
-        }
     }
 
 }

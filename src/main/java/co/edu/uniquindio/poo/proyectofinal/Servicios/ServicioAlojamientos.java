@@ -163,12 +163,16 @@ public class ServicioAlojamientos {
         return repositorioAlojamientos.getAlojamientos();
     }
 
+    public List<Alojamiento> recuperarCasasYApartamentos(){
+        return repositorioAlojamientos.listarCasasyApartamentos();
+    }
+
     /**
      * Metodo que recupera la lista de hoteles almacenados en el repositorio
      * @return lista de hoteles
      */
     public List<Alojamiento> listarHoteles(){
-        return repositorioAlojamientos.getHoteles();
+        return repositorioAlojamientos.listarHoteles();
     }
 
     /**

@@ -144,6 +144,8 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoView.fxml"));
                 Node nodoTarjeta = loader.load();
+                TarjetaAlojamientoViewController controller = loader.getController();
+                controller.setAlojamientoObservable(alojamiento);
 
                 Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamiento");
                 Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamiento");
