@@ -118,8 +118,7 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
     @FXML
     private VBox vboxPrincipal;
 
-    private final VentanaController ventanasController= VentanaController.getInstancia();
-
+    private final VentanasController ventanasController = VentanasController.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);
@@ -129,10 +128,12 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
 
     }
 
-    public void abrirVistaIniciarSesion(ActionEvent actionEvent) {
+    public void abrirVistaIniciarSesion(ActionEvent actionEvent) throws Exception {
+        ventanasController.navegarVentanas("/IniciarSesion.fxml","Inicio sesión",false,false);
     }
 
-    public void abrirVistaRegistrarse(ActionEvent actionEvent) {
+    public void abrirVistaRegistrarse(ActionEvent actionEvent) throws Exception {
+        ventanasController.navegarVentanas("/Registrarse.fxml","Registrarse",false,false);
 
     }
 

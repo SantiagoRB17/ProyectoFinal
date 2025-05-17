@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" spacing="30.0" style="-fx-padding: 30px" stylesheets="@style/IniciarSesionView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.IniciarSesionViewController">
+    <Label alignment="CENTER" maxWidth="Infinity" minWidth="-Infinity" text="Iniciar Sesión" />
+    <GridPane fx:id="gridPaneFormularioIniciarSesion" alignment="CENTER" hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+        <Label text="Número de identificación:" />
+        <Label text="Contraseña:" GridPane.rowIndex="1" />
+        <TextField fx:id="txtNumeroIdentificacionInicioSesion" GridPane.columnIndex="1" />
+        <PasswordField fx:id="passFieldContrasenaInicioSesion" prefHeight="25.0" prefWidth="157.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    </GridPane>
+    <HBox spacing="20">
+        <Button fx:id="btnVolverAInicio" mnemonicParsing="false" onAction="#volverAInicio" text="Volver al Inicio" HBox.hgrow="ALWAYS" />
+        <Button fx:id="btnIniciarSesion" maxWidth="Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#iniciarSesion" text="Iniciar Sesión" HBox.hgrow="ALWAYS" />
+    </HBox>
+   <Hyperlink fx:id="linkRegistrarse"  onAction="#irRegistrarse" text="¿No te has Resgistrado?">
+      <font>
+         <Font size="13.0" />
+      </font>
+   </Hyperlink>
+   <Text fx:id="btnRegistrarse" strokeType="OUTSIDE" strokeWidth="0.0" />
+</VBox>
