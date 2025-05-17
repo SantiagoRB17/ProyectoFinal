@@ -26,4 +26,18 @@
   "servicios" : [ "lavanderia" ],
   "capacidadMaxima" : 4,
   "costoExtra" : 90.0
+}, {
+  "tipo" : "casa",
+  "id" : "119cde2d-dec6-4e61-9836-0e952bee3158",
+  "resenas" : [ ],
+  "valoracion" : 0.0,
+  "activo" : true,
+  "nombre" : "Nigeria",
+  "ciudad" : "Zaragosa",
+  "descripcion" : "casa para dormir",
+  "rutaFoto" : "aa03f24b-67be-471b-a04b-30a99dc6da70_97add075100e59b1c6439c21522652a8.jpg",
+  "precio" : 450000.0,
+  "servicios" : [ "casita" ],
+  "capacidadMaxima" : 5,
+  "costoExtra" : 40000.0
 } ]

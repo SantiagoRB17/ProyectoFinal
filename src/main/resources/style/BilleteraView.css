@@ -1,0 +1,44 @@
+.root{
+    -fx-background-color: #F9F9F9;
+}
+.label{
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 28px;
+}
+
+#gridPaneBilletera .label{
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+.text-field{
+    -fx-background-color: #FF5A5F;
+    -fx-text-fill: #fffffe;
+    -fx-font-weight: bold;
+}
+#btnRecargarSaldoOpen{
+    -fx-background-color: #FF5A5F;
+    -fx-text-fill: #fffffe;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-radius: 30px;
+}
+#btnRecargarSaldoOpen:hover{
+    -fx-background-color: #3333;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+#btnVolverAInicio{
+    -fx-background-color: #FF5A5F;
+    -fx-text-fill: #fffffe;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-border-radius: 10px;
+}
+#btnVolverAInicio:hover{
+    -fx-background-color: #F16767;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}

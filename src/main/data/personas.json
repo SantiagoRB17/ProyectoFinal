@@ -1,0 +1,28 @@
+[ {
+  "nombre" : "Sherlock",
+  "apellidos" : "Snow",
+  "cedula" : "1096670377",
+  "email" : "dkfhgsjd@gmail.com",
+  "telefono" : "3172747021",
+  "password" : "4545",
+  "rol" : "ADMINISTRADOR",
+  "cuentaActiva" : true
+}, {
+  "nombre" : "satanas",
+  "apellidos" : "de los infiernos",
+  "cedula" : "666",
+  "email" : "satanasito@gmail.com",
+  "telefono" : "66666666",
+  "password" : "666",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true
+}, {
+  "nombre" : "Alberto",
+  "apellidos" : "Niño",
+  "cedula" : "7777",
+  "email" : "carechimba@gmail.com",
+  "telefono" : "321547845",
+  "password" : "7777",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true
+} ]

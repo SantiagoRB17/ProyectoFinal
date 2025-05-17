@@ -102,17 +102,19 @@ public class InicioViewcontroller implements Initializable {
     @FXML
     private VBox vboxPrincipal;
 
-
+    private final VentanasController ventanasController = VentanasController.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cargarAlojamientos();
         cargarOfertas();
     }
 
-    public void abrirVistaIniciarSesion(ActionEvent actionEvent) {
+    public void abrirVistaIniciarSesion(ActionEvent actionEvent) throws Exception {
+        ventanasController.navegarVentanas("/IniciarSesion.fxml","Inicio sesión",false,false);
     }
 
-    public void abrirVistaRegistrarse(ActionEvent actionEvent) {
+    public void abrirVistaRegistrarse(ActionEvent actionEvent) throws Exception {
+        ventanasController.navegarVentanas("/Registrarse.fxml","Registrarse",false,false);
 
     }
 
