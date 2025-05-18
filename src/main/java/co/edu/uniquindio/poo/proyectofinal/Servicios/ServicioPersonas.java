@@ -59,8 +59,13 @@ public class ServicioPersonas {
                     .password(password)
                     .rol(rol)
                     .cuentaActiva(true)
-                    .build();  // Llama
+                        .build();  // Llama
             repositorioPersonas.agregarPersona(persona);
+
+
+                ServicioBilleteras servicioBilleteras = ServicioBilleteras.getInstancia();
+                servicioBilleteras.registrarBilletera(persona);
+
         }
 
         public void editarPersona(String nombre,String apellidos, String cedula,String email,String telefono,String password,Rol rol) throws Exception {
