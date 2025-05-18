@@ -88,7 +88,4 @@ public class RegistrarseViewController {
         ventanasController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",false,false);
     }
 
-
-
-
 }

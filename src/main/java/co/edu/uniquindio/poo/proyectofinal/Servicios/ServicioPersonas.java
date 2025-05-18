@@ -13,6 +13,7 @@ public class ServicioPersonas {
     
         private  static  RepositorioPersonas repositorioPersonas=RepositorioPersonas.getInstancia();
 
+
         private static ServicioPersonas INSTANCE;
 
 
@@ -66,7 +67,6 @@ public class ServicioPersonas {
                     throw new Exception("Ya existe un administrador");
                 }
             }
-
             Persona persona = Persona.builder()
                     .nombre(nombre)
                     .apellidos(apellidos)
