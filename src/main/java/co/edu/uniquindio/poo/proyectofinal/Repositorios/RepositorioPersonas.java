@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
-import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanasController;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -76,6 +75,12 @@ public class RepositorioPersonas {
                 .orElse(null);
     }
 
+    public Persona obtenerPorEmail(String email) {
+        return personas.stream()
+                .filter(persona -> persona.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
+    }
     public void editarPersona(Persona persona) throws Exception {
         for (int i = 0; i < personas.size(); i++) {
             if (personas.get(i).getCedula().equals(persona.getCedula())) {
