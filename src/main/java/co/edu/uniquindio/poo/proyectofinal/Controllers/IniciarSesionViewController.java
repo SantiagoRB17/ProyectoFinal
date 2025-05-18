@@ -14,24 +14,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class IniciarSesionViewController {
-
     @FXML
     private Button btnIniciarSesion;
-
     @FXML
     private Button btnVolverAInicio;
-
     @FXML
     private GridPane gridPaneFormularioIniciarSesion;
-
     @FXML
     private PasswordField passFieldContrasenaInicioSesion;
 
     @FXML
     private TextField txtEmailInicioSesion;
 
-    private final VentanasController ventanasController = VentanasController.getInstancia();
-    private final RepositorioPersonas repositorioPersonas = RepositorioPersonas.getInstancia();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
 
     @FXML
     void iniciarSesion(ActionEvent event) throws Exception {
@@ -43,22 +38,21 @@ public class IniciarSesionViewController {
             return;
         }
         try {
-            Persona persona = ServicioPersonas.getInstancia().inicarSesion(email, password);
+            Persona persona = ventanasController.getPlataforma().iniciarSesion(email, password);
             Sesion.getInstancia().setPersona(persona);
             if (persona.getRol().equals(Rol.ADMINISTRADOR)) {
-                ventanasController.navegarVentanas("/ServicioAlojamientosView.fxml", "Administrador", false, false);
+                ventanasController.navegarVentanas("/ServicioAlojamientosView.fxml", "Administrador", true, true);
             } else {
-                ventanasController.navegarVentanas("/InicioView.fxml", "Cliente", false, false);
+                ventanasController.navegarVentanas("/InicioView.fxml", "Cliente", true, true);
             }
         } catch (Exception e) {
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("/InicioView.fxml", "Inicio", false, false);
+        ventanasController.navegarVentanas("/InicioView.fxml", "Inicio", true, true);
     }
 
     @FXML

@@ -29,11 +29,7 @@ public class confirmarPasswordController {
     @FXML
     private TextField txtPassword;
 
-    private final VentanasController ventanasController = VentanasController.getInstancia();
-
-    private  static RepositorioPersonas repositorioPersonas=RepositorioPersonas.getInstancia();
-
-    private static ServicioPersonas servicioPersonas=ServicioPersonas.getInstancia();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
 
     @FXML
     void confirmarPassword(ActionEvent event) throws Exception {
@@ -42,7 +38,7 @@ public class confirmarPasswordController {
         String correo = CodigoTemporal.getCorreo();
 
         try{
-            servicioPersonas.cambiarPassword(correo,newPassword);
+            ventanasController.getPlataforma().cambiarContrasena(correo,newPassword);
             ventanasController.mostrarAlerta("Contraseña cambiada con exito", Alert.AlertType.INFORMATION);
             ventanasController.navegarVentanas("/IniciarSesion.fxml","IniciarSesion",false,false);
             CodigoTemporal.setCorreo(null);

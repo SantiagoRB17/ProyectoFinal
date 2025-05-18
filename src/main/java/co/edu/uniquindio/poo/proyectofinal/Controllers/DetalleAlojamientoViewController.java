@@ -1,25 +1,19 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.dlsc.gemsfx.ResizableTextArea;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import lombok.Setter;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class DetalleAlojamientoViewController{
 

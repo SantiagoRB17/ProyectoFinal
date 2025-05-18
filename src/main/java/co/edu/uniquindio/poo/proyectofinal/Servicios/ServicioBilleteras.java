@@ -9,22 +9,14 @@ import java.util.Random;
 
 public class ServicioBilleteras {
 
-    private static RepositorioBilleteras repositorioBilleteras = RepositorioBilleteras.getInstancia();
+    private final RepositorioBilleteras repositorioBilleteras = new RepositorioBilleteras();
 
-
-    private static ServicioBilleteras INSTANCE;
-
-    public static ServicioBilleteras getInstancia(){
-        if(INSTANCE==null){
-            INSTANCE=new ServicioBilleteras();
-        }
-        return INSTANCE;
-    }
 
     public void registrarBilletera(Persona usuario) throws Exception {
         if(validarUsuario(usuario)){
             String numeroUnico = generarNumeroUnico();
-            Billetera billetera = new Billetera(numeroUnico,0, usuario);
+            Billetera billetera = new Billetera(numeroUnico,0, usuario.getCedula());
+            usuario.setNumeroBilletera(billetera.getNumero());
             repositorioBilleteras.agregarBilletera(billetera);
         }
    }
@@ -61,15 +53,14 @@ public class ServicioBilleteras {
         if (monto <= 0) {
             throw new Exception("El monto a recargar debe ser positivo");
         }
+
         Billetera billetera = repositorioBilleteras.buscarPorNumero(numeroBilletera);
         if (billetera == null) {
             throw new Exception("La billetera no existe");
         }
-        if (validarUsuario(billetera.getUsuario())) {
-            throw new Exception("No se puede recargar una billetera siendo un usuario");
-        }
+
         billetera.setSaldo(billetera.getSaldo() + monto);
-        repositorioBilleteras.agregarBilletera(billetera);
+        repositorioBilleteras.actualizarBilletera(billetera);
     }
 
 

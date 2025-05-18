@@ -15,29 +15,20 @@ import java.util.List;
 @Getter
 public class RepositorioPersonas {
 
-    private static RepositorioPersonas INSTANCE;
     private final ObjectMapper objectMapper;
     private final File archivo;
     private List<Persona> personas;
 
-    private RepositorioPersonas() {
+    public RepositorioPersonas() {
         this.objectMapper = new ObjectMapper();
         this.archivo = new File("src/main/data/personas.json"); //;
         this.personas= cargarPersonas();
-    }
-
-    public static RepositorioPersonas getInstancia() {
-        if (INSTANCE == null) {
-            INSTANCE = new RepositorioPersonas();
-        }
-        return INSTANCE;
     }
 
     public void agregarPersona(Persona persona) throws Exception {
         if (obtenerPorId(persona.getCedula()) == null) {
             personas.add(persona);
             guardarPersonas();
-            System.out.println("Persona agregada: " + persona); // <-- AQUÍ imprime los datos
         } else {
             throw new Exception("Ya existe una persona con la cédula " + persona.getCedula());
         }

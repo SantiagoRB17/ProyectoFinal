@@ -3,8 +3,10 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 
 import java.time.LocalDate;
@@ -16,7 +18,9 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
 
     private final ServicioAlojamientos servicioAlojamientos=new ServicioAlojamientos();
     private final ServicioOfertas servicioOfertas=new ServicioOfertas();
+    private final ServicioPersonas servicioPersonas=new ServicioPersonas();
     private final List<AlojamientosObserver> observadores=new ArrayList<>();
+    private final ServicioBilleteras servicioBilleteras=new ServicioBilleteras();
 
     public void registrarObservador(AlojamientosObserver observador){
         observadores.add(observador);
@@ -28,6 +32,37 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
         for(AlojamientosObserver observador:observadores){
             observador.actualizar();
         }
+    }
+    @Override
+    public Persona iniciarSesion(String email, String password) throws Exception{
+        return servicioPersonas.inicarSesion(email,password);
+    }
+    @Override
+    public void crearUsuario(String nombre, String apellidos, String cedula, String email, String telefono, String password, Rol rol) throws Exception{
+        servicioPersonas.agregarPersona(nombre,apellidos,cedula,email,telefono,password,rol);
+        Persona persona=servicioPersonas.recuperarPersona(cedula);
+        servicioBilleteras.registrarBilletera(persona);
+        servicioPersonas.actualizarPersona(persona);
+    }
+
+    @Override
+    public void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono) throws Exception{
+        servicioPersonas.editarPersona(nombre,apellidos,cedula,email,telefono);
+    }
+
+    @Override
+    public Persona recuperarPersonaPorEmail(String email){
+        return servicioPersonas.recuperarPorEmail(email);
+    }
+
+    @Override
+    public void cambiarContrasena(String correo, String newPassword) throws Exception{
+        servicioPersonas.cambiarPassword(correo,newPassword);
+    }
+
+    @Override
+    public void recargarBilletera(float monto, String numeroBilletera) throws Exception{
+        servicioBilleteras.recargarBilletera(monto, numeroBilletera);
     }
 
     @Override
@@ -70,10 +105,12 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
         return servicioAlojamientos.listarHoteles();
     }
 
+    @Override
     public List<Alojamiento> recuperarCasasYApartamentos(){
         return servicioAlojamientos.recuperarCasasYApartamentos();
     }
 
+    @Override
     public Alojamiento buscarAlojamientoPorId(UUID id){
         return servicioAlojamientos.obtenerPorId(id);
     }

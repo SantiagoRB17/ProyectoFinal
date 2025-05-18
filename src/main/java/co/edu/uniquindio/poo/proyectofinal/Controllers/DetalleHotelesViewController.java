@@ -1,8 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.dlsc.gemsfx.ResizableTextArea;
 import com.jfoenix.controls.JFXButton;

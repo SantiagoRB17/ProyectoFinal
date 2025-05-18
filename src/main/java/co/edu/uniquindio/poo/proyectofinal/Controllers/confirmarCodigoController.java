@@ -27,7 +27,7 @@ public class confirmarCodigoController {
     @FXML
     private TextField txtCodigo;
 
-    private final VentanasController ventanasController = VentanasController.getInstancia();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
 
 
     @FXML

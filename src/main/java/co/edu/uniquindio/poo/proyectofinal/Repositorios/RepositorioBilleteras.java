@@ -10,10 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RepositorioBilleteras {
 
-    private static RepositorioBilleteras INSTANCE;
     private final ObjectMapper objectMapper;
     private final File archivo;
 
@@ -25,21 +25,21 @@ public class RepositorioBilleteras {
         this.billeteras = cargarBilleteras();
     }
 
-
-    public static RepositorioBilleteras getInstancia() {
-        if (INSTANCE == null) {
-            INSTANCE = new RepositorioBilleteras();
+    public void actualizarBilletera(Billetera billetera) throws Exception {
+        for (int i = 0; i < billeteras.size(); i++) {
+            if (billeteras.get(i).getNumero().equals(billetera.getNumero())) {
+                billeteras.set(i, billetera);
+                guardarBilleteras();
+                return;
+            }
         }
-        return INSTANCE;
+        throw new Exception("No existe una billetera con el numero " + billetera.getNumero());
     }
-
-
 
     public void agregarBilletera(Billetera billetera)throws Exception{
         if(buscarPorNumero(billetera.getNumero())==null){
             billeteras.add(billetera);
             guardarBilleteras();
-            System.out.println("Billetera agregada: " + billetera);
         }else{
             throw new Exception("Ya existe una billetera con el numero " + billetera.getNumero());
         }

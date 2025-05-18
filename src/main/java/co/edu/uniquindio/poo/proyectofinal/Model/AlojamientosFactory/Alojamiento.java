@@ -1,10 +1,9 @@
 package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory;
 
 
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

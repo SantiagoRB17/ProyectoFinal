@@ -1,9 +1,10 @@
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
 import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioAlojamientos;
 import org.junit.jupiter.api.Test;

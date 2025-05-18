@@ -45,11 +45,7 @@ public class RegistrarseViewController {
     @FXML
     private TextField txtNumeroTelefonoRegistrarse;
 
-    RepositorioPersonas repositorioPersonas= RepositorioPersonas.getInstancia();
-
-    private static VentanasController ventanasController = VentanasController.getInstancia();
-
-    private  final ServicioPersonas servicioPersonas=ServicioPersonas.getInstancia();
+    private static VentanaController ventanaController = VentanaController.getInstancia();
 
     public RegistrarseViewController() throws Exception {
     }
@@ -69,23 +65,23 @@ public class RegistrarseViewController {
         String password = passFieldContrasenaRegistrarse.getText();
         Rol rolSeleccionado= (Rol) comboRol.getValue();
         try{
-            servicioPersonas.agregarPersona(nombre,apellido,cedula,email,numero,password,rolSeleccionado);
-            ventanasController.mostrarAlerta("¡Registro exitoso! Ahora puedes iniciar sesión.", Alert.AlertType.INFORMATION);
-            ventanasController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",false,false);
+            ventanaController.getPlataforma().crearUsuario(nombre,apellido,cedula,email,numero,password,rolSeleccionado);
+            ventanaController.mostrarAlerta("¡Registro exitoso! Ahora puedes iniciar sesión.", Alert.AlertType.INFORMATION);
+            ventanaController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",true,false);
         }
         catch (Exception e){
-            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.INFORMATION);
+            ventanaController.mostrarAlerta(e.getMessage(), Alert.AlertType.INFORMATION);
         }
     }
 
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("/InicioView.fxml","Iniciar Sesión",false,false);
+        ventanaController.navegarVentanas("/InicioView.fxml","Iniciar Sesión",true,true);
 
     }
     @FXML
     void  volverIniciarSesion(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",false,false);
+        ventanaController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",true,false);
     }
 
 }

@@ -1,23 +1,18 @@
 package co.edu.uniquindio.poo.proyectofinal;
 
 import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanaController;
-import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanasController;
-import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioPersonas;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 
 public class PlataformaApp extends Application {
 
-    VentanaController ventanasController = VentanaController.getInstancia();
+    VentanaController ventanaController = VentanaController.getInstancia();
     @Override
     public void start(Stage stage) throws Exception {
-        VentanasController controladorVentanas = VentanasController.getInstancia();
-        controladorVentanas.setPrimaryStage(stage);
-        controladorVentanas.navegarVentanas("/InicioView.fxml", "Inicio de sesión", false, false);
+        ventanaController.setPrimaryStage(stage);
+        ventanaController.navegarVentanas("/InicioView.fxml", "Inicio de sesión", true, true);
     }
-
-
 
     public static PlataformaApp INSTANCE;
 

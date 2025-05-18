@@ -1,7 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,11 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.*;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 
@@ -12,8 +15,8 @@ import java.util.UUID;
 
 public class ServicioAlojamientos {
 
-    private RepositorioAlojamientos repositorioAlojamientos=new RepositorioAlojamientos();
-    private RepositorioImagenes repositorioImagenes=new RepositorioImagenes();
+    private final RepositorioAlojamientos repositorioAlojamientos=new RepositorioAlojamientos();
+    private final RepositorioImagenes repositorioImagenes=new RepositorioImagenes();
 
     /**
      * Método que valida los campos necesarios para agregar o editar un alojamiento.
@@ -212,8 +215,8 @@ public class ServicioAlojamientos {
      * @throws Exception Si el número de la habitación, precio, capacidad, descripción,
      * o la ruta de imagen no cumplen con las validaciones definidas.
      */
-    public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion,double precio,int capacidad,String rutaImagenHabitacion
-            ,String descripcion) throws Exception{
+    public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
+            , String descripcion) throws Exception{
         if(numeroHabitacion < 1){
             throw new Exception("El numero de la habitation debe ser mayor a 0");
         }

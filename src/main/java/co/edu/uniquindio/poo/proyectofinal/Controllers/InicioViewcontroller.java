@@ -3,9 +3,10 @@ package co.edu.uniquindio.poo.proyectofinal.Controllers;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.jfoenix.controls.JFXButton;
@@ -20,7 +21,6 @@ import javafx.scene.layout.FlowPane;
 import jfxtras.scene.layout.HBox;
 import jfxtras.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -63,6 +63,9 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
 
     @FXML
     private HBox hboxVistaTarjetaOfertas;
+
+    @FXML
+    private MenuItem menItemBilletera;
 
     @FXML
     private Label lblBienvenido;
@@ -113,32 +116,65 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
     private VBox vboxEslogans;
 
     @FXML
+    private MenuItem menItemCerrarSesion;
+
+    @FXML
     private VBox vboxFiltroAlojamientos;
 
     @FXML
     private VBox vboxPrincipal;
 
-    private final VentanasController ventanasController = VentanasController.getInstancia();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
+    private final Sesion sesion = Sesion.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);
         cmbTipoAlojamiento.getItems().addAll(TipoAlojamiento.values());
+
+        if(sesion.getPersona()!=null){
+            conSesion();
+        }else{
+            sinSesion();
+        }
         cargarAlojamientos();
         cargarOfertas();
 
     }
 
+    private void conSesion(){
+        hboxUsuarioLogeado.setVisible(true);
+        hboxUsuarioLogeado.setManaged(true);
+        lblBienvenidoUsuario.setVisible(true);
+        lblBienvenidoUsuario.setManaged(true);
+        lblBienvenidoUsuario.setText("Bienvenido " + sesion.getPersona().getNombre());
+        hboxIniSesionRegistro.setVisible(false);
+        hboxIniSesionRegistro.setManaged(false);
+        menItemOpcionesUsuario.setVisible(true);
+    }
+
+    private void sinSesion(){
+        hboxIniSesionRegistro.setVisible(true);
+        hboxIniSesionRegistro.setManaged(true);
+        hboxUsuarioLogeado.setVisible(false);
+        hboxUsuarioLogeado.setManaged(false);
+        lblBienvenidoUsuario.setVisible(false);
+        lblBienvenidoUsuario.setManaged(false);
+        menItemOpcionesUsuario.setVisible(false);
+        menItemOpcionesUsuario.setManaged(false);
+    }
+
     public void abrirVistaIniciarSesion(ActionEvent actionEvent) throws Exception {
-        ventanasController.navegarVentanas("/IniciarSesion.fxml","Inicio sesión",false,false);
+        ventanasController.navegarVentanas("/IniciarSesion.fxml","Inicio sesión",true,false);
     }
 
     public void abrirVistaRegistrarse(ActionEvent actionEvent) throws Exception {
-        ventanasController.navegarVentanas("/Registrarse.fxml","Registrarse",false,false);
+        ventanasController.navegarVentanas("/Registrarse.fxml","Registrarse",true,false);
 
     }
 
     public void verMasAlojamientos(ActionEvent actionEvent) {
     }
+
     private void cargarAlojamientos() {
         List<Alojamiento> alojamientos=ventanasController.getPlataforma().listarAlojamientos();
         for (Alojamiento alojamiento : alojamientos) {
@@ -181,6 +217,8 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
         for (Oferta oferta : ofertas) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoOfertaView.fxml"));
+
+
                 Node nodoTarjeta = loader.load();
 
                 Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamientoOferta");
@@ -197,12 +235,40 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
                 img.setImage(RepositorioImagenes.cargarImagen(ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()).getRutaFoto()));
 
 
-                    hboxVistaTarjetaOfertas.getChildren().add(nodoTarjeta);
+                hboxVistaTarjetaOfertas.getChildren().add(nodoTarjeta);
+
+                TarjetaAlojamientoOfertaViewController controller = loader.getController();
+                controller.setOfertaObervable(oferta);
+                controller.setAlojamientoObservable(ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
+    }
+
+    @FXML
+    void irAEditarPerfil(ActionEvent event) {
+        try{
+            ventanasController.navegarVentanas("/EditarPerfil.fxml","Editar Perfil", true,false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void abrirBilletera(ActionEvent event) {
+        try{
+            ventanasController.navegarVentanas("/RecargarBilletera.fxml","Billetera",true,false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void cerrarSesion(ActionEvent event) {
+        sesion.cerrarSesion();
+        sinSesion();
     }
 
     @Override

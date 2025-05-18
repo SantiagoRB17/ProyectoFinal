@@ -1,10 +1,10 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -191,4 +191,5 @@ public class RepositorioAlojamientos {
         alojamientoAEliminar.setActivo(false);
         guardarAlojamiento();
     }
+
 }

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +19,8 @@ import org.controlsfx.control.SearchableComboBox;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoApartamento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import javafx.beans.property.SimpleObjectProperty;
@@ -38,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class CasaApartamentoViewController implements Initializable, AlojamientosObserver {
 
@@ -166,13 +166,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
 
     private File fotoSeleccionada;
 
-
-    @FXML
-    void cerrarSesion(ActionEvent event) {
-
-    }
-
-
     @FXML
     void refrescarTabla(ActionEvent event) {
 
@@ -183,6 +176,7 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     private ObservableList<String> serviciosDisponibles;
     private final VentanaController ventanasController= VentanaController.getInstancia();
     private Alojamiento alojamientoSeleccionado;
+    Sesion sesion=Sesion.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);
@@ -476,6 +470,15 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
             }
         }
         return false;
+    }
+
+    public void cerrarSesion(ActionEvent event) {
+        sesion.cerrarSesion();
+        try{
+            ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

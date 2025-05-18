@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 
 
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +20,8 @@ import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Observers.HotelDataOberserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
@@ -42,7 +43,6 @@ import javafx.stage.Window;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HotelViewController implements AlojamientosObserver, Initializable, HotelDataOberserver {
 
@@ -192,22 +192,9 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
 
     @FXML
-    void cerrarSesion(ActionEvent event) {
-
-    }
-
-    @FXML
     void editarHotel(ActionEvent event) {
 
     }
-
-
-    @FXML
-    void guardarCambios(ActionEvent event) {
-
-    }
-
-
 
     @FXML
     void refrescarTablaHabitacion(ActionEvent event) {
@@ -225,6 +212,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     private ObservableList<String> serviciosDisponiblesHotel;
     private final VentanaController ventanasController= VentanaController.getInstancia();
     private ProductoHotel hotelSeleccionado;
+    Sesion sesion=Sesion.getInstancia();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -496,6 +484,14 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
         return false;
     }
 
+    public void cerrarSesion(ActionEvent event) {
+        sesion.cerrarSesion();
+        try{
+            ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void actualizar() {

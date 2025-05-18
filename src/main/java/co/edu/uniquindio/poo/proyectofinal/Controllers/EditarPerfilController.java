@@ -7,6 +7,7 @@ import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioPersonas;
 import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioPersonas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -39,9 +40,7 @@ public class EditarPerfilController {
     private TextField txtNumeroTelefonoEditar;
 
 
-    private final VentanasController ventanasController = VentanasController.getInstancia();
-    RepositorioPersonas repositorioPersonas = RepositorioPersonas.getInstancia();
-    ServicioPersonas servicioPersonas = ServicioPersonas.getInstancia();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
     @FXML
     void editar(ActionEvent event) {
         String apellidos = txtApellidosEditar.getText();
@@ -50,12 +49,18 @@ public class EditarPerfilController {
         String numeroTelefono = txtNumeroTelefonoEditar.getText();
 
         Persona persona = Sesion.getInstancia().getPersona();
+        try{
+            ventanasController.getPlataforma().editarPersona(nombreCompleto,apellidos,persona.getCedula(), email
+                    ,numeroTelefono);
+        }catch (Exception e){
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+        }
 
     }
 
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("InicioView","Inicio",false,false);
+        ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
 
     }
 

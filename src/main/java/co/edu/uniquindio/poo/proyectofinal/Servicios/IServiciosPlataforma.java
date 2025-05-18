@@ -3,8 +3,10 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -37,4 +39,12 @@ public interface IServiciosPlataforma {
     List<Oferta> listarOfertas();
     List<ProductoHabitacion> recuperarHabitacionesPorHotel(UUID idHotel);
     void eliminarOferta(UUID id) throws Exception;
+    Alojamiento buscarAlojamientoPorId(UUID id);
+    List<Alojamiento> recuperarCasasYApartamentos();
+    void crearUsuario(String nombre, String apellidos, String cedula, String email, String telefono, String password, Rol rol) throws Exception;
+    Persona iniciarSesion(String email, String password) throws Exception;
+    void cambiarContrasena(String correo, String newPassword) throws Exception;
+    Persona recuperarPersonaPorEmail(String email);
+    void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono) throws Exception;
+    void recargarBilletera(float monto, String numeroBilletera) throws Exception;
 }
