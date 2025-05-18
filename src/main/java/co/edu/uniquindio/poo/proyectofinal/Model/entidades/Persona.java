@@ -17,4 +17,5 @@ public class Persona {
     private String password;
     private Rol rol;
     private boolean cuentaActiva;
+    private Billetera billetera;
 }

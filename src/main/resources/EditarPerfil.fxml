@@ -39,11 +39,11 @@
         <Label text="Email" GridPane.rowIndex="8" />
         <Label text="Número de Telefono" GridPane.rowIndex="6" />
         <Label text="Contraseña:" GridPane.rowIndex="10" />
-        <PasswordField fx:id="passFieldContrasenaRegistrarse" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-        <TextField fx:id="txtEmailRegistrarse" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-        <TextField fx:id="txtNumeroTelefonoRegistrarse" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-        <TextField fx:id="txtNombreCompletoRegistrarse" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <TextField fx:id="txtApellidosRegistrarse" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <PasswordField fx:id="passwordEditar" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+        <TextField fx:id="txtEmailEditar" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <TextField fx:id="txtNumeroTelefonoEditar" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <TextField fx:id="txtNombreCompletoEditar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <TextField fx:id="txtApellidosEditar" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     </GridPane>
     <HBox prefHeight="31.0" prefWidth="590.0" spacing="20">
         <Button fx:id="btnVolverAInicio" mnemonicParsing="false" onAction="#volverAInicio" text="Volver al Inicio" HBox.hgrow="ALWAYS" />
