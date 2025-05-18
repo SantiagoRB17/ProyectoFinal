@@ -5,8 +5,10 @@ module co.edu.uniquindio.poo.proyectofinal {
     requires com.jfoenix;
     requires org.controlsfx.controls;
     requires static lombok;
-    requires com.dlsc.gemsfx;
     requires com.fasterxml.jackson.databind;
+    requires org.simplejavamail.core;
+    requires org.simplejavamail;
+
     requires com.fasterxml.jackson.datatype.jsr310;
 
 
