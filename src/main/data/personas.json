@@ -1,28 +1,37 @@
 [ {
-  "nombre" : "Sherlock",
-  "apellidos" : "Snow",
-  "cedula" : "1096670377",
-  "email" : "dkfhgsjd@gmail.com",
-  "telefono" : "3172747021",
-  "password" : "4545",
+  "nombre" : "Compa",
+  "apellidos" : "Nocha",
+  "cedula" : "121214",
+  "email" : "companocha007@gmail.com",
+  "telefono" : "322547874",
+  "password" : "1212@",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true,
+  "billetera" : {
+    "id" : "62c227d9-f262-43f7-a9d0-5359945e3927",
+    "saldo" : 0.0
+  }
+}, {
+  "nombre" : "Obi Wan",
+  "apellidos" : "Kenobi",
+  "cedula" : "7778987",
+  "email" : "Kenobi@gmail.com",
+  "telefono" : "35457847474",
+  "password" : "1415",
   "rol" : "ADMINISTRADOR",
-  "cuentaActiva" : true
+  "cuentaActiva" : true,
+  "billetera" : null
 }, {
-  "nombre" : "satanas",
-  "apellidos" : "de los infiernos",
-  "cedula" : "666",
-  "email" : "satanasito@gmail.com",
-  "telefono" : "66666666",
-  "password" : "666",
+  "nombre" : "Sergio",
+  "apellidos" : "Perez",
+  "cedula" : "474849",
+  "email" : "perezsergio@gmail.com",
+  "telefono" : "321454747",
+  "password" : "1111",
   "rol" : "USUARIO",
-  "cuentaActiva" : true
-}, {
-  "nombre" : "Alberto",
-  "apellidos" : "Niño",
-  "cedula" : "7777",
-  "email" : "carechimba@gmail.com",
-  "telefono" : "321547845",
-  "password" : "7777",
-  "rol" : "USUARIO",
-  "cuentaActiva" : true
+  "cuentaActiva" : true,
+  "billetera" : {
+    "id" : "5e92fc04-c621-4f8b-b46a-570ec01a3189",
+    "saldo" : 0.0
+  }
 } ]
