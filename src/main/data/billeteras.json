@@ -1,0 +1,13 @@
+[ {
+  "numero" : "0981234567",
+  "saldo" : 0.0,
+  "cedulaUsuario" : null
+}, {
+  "numero" : "1230987456",
+  "saldo" : 0.0,
+  "cedulaUsuario" : null
+}, {
+  "numero" : "3716651780",
+  "saldo" : 30000.0,
+  "cedulaUsuario" : "1097890"
+} ]

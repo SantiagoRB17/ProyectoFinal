@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -22,7 +22,7 @@
   "ciudad" : "circasia",
   "descripcion" : "dos habitaciones con cama doble capacidad maxima de ocupacion 4 personas, minima dos, dos baños, cocina equipada.",
   "rutaFoto" : "c64d4e8c-dd3b-4715-9a06-b74c6753db4b_apartamentos.jpg",
-  "precio" : 360.0,
+  "precio" : 3600.0,
   "servicios" : [ "lavanderia" ],
   "capacidadMaxima" : 4,
   "costoExtra" : 90.0

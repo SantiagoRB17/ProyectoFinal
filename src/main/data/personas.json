@@ -7,10 +7,7 @@
   "password" : "1212@",
   "rol" : "USUARIO",
   "cuentaActiva" : true,
-  "billetera" : {
-    "id" : "62c227d9-f262-43f7-a9d0-5359945e3927",
-    "saldo" : 0.0
-  }
+  "numeroBilletera" : "0981234567"
 }, {
   "nombre" : "Obi Wan",
   "apellidos" : "Kenobi",
@@ -20,7 +17,7 @@
   "password" : "1415",
   "rol" : "ADMINISTRADOR",
   "cuentaActiva" : true,
-  "billetera" : null
+  "numeroBilletera" : null
 }, {
   "nombre" : "Sergio",
   "apellidos" : "Perez",
@@ -30,8 +27,15 @@
   "password" : "1111",
   "rol" : "USUARIO",
   "cuentaActiva" : true,
-  "billetera" : {
-    "id" : "5e92fc04-c621-4f8b-b46a-570ec01a3189",
-    "saldo" : 0.0
-  }
+  "numeroBilletera" : "1230987456"
+}, {
+  "nombre" : "Santiago",
+  "apellidos" : "Bernal",
+  "cedula" : "1097890",
+  "email" : "santiago@gmail.com",
+  "telefono" : "3211776553",
+  "password" : "lucas123",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true,
+  "numeroBilletera" : "3716651780"
 } ]

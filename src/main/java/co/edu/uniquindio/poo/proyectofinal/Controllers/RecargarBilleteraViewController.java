@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
-import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioBilleteras;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -22,9 +22,8 @@ public class RecargarBilleteraViewController {
     @FXML
     private TextField txtSaldoMontoRecarga;
 
-    private ServicioBilleteras serviciosBilletera = ServicioBilleteras.getInstancia();
-
-    private final VentanasController ventanasController = VentanasController.getInstancia();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
+    private final Sesion sesion = Sesion.getInstancia();
 
     @FXML
     void recargarSaldo(ActionEvent event) {
@@ -36,20 +35,20 @@ public class RecargarBilleteraViewController {
                 return;
             }
             float monto = Float.parseFloat(montoStr);
-            String numeroBilletera =
-            serviciosBilletera.recargarBilletera(monto, numeroBilletera);
+            String numeroBilletera=sesion.getPersona().getNumeroBilletera();
+            ventanasController.getPlataforma().recargarBilletera(monto, numeroBilletera);
 
-            VentanasController.getInstancia().mostrarAlerta("Se recargaron los saldos correctamente", Alert.AlertType.INFORMATION);
+            VentanaController.getInstancia().mostrarAlerta("Se recargaron los saldos correctamente", Alert.AlertType.INFORMATION);
             txtSaldoMontoRecarga.clear();
         }catch (Exception e) {
-            VentanasController.getInstancia().mostrarAlerta("Error al recargar el saldo", Alert.AlertType.ERROR);
+            e.printStackTrace();
+            VentanaController.getInstancia().mostrarAlerta("Error al recargar el saldo", Alert.AlertType.ERROR);
         }
 
     }
 
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("/InicioView.fxml","Iniciar Sesión",false,false);
-
+        ventanasController.navegarVentanas("/InicioView.fxml","Iniciar Sesión",true,true);
     }
 }

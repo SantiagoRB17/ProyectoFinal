@@ -211,6 +211,24 @@
     -fx-background-color: #328E6E;
     -fx-text-fill: white;
 }
+.menu-button{
+    -fx-background-radius: 10;
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 14px;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10;
+    -fx-background-color: #328E6E;
+    -fx-text-fill: white;
+}
+.menu-button .arrow{
+    -fx-background-color: #555;
+}
+#lblBienvenidoUsuario{
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
 @font-face {
     font-family: 'Satoshi-Bold';
     src: url('/Fonts/Satoshi-Bold.otf');

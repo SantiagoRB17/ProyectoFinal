@@ -3,6 +3,8 @@ package co.edu.uniquindio.poo.proyectofinal.Model.entidades;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,5 +19,5 @@ public class Persona {
     private String password;
     private Rol rol;
     private boolean cuentaActiva;
-    private Billetera billetera;
+    private String numeroBilletera;
 }

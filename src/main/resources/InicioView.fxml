@@ -2,8 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
@@ -20,6 +21,17 @@
          <JFXButton fx:id="btnIniciarSesion" maxWidth="Infinity" minWidth="-Infinity" onAction="#abrirVistaIniciarSesion" prefHeight="40" prefWidth="120" styleClass="" text="Iniciar sesión" />
          <JFXButton fx:id="btnRegistro" maxWidth="Infinity" minWidth="-Infinity" onAction="#abrirVistaRegistrarse" prefHeight="40" prefWidth="120" text="Registrarse" />
       </HBox>
+      <Label fx:id="lblBienvenidoUsuario" text="Bienvenido" />
+      <HBox fx:id="hboxUsuarioLogeado">
+         <MenuButton fx:id="menItemOpcionesUsuario" alignment="CENTER" maxWidth="Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40" prefWidth="120" text="Opciones" HBox.hgrow="ALWAYS">
+            <items>
+               <MenuItem mnemonicParsing="false" text="Reservas" />
+               <MenuItem fx:id="menItemEditarPerfil" mnemonicParsing="false" onAction="#irAEditarPerfil" text="Editar Perfil" />
+               <MenuItem fx:id="menItemBilletera" mnemonicParsing="false" onAction="#abrirBilletera" text="Billetera" />
+               <MenuItem fx:id="menItemCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
+            </items>
+         </MenuButton>
+      </HBox>
    </HBox>
    <Separator fx:id="sepSeparadorSaludoYAlojamientos" maxWidth="Infinity" minWidth="-Infinity" />
    <VBox fx:id="vboxEslogans" alignment="CENTER">
@@ -34,24 +46,20 @@
                   <HBox fx:id="hboxFiltroAlojamientosLabels" alignment="CENTER" style="-fx-padding: 8">
                      <Label text=" 📍 Ciudad" />
                      <Region HBox.hgrow="ALWAYS" />
-                     <Label text=" 📆 Llegada" />
+                     <Label text="🔍 Nombre" />
                      <Region HBox.hgrow="ALWAYS" />
-                     <Label text="📆 Salida" />
+                     <Label text="🏠 Tipo" />
                      <Region HBox.hgrow="ALWAYS" />
-                     <Label text="👤 Huespedes" />
-                     <Region HBox.hgrow="ALWAYS" />
-                     <Label text="🌟 Estrellas" />
+                     <Label text="💰Precio" />
                   </HBox>
                   <HBox fx:id="hboxFiltroAlojamientosFields" alignment="CENTER" spacing="10">
                      <TextField fx:id="txtFieldFiltroCiudad" />
                      <Region HBox.hgrow="ALWAYS" />
-                     <DatePicker fx:id="datePickerLLegada" />
+                     <TextField fx:id="txtFieldNombre" />
                      <Region HBox.hgrow="ALWAYS" />
-                     <DatePicker fx:id="datePickerSalida" />
+                     <ComboBox fx:id="cmbTipoAlojamiento" prefWidth="150.0" />
                      <Region HBox.hgrow="ALWAYS" />
-                     <TextField fx:id="txtFieldFiltroCantidadHuespedes" />
-                     <Region HBox.hgrow="ALWAYS" />
-                     <ComboBox fx:id="textFieldFiltroEstrellas" prefWidth="150.0" />
+                     <ComboBox fx:id="textFieldFiltroPrecio" prefWidth="150.0" />
                   </HBox>
                </VBox>
                <FlowPane fx:id="flowPaneVistaTarjetasAlojamiento" hgap="10" prefWrapLength="900" vgap="10" />

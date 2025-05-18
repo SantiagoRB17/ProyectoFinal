@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,9 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import jfxtras.scene.layout.HBox;
 import jfxtras.scene.layout.VBox;
+import lombok.Getter;
+import lombok.Setter;
 
 public class TarjetaAlojamientoViewController {
-    private VentanasController ventanasController= VentanasController.getInstancia();
     @FXML
     private JFXButton btnVerDetalles;
 
@@ -27,7 +30,7 @@ public class TarjetaAlojamientoViewController {
     private ImageView imgViewFotoAlojamiento;
 
     @FXML
-    private Label lblEstrellasAlojamiento;
+    private Label lblPrecioAlojamiento;
 
     @FXML
     private Label lblNombreAlojamiento;
@@ -38,13 +41,33 @@ public class TarjetaAlojamientoViewController {
     @FXML
     private VBox vboxTarjetaAlojamiento;
 
+    @Getter
+    @Setter
+    Alojamiento alojamientoObservable;
     @FXML
     void abrirDetallesAlojamientos(ActionEvent event) {
         try {
-
             // Cargar la vista
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DetalleAlojamientoView.fxml"));
-            Parent root = loader.load();
+            Parent root;
+            FXMLLoader loader;
+
+            if (alojamientoObservable instanceof ProductoHotel) {
+                loader = new FXMLLoader(getClass().getResource("/DetalleHotelesView.fxml"));
+                root = loader.load();
+
+                // Obtener el controlador y pasarle el objeto hotel
+                DetalleHotelesViewController controller = loader.getController();
+                controller.cargarDatosHotel((ProductoHotel) alojamientoObservable);
+                controller.setHotelObservable((ProductoHotel) alojamientoObservable);
+
+            } else {
+                loader = new FXMLLoader(getClass().getResource("/DetalleAlojamientoView.fxml"));
+                root = loader.load();
+                // Obtener el controlador y pasarle el objeto alojamiento normal
+                DetalleAlojamientoViewController controller = loader.getController();
+                controller.cargarDatosAlojamiento(alojamientoObservable);
+            }
+
 
             // Crear la escena
             Scene scene = new Scene(root);
@@ -53,7 +76,7 @@ public class TarjetaAlojamientoViewController {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(true);
-            stage.setTitle("Servicio Habitacion");
+            stage.setTitle("Detalle alojamiento");
 
             // Mostrar la nueva ventana
             stage.show();

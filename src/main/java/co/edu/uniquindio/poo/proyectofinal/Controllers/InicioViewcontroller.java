@@ -1,5 +1,14 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
+import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
+import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,11 +21,11 @@ import javafx.scene.layout.FlowPane;
 import jfxtras.scene.layout.HBox;
 import jfxtras.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class InicioViewcontroller implements Initializable {
+public class InicioViewcontroller implements Initializable, AlojamientosObserver {
 
     @FXML
     private JFXButton btnIniciarSesion;
@@ -28,16 +37,17 @@ public class InicioViewcontroller implements Initializable {
     private JFXButton btnVerMas;
 
     @FXML
-    private DatePicker datePickerLLegada;
-
-    @FXML
-    private DatePicker datePickerSalida;
+    private ComboBox<TipoAlojamiento> cmbTipoAlojamiento;
 
     @FXML
     private FlowPane flowPaneVistaTarjetasAlojamiento;
 
     @FXML
     private HBox hboxFiltroAlojamientosFields;
+
+    @FXML
+    private Label lblBienvenidoUsuario;
+
 
     @FXML
     private HBox hboxFiltroAlojamientosLabels;
@@ -49,7 +59,13 @@ public class InicioViewcontroller implements Initializable {
     private HBox hboxSaludoIniSesionRegistro;
 
     @FXML
+    private HBox hboxUsuarioLogeado;
+
+    @FXML
     private HBox hboxVistaTarjetaOfertas;
+
+    @FXML
+    private MenuItem menItemBilletera;
 
     @FXML
     private Label lblBienvenido;
@@ -62,6 +78,9 @@ public class InicioViewcontroller implements Initializable {
 
     @FXML
     private Label lblOfertas;
+
+    @FXML
+    private MenuButton menItemOpcionesUsuario;
 
     @FXML
     private ScrollPane scrollPaneAlojamientos;
@@ -79,13 +98,13 @@ public class InicioViewcontroller implements Initializable {
     private Separator sepSeparadorSaludoYAlojamientos;
 
     @FXML
-    private ComboBox<?> textFieldFiltroEstrellas;
-
-    @FXML
-    private TextField txtFieldFiltroCantidadHuespedes;
+    private ComboBox<Double> textFieldFiltroPrecio;
 
     @FXML
     private TextField txtFieldFiltroCiudad;
+
+    @FXML
+    private TextField txtFieldNombre;
 
     @FXML
     private VBox vboxAlojamientos;
@@ -97,67 +116,165 @@ public class InicioViewcontroller implements Initializable {
     private VBox vboxEslogans;
 
     @FXML
+    private MenuItem menItemCerrarSesion;
+
+    @FXML
     private VBox vboxFiltroAlojamientos;
 
     @FXML
     private VBox vboxPrincipal;
 
-    private final VentanasController ventanasController = VentanasController.getInstancia();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
+    private final Sesion sesion = Sesion.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ventanasController.getPlataforma().registrarObservador(this);
+        cmbTipoAlojamiento.getItems().addAll(TipoAlojamiento.values());
+
+        if(sesion.getPersona()!=null){
+            conSesion();
+        }else{
+            sinSesion();
+        }
         cargarAlojamientos();
         cargarOfertas();
+
+    }
+
+    private void conSesion(){
+        hboxUsuarioLogeado.setVisible(true);
+        hboxUsuarioLogeado.setManaged(true);
+        lblBienvenidoUsuario.setVisible(true);
+        lblBienvenidoUsuario.setManaged(true);
+        lblBienvenidoUsuario.setText("Bienvenido " + sesion.getPersona().getNombre());
+        hboxIniSesionRegistro.setVisible(false);
+        hboxIniSesionRegistro.setManaged(false);
+        menItemOpcionesUsuario.setVisible(true);
+    }
+
+    private void sinSesion(){
+        hboxIniSesionRegistro.setVisible(true);
+        hboxIniSesionRegistro.setManaged(true);
+        hboxUsuarioLogeado.setVisible(false);
+        hboxUsuarioLogeado.setManaged(false);
+        lblBienvenidoUsuario.setVisible(false);
+        lblBienvenidoUsuario.setManaged(false);
+        menItemOpcionesUsuario.setVisible(false);
+        menItemOpcionesUsuario.setManaged(false);
     }
 
     public void abrirVistaIniciarSesion(ActionEvent actionEvent) throws Exception {
-        ventanasController.navegarVentanas("/IniciarSesion.fxml","Inicio sesión",false,false);
+        ventanasController.navegarVentanas("/IniciarSesion.fxml","Inicio sesión",true,false);
     }
 
     public void abrirVistaRegistrarse(ActionEvent actionEvent) throws Exception {
-        ventanasController.navegarVentanas("/Registrarse.fxml","Registrarse",false,false);
+        ventanasController.navegarVentanas("/Registrarse.fxml","Registrarse",true,false);
 
     }
 
     public void verMasAlojamientos(ActionEvent actionEvent) {
     }
+
     private void cargarAlojamientos() {
-        for (int i = 0; i < 8; i++) {
+        List<Alojamiento> alojamientos=ventanasController.getPlataforma().listarAlojamientos();
+        for (Alojamiento alojamiento : alojamientos) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoView.fxml"));
                 Node nodoTarjeta = loader.load();
+                TarjetaAlojamientoViewController controller = loader.getController();
+                controller.setAlojamientoObservable(alojamiento);
 
                 Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamiento");
                 Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamiento");
-                Label lblEstrellas = (Label) nodoTarjeta.lookup("#lblEstrellasAlojamiento");
+                Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamiento");
                 ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamiento");
 
-                lblNombre.setText("Alojamiento " + (i + 1));
-                lblUbicacion.setText("Ubicacion " + (i + 1));
-                lblEstrellas.setText((i % 5 + 1) +"★" );
-                img.setImage(img.getImage());
+                double precioAlojamiento = 0;
+                if (alojamiento instanceof ProductoCasa casa) {
+                    precioAlojamiento = casa.getPrecio();
+                } else if (alojamiento instanceof ProductoApartamento apartamento) {
+                    precioAlojamiento = apartamento.getPrecio();
+                } else if (alojamiento instanceof ProductoHotel hotel) {
+                    precioAlojamiento = 0.0;
+                }
+
+
+                lblNombre.setText("Alojamiento " + (alojamiento.getNombre()));
+                lblUbicacion.setText("Ubicacion " + (alojamiento.getCiudad()));
+                lblPrecio.setText("Precio " + (precioAlojamiento));
+
+                img.setImage(RepositorioImagenes.cargarImagen(alojamiento.getRutaFoto()));
 
                 flowPaneVistaTarjetasAlojamiento.getChildren().add(nodoTarjeta);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void cargarOfertas() {
-        for (int i = 0; i < 10; i++) {
+        List<Oferta> ofertas=ventanasController.getPlataforma().listarOfertas();
+        for (Oferta oferta : ofertas) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoOfertaView.fxml"));
+
+
                 Node nodoTarjeta = loader.load();
 
                 Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamientoOferta");
-                lblNombre.setText("Oferta " + (i + 1));
+                Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamientoOferta");
+                Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamientoOferta");
+                ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamientoOferta");
+                Label lblDescripcionOferta = (Label) nodoTarjeta.lookup("#lblDescripcionOferta");
+
+                lblNombre.setText("Oferta " + ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()).getNombre() );
+                lblUbicacion.setText("Ubicacion "+ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()).getCiudad());
+                lblPrecio.setText("Descuento "+ oferta.getPorcentajeDescuento());
+                lblDescripcionOferta.setText("Oferta "+ oferta.getDescripcionOferta());
+
+                img.setImage(RepositorioImagenes.cargarImagen(ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()).getRutaFoto()));
+
 
                 hboxVistaTarjetaOfertas.getChildren().add(nodoTarjeta);
-            } catch (IOException e) {
+
+                TarjetaAlojamientoOfertaViewController controller = loader.getController();
+                controller.setOfertaObervable(oferta);
+                controller.setAlojamientoObservable(ventanasController.getPlataforma().buscarAlojamientoPorId(oferta.getIdAlojamiento()));
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
+    }
+
+    @FXML
+    void irAEditarPerfil(ActionEvent event) {
+        try{
+            ventanasController.navegarVentanas("/EditarPerfil.fxml","Editar Perfil", true,false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void abrirBilletera(ActionEvent event) {
+        try{
+            ventanasController.navegarVentanas("/RecargarBilletera.fxml","Billetera",true,false);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void cerrarSesion(ActionEvent event) {
+        sesion.cerrarSesion();
+        sinSesion();
+    }
+
+    @Override
+    public void actualizar() {
+        cargarAlojamientos();
+        cargarOfertas();
     }
 }
 

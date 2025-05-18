@@ -1,14 +1,12 @@
 package co.edu.uniquindio.poo.proyectofinal.Model.entidades;
- import lombok.AllArgsConstructor;
- import lombok.Builder;
- import lombok.Getter;
- import lombok.Setter;
+ import lombok.*;
 
- @AllArgsConstructor
+@AllArgsConstructor
  @Getter
  @Setter
+ @NoArgsConstructor
 public class Billetera {
-    private final String numero;
+    private String numero;
     private float saldo;
-    private Persona Usuario;
-}
+    private String cedulaUsuario;
+ }

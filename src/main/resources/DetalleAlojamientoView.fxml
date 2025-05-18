@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="930.0" spacing="20.0" style="-fx-padding: 20" stylesheets="@Style/DetalleAlojamientoViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="930.0" spacing="20.0" style="-fx-padding: 20" stylesheets="@Style/DetalleAlojamientoViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.DetalleAlojamientoViewController">
     <VBox spacing="20" HBox.hgrow="ALWAYS">
         <Label fx:id="lblSaludoDetalles" text="Tu proximo destino" />
         <GridPane fx:id="gridPaneInformacionAlojamiento" alignment="CENTER" hgap="10.0" maxWidth="Infinity" minWidth="-Infinity" vgap="10.0" HBox.hgrow="ALWAYS">
@@ -30,19 +30,20 @@
                 <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
             <Label text="Nombre" />
             <Label text="Ciudad" GridPane.rowIndex="1" />
             <Label text="Descripcion" GridPane.rowIndex="2" />
-            <Label text="Foto" GridPane.rowIndex="6" />
-            <Label text="Capacidad de huespedes" GridPane.rowIndex="3" />
-            <Label text="Servicios" GridPane.rowIndex="4" />
-            <Label text="Valoracion" GridPane.rowIndex="5" />
-            <ListView fx:id="listViewServiciosAlojamiento" prefHeight="80.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label text="Foto" GridPane.rowIndex="7" />
+            <Label text="Capacidad de huespedes" GridPane.rowIndex="4" />
+            <Label text="Servicios" GridPane.rowIndex="5" />
+            <Label text="Valoracion" GridPane.rowIndex="6" />
+            <ListView fx:id="listViewServiciosAlojamiento" prefHeight="80.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor></ListView>
-            <ImageView fx:id="imgViewFotoAlojamiento" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ImageView fx:id="imgViewFotoAlojamiento" fitHeight="150.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          <ResizableTextArea fx:id="txtAreaDescripcion" editable="false" prefHeight="34.0" prefWidth="162.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
@@ -55,14 +56,16 @@
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
-         <TextField fx:id="txtFieldCapacidadHuespedes" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <TextField fx:id="txtFieldCapacidadHuespedes" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
-         <TextField fx:id="txtFieldValoracionAlojamiento" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <TextField fx:id="txtFieldValoracionAlojamiento" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6">
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor></TextField>
+         <Label text="Precio" GridPane.rowIndex="3" />
+         <TextField fx:id="txtFieldPrecioAlojamiento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         </GridPane>
       <Label fx:id="lblResenas" text="Reseñas de nuestros usuario" />
       <ListView fx:id="listViewResenasAlojamiento" prefHeight="200.0" prefWidth="200.0">

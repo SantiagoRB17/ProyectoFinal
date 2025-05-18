@@ -1,7 +1,10 @@
 package co.edu.uniquindio.poo.proyectofinal.Repositorios;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -17,8 +20,6 @@ import java.util.UUID;
  * Clase encargada de manejar la persistencia de los alojamientos
  */
 public class RepositorioAlojamientos {
-    //Insancia para singleton
-    private static RepositorioAlojamientos INSTANCE;
     //Instancia de Jackson que convierte objetos a JSON y viceversa.
     private final ObjectMapper objectMapper;
     // Representa el archivo físico donde se guarda la lista de alojamientos (alojamientos.json).
@@ -33,22 +34,11 @@ public class RepositorioAlojamientos {
      * Crea el ObjectMapper, define el archivo JSON
      * carga los alojamientos existentes desde ese archivo.
      */
-    private RepositorioAlojamientos() {
+    public RepositorioAlojamientos() {
         this.objectMapper = new ObjectMapper();
         this.archivo=new File("src/main/data/alojamientos.json");
         this.alojamientos = cargarAlojamientos();
         this.hoteles=cargarHoteles();
-    }
-
-    /**
-     * Método para acceder a la única instancia de la clase (Singleton). Si no existe, la crea.
-     * @return instancia singleton de la clase
-     */
-    public static RepositorioAlojamientos getInstancia() {
-        if (INSTANCE == null) {
-            INSTANCE = new RepositorioAlojamientos();
-        }
-        return INSTANCE;
     }
 
     /**
@@ -117,15 +107,28 @@ public class RepositorioAlojamientos {
      * @return lista de alojamientos cargados
      */
     private List<Alojamiento> cargarAlojamientos() {
+        List<Alojamiento> todos;
         try {
             if (archivo.exists() && archivo.length() > 0) {
-                return objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
+                todos = objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
                 });
+                return new ArrayList<>(todos.stream().filter(Alojamiento::isActivo).toList());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    public List<Alojamiento> listarCasasyApartamentos(){
+        return alojamientos.stream()
+                .filter(a -> a instanceof ProductoCasa && a.isActivo()
+                        || a.isActivo() && a instanceof ProductoApartamento && a.isActivo())
+                .toList();
+    }
+
+    public List<Alojamiento> listarHoteles(){
+        return alojamientos.stream().filter(a -> a instanceof ProductoHotel && a.isActivo()).toList();
     }
 
     /**
@@ -138,7 +141,7 @@ public class RepositorioAlojamientos {
                 List<Alojamiento> todos = objectMapper.readValue(archivo, new TypeReference<List<Alojamiento>>() {
                 });
                 return todos.stream()
-                        .filter(a -> a instanceof ProductoHotel)
+                        .filter(a -> a instanceof ProductoHotel && a.isActivo())
                         .toList();
             }
         } catch (IOException e) {
@@ -161,4 +164,32 @@ public class RepositorioAlojamientos {
             throw new Exception("Alojamiento no encontrado");
         }
     }
+
+    public List<ProductoHabitacion> cargarHabitaciones(UUID id){
+        ProductoHotel hotel= (ProductoHotel) obtenerPorId(id);
+        if(hotel!=null){
+            return hotel.getHabitaciones();
+        }
+        return new ArrayList<>();
+    }
+
+    /**
+     * Metodo que elimina un hotel y sus habitacion buscando por su UUID.
+     * @param id id del alojamiento a borrar
+     * @throws Exception
+     */
+    public void eliminarHotel(UUID id)throws Exception{
+        Alojamiento alojamientoAEliminar=obtenerPorId(id);
+        if (alojamientoAEliminar == null) {
+            throw new Exception("Alojamiento no encontrado");
+        }
+        ProductoHotel hotelAEliminar=(ProductoHotel) alojamientoAEliminar;
+        for(ProductoHabitacion habitacion:hotelAEliminar.getHabitaciones()){
+            habitacion.setActivo(false);
+            guardarAlojamiento();
+        }
+        alojamientoAEliminar.setActivo(false);
+        guardarAlojamiento();
+    }
+
 }

@@ -28,9 +28,8 @@ public class ConfirmarCorreoController {
 
     @FXML
     private TextField txtEmail;
-    private final VentanasController ventanasController = VentanasController.getInstancia();
-    private final RepositorioPersonas repositorioPersonas = RepositorioPersonas.getInstancia();
-    private   ServicioEnvioEmail servicioEnvioEmail=ServicioEnvioEmail.getInstance();
+    private final VentanaController ventanasController = VentanaController.getInstancia();
+    private ServicioEnvioEmail servicioEnvioEmail=ServicioEnvioEmail.getInstance();
 
     public ConfirmarCorreoController() {
     }
@@ -47,8 +46,7 @@ public class ConfirmarCorreoController {
             ventanasController.mostrarAlerta("Error,El correo no puede estar vacio", Alert.AlertType.ERROR);
             return;
         }
-        if (repositorioPersonas.obtenerPorEmail(correo) == null) {
-
+        if (ventanasController.getPlataforma().recuperarPersonaPorEmail(correo) == null) {
             ventanasController.mostrarAlerta("El correo no esta registrado", Alert.AlertType.ERROR);
             return;
         }
