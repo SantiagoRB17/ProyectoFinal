@@ -29,7 +29,7 @@ public class ConfirmarCorreoController {
     @FXML
     private TextField txtEmail;
     private final VentanaController ventanasController = VentanaController.getInstancia();
-    private ServicioEnvioEmail servicioEnvioEmail=ServicioEnvioEmail.getInstance();
+    private ServicioEnvioEmail servicioEnvioEmail=new ServicioEnvioEmail();
 
     public ConfirmarCorreoController() {
     }

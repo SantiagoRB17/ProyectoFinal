@@ -192,11 +192,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
 
     @FXML
-    void editarHotel(ActionEvent event) {
-
-    }
-
-    @FXML
     void refrescarTablaHabitacion(ActionEvent event) {
 
     }
@@ -386,6 +381,39 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
         }
     }
 
+    public void editarHotel(ActionEvent event) {
+        try {
+            if(hotelSeleccionado == null){
+                ventanasController.mostrarAlerta("Seleccione un Hotel",Alert.AlertType.ERROR);
+                return;
+            }
+            ArrayList<String> serviciosActualizados = new ArrayList<>(serviciosDisponiblesHotel);
+
+            String rutaFoto;
+            if (fotoSeleccionada != null) {
+                String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
+                String rutaFotoGuardada = new File(rutaRelativa).getName();
+                if (!rutaFotoGuardada.equals(hotelSeleccionado.getRutaFoto())) {
+                    ventanasController.getPlataforma().eliminarImagen(hotelSeleccionado.getRutaFoto());
+                }
+                rutaFoto = rutaFotoGuardada;
+            } else {
+                rutaFoto = hotelSeleccionado.getRutaFoto();
+            }
+
+            ventanasController.getPlataforma().editarHotel(hotelSeleccionado.getId()
+                    , txtFieldNombreHotel.getText()
+                    , txtFieldCiudadHotel.getText()
+                    , txtAreaDescripcionHotel.getText()
+                    , rutaFoto
+                    , serviciosActualizados);
+            limpiarCamposHotel();
+            ventanasController.mostrarAlerta("Hotel editado con exito", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
     /**
      * Metodo que abre una nueva ventana para la edición de habitaciónes.
      */
@@ -468,6 +496,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
             tbHabitaciones.getItems().clear();
         }
         fotoSeleccionada = null;
+        hotelSeleccionado=null;
     }
 
     /**

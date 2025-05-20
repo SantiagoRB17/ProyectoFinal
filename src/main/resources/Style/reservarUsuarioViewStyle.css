@@ -1,0 +1,115 @@
+.root {
+    -fx-background-color: #F2F2F2;
+    -fx-font-family: "Satoshi-Bold";
+}
+
+
+#lblReservas{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-font-size: 36px;
+}
+#lblEsloganReservas{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-text-fill: #757575;
+    -fx-font-size: 18px;
+}
+.table-view {
+    -fx-background-color: #A3C9AA;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #e0e0e0;
+    -fx-padding: 0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #96C291;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #638C6D;
+    -fx-text-fill: black;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #140d0b;
+    -fx-alignment: center-left;
+}
+
+.table-row-cell {
+    -fx-background-color: #A3C9AA;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
+    -fx-padding: 5;
+}
+
+
+#btnPagar {
+    -fx-background-color: #140d0b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+#btnPagar:hover {
+    -fx-background-color: #578E7E;
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+
+#btnCancelarReserva {
+    -fx-background-color: #140d0b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4;
+}
+
+#btnCancelarReserva:hover {
+    -fx-background-color: #641B2E;
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+
+#btnResenarReserva{
+    -fx-background-color: #140d0b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4;
+}
+#btnResenarReserva:hover{
+    -fx-background-color: #123458;
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+#btnVolverAlInicio{
+    -fx-background-color: #140d0b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4;
+}
+#btnVolverAlInicio:hover{
+    -fx-background-color: #5409DA;
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+
+
+@font-face {
+    font-family: 'Satoshi-Bold';
+    src: url('/Fonts/Satoshi-Bold.otf');
+}
+@font-face {
+    font-family: 'Satoshi-Variable';
+    src: url('/Fonts/Satoshi-Variable.ttf');
+}

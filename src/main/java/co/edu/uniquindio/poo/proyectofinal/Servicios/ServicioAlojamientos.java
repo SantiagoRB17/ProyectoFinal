@@ -202,8 +202,50 @@ public class ServicioAlojamientos {
                              ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
         validarCamposHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
         FabricaAlojamiento fabricaHotel= new FabricaHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
-        return fabricaHotel.crearProducto();
+        Alojamiento alojamiento = fabricaHotel.crearProducto();
+        repositorioAlojamientos.agregarAlojamiento(alojamiento);
+        return alojamiento;
     }
+
+    /**
+     * Edita un hotel existente con la información proporcionada.
+     * @param idHotel el identificador único del hotel que se va a editar
+     * @param nombre el nuevo nombre del hotel
+     * @param ciudad la ciudad donde se encuentra el hotel
+     * @param descripcion una descripción del hotel
+     * @param rutaFoto la ruta del archivo de la foto del hotel
+     * @param servicios una lista de servicios ofrecidos por el hotel
+     * @throws Exception si el hotel no existe, si algún campo obligatorio (nombre, ciudad, descripcion) es nulo o está vacío,
+     *                   si no se proporcionan servicios en la lista, o si rutaFoto es nulo o está vacío
+     */
+    public void editarHotel(UUID idHotel, String nombre, String ciudad, String descripcion, String rutaFoto,
+                                   ArrayList<String> servicios) throws Exception{
+        ProductoHotel alojamiento=(ProductoHotel) repositorioAlojamientos.obtenerPorId(idHotel);
+        if(alojamiento==null){
+            throw new Exception("Alojamiento inexistente o no seleccionado");
+        }
+        if(nombre==null||ciudad==null||descripcion==null||nombre.isEmpty()||ciudad.isEmpty()||descripcion.isEmpty()){
+            throw new Exception("Todos los campos son obligatorios");
+        }
+        if(servicios.isEmpty()){
+            throw new Exception("Debe añadir al menos un servicio");
+        }
+        if(rutaFoto.isEmpty() || rutaFoto==null){
+            throw new Exception("Debe añadir una foto del hotel");
+        }
+        Alojamiento hotelEditado=ProductoHotel.builder()
+                .id(idHotel)
+                .nombre(nombre)
+                .ciudad(ciudad)
+                .numeroDeHabitaciones(alojamiento.getNumeroDeHabitaciones())
+                .habitaciones(alojamiento.getHabitaciones())
+                .descripcion(descripcion)
+                .rutaFoto(rutaFoto)
+                .servicios(servicios)
+                .build();
+        repositorioAlojamientos.editarAlojamiento(hotelEditado);
+    }
+
 
     /**
      * Crea una nueva habitación y la agrega al listado de habitaciones de un hotel existente.
@@ -215,7 +257,7 @@ public class ServicioAlojamientos {
      * @throws Exception Si el número de la habitación, precio, capacidad, descripción,
      * o la ruta de imagen no cumplen con las validaciones definidas.
      */
-    public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
+    public ProductoHabitacion crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
             , String descripcion) throws Exception{
         if(numeroHabitacion < 1){
             throw new Exception("El numero de la habitation debe ser mayor a 0");
@@ -226,36 +268,48 @@ public class ServicioAlojamientos {
         if(capacidad < 0){
             throw new Exception("La capacidad debe ser mayor que 0");
         }
-        if(rutaImagenHabitacion==null || rutaImagenHabitacion.isEmpty() || descripcion==null || descripcion.isEmpty()){
+        if (rutaImagenHabitacion == null || rutaImagenHabitacion.isEmpty() || descripcion == null || descripcion.isEmpty()) {
             throw new Exception("Debe agregar una imagen y descripcion de la habitacion");
         }
-
         ProductoHotel alojamiento = (ProductoHotel) repositorioAlojamientos.obtenerPorId(hotel.getId());
-        if(alojamiento == null){
-            repositorioAlojamientos.agregarAlojamiento(hotel);
-        }else {
-            if (alojamiento.getHabitaciones().size() >= alojamiento.getNumeroDeHabitaciones()) {
-                throw new Exception("No se pueden agregar mas habitaciones al hotel");
-            }
-            if (alojamiento.getHabitaciones().stream().anyMatch(h -> h.getNumeroHabitacion() == numeroHabitacion)) {
-                throw new Exception("Ya existe una habitacion con ese numero");
-            }
-            ProductoHabitacion habitacion = ProductoHabitacion.builder()
-                    .numeroHabitacion(numeroHabitacion)
-                    .precio(precio)
-                    .capacidad(capacidad)
-                    .rutaImagenHabitacion(rutaImagenHabitacion)
-                    .descripcion(descripcion)
-                    .build();
-            alojamiento.getHabitaciones().add(habitacion);
-            repositorioAlojamientos.editarAlojamiento(alojamiento);
+        if (alojamiento.getHabitaciones().stream().anyMatch(h -> h.getNumeroHabitacion() == numeroHabitacion)) {
+            throw new Exception("Ya existe una habitacion con ese numero");
         }
+        ProductoHabitacion habitacion = ProductoHabitacion.builder()
+                .numeroHabitacion(numeroHabitacion)
+                .idHotel(hotel.getId())
+                .precio(precio)
+                .capacidad(capacidad)
+                .rutaImagenHabitacion(rutaImagenHabitacion)
+                .descripcion(descripcion)
+                .build();
+        return habitacion;
     }
 
+    /**
+     * Metodo que asigna una lista de habitaciones a un hotel existente en el repositorio.
+     * @param habitaciones habitaciones a asignar al hotel. Debe contener al menos una habitacion y no ser nula.
+     * @param idHotel id del hotel
+     * @throws Exception
+     */
+    public void asignarHabitaciones(List<ProductoHabitacion> habitaciones, UUID idHotel) throws Exception{
+        ProductoHotel hotel = (ProductoHotel) repositorioAlojamientos.obtenerPorId(idHotel);
+        hotel.setHabitaciones(habitaciones);
+        repositorioAlojamientos.editarAlojamiento(hotel);
+    }
+
+    /**
+     * Metodo que recupera la lista de habitaciones de un hotel almacenadas en el repositorio.
+     * @param id id del hotel
+     * @return
+     */
     public List<ProductoHabitacion> recuperarHabitaciones(UUID id){
         return repositorioAlojamientos.cargarHabitaciones(id);
     }
 
+    public ProductoHabitacion obtenerHabitacionPorId(UUID idHabitacion){
+        return repositorioAlojamientos.obtenerHabitacionPorId(idHabitacion);
+    }
 
     /**
      * Metodo que permite borrar un hotel junto con sus habitacion

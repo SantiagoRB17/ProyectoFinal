@@ -21,6 +21,8 @@ import lombok.Setter;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -102,6 +104,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
             .getResourceAsStream("/imagenes/habitacion.png")));
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.habitaciones = new ArrayList<>();
         clNumeroHabitacion.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getNumeroHabitacion()));
         clPrecioHabitacion.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
         clCantidadHuespedesHabitacion.setCellValueFactory(cellData->new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
@@ -133,38 +136,35 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
     @Override
     public void actualizardatosHotel(ProductoHotel hotel) {
         this.hotel = hotel;
-        cargarTablaHabitaciones();
-        System.out.println(hotel);
     }
+
+    private List<ProductoHabitacion> habitaciones;
 
     @FXML
     void crearHabitacion(ActionEvent event) {
         if(hayCamposVacios(txtFieldNumeroHabitacion,txtFieldPrecioHabitacion,txtFieldCantidadHuespedesHabitacion,txtAreaDescripcionHabitacion)){
             ventanasController.mostrarAlerta("Todos los campos son obligatorios.", Alert.AlertType.ERROR);
         }
-        try {
 
-            if (hotel.getHabitaciones().size() >= hotel.getNumeroDeHabitaciones()) {
-                ventanasController.mostrarAlerta("Número máximo de habitaciones alcanzado.", Alert.AlertType.ERROR);
-                observer.limpiarCamposHotel();
-            }
+        try {
 
             String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
             String rutaFotoGuardada = new File(rutaRelativa).getName();
 
-           ventanasController.getPlataforma().crearHabitacion(hotel, Integer.parseInt(txtFieldNumeroHabitacion.getText()),
-                    Integer.parseInt(txtFieldPrecioHabitacion.getText()), Integer.parseInt(txtFieldCantidadHuespedesHabitacion.getText()),
+           ProductoHabitacion habitacion= ventanasController.getPlataforma().crearHabitacion(hotel, Integer.parseInt(txtFieldNumeroHabitacion.getText()),
+                   Integer.parseInt(txtFieldPrecioHabitacion.getText()), Integer.parseInt(txtFieldCantidadHuespedesHabitacion.getText()),
                     rutaFotoGuardada, txtAreaDescripcionHabitacion.getText());
+
+            habitaciones.add(habitacion);
 
             limpiarCampos();
             cargarTablaHabitaciones();
 
             ventanasController.mostrarAlerta("Habitación creada con éxito.", Alert.AlertType.INFORMATION);
 
-            if(hotel.getHabitaciones().size()==hotel.getNumeroDeHabitaciones()){
+            if(habitaciones.size()==hotel.getNumeroDeHabitaciones()){
+                ventanasController.getPlataforma().asignarHabitaciones(habitaciones,hotel.getId());
                 ventanasController.mostrarAlerta("Hotel creado con exito",Alert.AlertType.INFORMATION);
-                observer.limpiarCamposHotel();
-                ventanasController.getPlataforma().notificarObservadores();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,10 +206,8 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
      * Metodo que carga las habitaciones en la tabla de habitaciones
      */
     public void cargarTablaHabitaciones(){
-        if (hotel != null && hotel.getHabitaciones() != null) {
-            System.out.println(hotel.getHabitaciones().size() + " habitaciones encontradas");
-            tbHabitaciones.setItems(FXCollections.observableArrayList(hotel.getHabitaciones()));
-        }
+            tbHabitaciones.setItems(FXCollections.observableArrayList(habitaciones));
+
     }
 
     public void limpiarCamposHabitacion(ActionEvent event){

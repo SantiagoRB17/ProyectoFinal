@@ -30,6 +30,11 @@ public class confirmarCodigoController {
     private final VentanaController ventanasController = VentanaController.getInstancia();
 
 
+    /**
+     * Gestiona la confirmación de un código ingresado por el usuario.
+     * Valida el código y navega a la ventana de cambio de contraseña si es válido
+     * @param event el evento que se activa al hacer clic en el botón de confirmación
+     */
     @FXML
     void confirmarCodigo(ActionEvent event) {
         String codigoIngresado = txtCodigo.getText();
@@ -53,9 +58,13 @@ public class confirmarCodigoController {
         }
     }
 
+    /**
+     * Metodo que permite volver al inicio
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
-
             ventanasController.navegarVentanas("IniciarSesion.fxml", "Inicio de Sesión", false, false);
 
     }

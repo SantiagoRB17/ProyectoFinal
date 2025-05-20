@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
@@ -128,11 +129,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     private TextField txtFieldFiltroOfertas;
 
     @FXML
-    void cerrarSesion(ActionEvent event) {
-
-    }
-
-    @FXML
     void editarOferta(ActionEvent event) {
 
     }
@@ -150,6 +146,7 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     private final VentanaController ventanasController= VentanaController.getInstancia();
     private Oferta ofertaSeleccionado;
     private Alojamiento alojamientoSeleccionado;
+    private final Sesion sesion= Sesion.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);
@@ -322,6 +319,19 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     public void actualizar() {
         cargarDatosAlojamientoEnOfertas();
         cargarDatosTablaOfertas();
+    }
+
+    /**
+     * Metodo que permite cerrar la sesion del administrador actual.
+     * @param event
+     */
+    public void cerrarSesion(ActionEvent event) {
+        sesion.cerrarSesion();
+        try{
+            ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 

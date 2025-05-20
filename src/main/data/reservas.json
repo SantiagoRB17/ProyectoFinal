@@ -1,0 +1,21 @@
+[ {
+  "idReserva" : "e83aad20-35a2-4cad-9c96-df6e0047b175",
+  "cedulaCliente" : "1097890",
+  "idAlojamiento" : "c234ed89-1cbe-4ada-97f1-27b2c8a9525e",
+  "idHabitacion" : null,
+  "fechaInicio" : [ 2025, 5, 21 ],
+  "fechaFin" : [ 2025, 5, 23 ],
+  "numeroHuespedes" : 3,
+  "estado" : "PAGADO",
+  "idFactura" : "9cbd61df-e1b1-460a-a215-75352fb44542"
+}, {
+  "idReserva" : "f99d67d0-dbc4-4cb4-b750-794bba270c7c",
+  "cedulaCliente" : "1097890",
+  "idAlojamiento" : "a111ea21-7ad1-4e36-9d18-7c5776c691ab",
+  "idHabitacion" : null,
+  "fechaInicio" : [ 2025, 5, 21 ],
+  "fechaFin" : [ 2025, 5, 31 ],
+  "numeroHuespedes" : 3,
+  "estado" : "PAGADO",
+  "idFactura" : "abe05664-15df-42e8-8094-afada4f34fbe"
+} ]

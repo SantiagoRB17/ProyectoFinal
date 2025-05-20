@@ -66,6 +66,7 @@ public class TarjetaAlojamientoViewController {
                 // Obtener el controlador y pasarle el objeto alojamiento normal
                 DetalleAlojamientoViewController controller = loader.getController();
                 controller.cargarDatosAlojamiento(alojamientoObservable);
+                controller.setAlojamientoObservable(alojamientoObservable);
             }
 
 

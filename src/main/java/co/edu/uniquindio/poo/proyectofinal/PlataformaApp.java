@@ -12,19 +12,7 @@ public class PlataformaApp extends Application {
     public void start(Stage stage) throws Exception {
         ventanaController.setPrimaryStage(stage);
         ventanaController.navegarVentanas("/InicioView.fxml", "Inicio de sesión", true, true);
-    }
-
-    public static PlataformaApp INSTANCE;
-
-    public PlataformaApp() {
-        INSTANCE = this;
-    }
-
-    public static PlataformaApp getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new PlataformaApp();
-        }
-        return INSTANCE;
+        //ventanaController.navegarVentanas("/servicioAlojamientosView.fxml", "Gestion de Alojamientos", true, true);
     }
 
     public static void main(String[] args) {

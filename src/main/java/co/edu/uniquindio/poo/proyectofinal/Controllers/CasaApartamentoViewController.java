@@ -183,8 +183,7 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
         // Configuración de columnas de la tabla de casas y apartamentos
         clTipoAlojamiento.setCellValueFactory(cellData -> {
             Alojamiento alojamiento = cellData.getValue();
-            String tipo = "";
-
+            String tipo;
             if (alojamiento instanceof ProductoCasa) {
                 tipo = "Casa";
             } else if (alojamiento instanceof ProductoApartamento) {
@@ -380,37 +379,38 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
      * @param event
      */
     public void editarAlojamiento(ActionEvent event) {
-        try{
+        try {
+            if (alojamientoSeleccionado == null) {
+                ventanasController.mostrarAlerta("Seleccione un alojamiento", Alert.AlertType.ERROR);
+                return;
+            }
             ArrayList<String> serviciosActualizados = new ArrayList<>(serviciosDisponibles);
 
-            String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
-            String rutaFotoGuardada = new File(rutaRelativa).getName();
-
             String rutaFoto;
-            if (fotoSeleccionada != null && !rutaFotoGuardada.equals(alojamientoSeleccionado.getRutaFoto())) {
-                ventanasController.getPlataforma().eliminarImagen(alojamientoSeleccionado.getRutaFoto());
+            if (fotoSeleccionada != null) {
+                String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
+                String rutaFotoGuardada = new File(rutaRelativa).getName();
+                if (!rutaFotoGuardada.equals(alojamientoSeleccionado.getRutaFoto())) {
+                    // Eliminas la anterior
+                    ventanasController.getPlataforma().eliminarImagen(alojamientoSeleccionado.getRutaFoto());
+                }
                 rutaFoto = rutaFotoGuardada;
             } else {
-                ventanasController.getPlataforma().eliminarImagen(alojamientoSeleccionado.getRutaFoto());
                 rutaFoto = alojamientoSeleccionado.getRutaFoto();
             }
-            if(alojamientoSeleccionado == null){
-                ventanasController.mostrarAlerta("Seleccione un alojamiento",Alert.AlertType.ERROR);
-            }else{
-                ventanasController.getPlataforma().editarAlojamiento(alojamientoSeleccionado.getId()
-                        , txtFieldNombre.getText()
-                        , txtFieldCiudad.getText()
-                        , txtAreaDescripcion.getText()
-                        , rutaFoto
-                        , Double.parseDouble(txtFieldPrecio.getText())
-                        , serviciosActualizados
-                        , Integer.parseInt(txtFieldCantidadHuespedes.getText())
-                        , Double.parseDouble(txtFieldCostoExtra.getText()));
-                limpiarCampos();
-                ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
-            }
 
-        }catch (Exception e){
+            ventanasController.getPlataforma().editarAlojamiento(alojamientoSeleccionado.getId()
+                    , txtFieldNombre.getText()
+                    , txtFieldCiudad.getText()
+                    , txtAreaDescripcion.getText()
+                    , rutaFoto
+                    , Double.parseDouble(txtFieldPrecio.getText())
+                    , serviciosActualizados
+                    , Integer.parseInt(txtFieldCantidadHuespedes.getText())
+                    , Double.parseDouble(txtFieldCostoExtra.getText()));
+            limpiarCampos();
+            ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -472,11 +472,16 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
         return false;
     }
 
+    /**
+     * Metodo que permite cerrar la sesion del administrador actual.
+     *
+     * @param event
+     */
     public void cerrarSesion(ActionEvent event) {
         sesion.cerrarSesion();
-        try{
-            ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
-        }catch (Exception e){
+        try {
+            ventanasController.navegarVentanas("/InicioView.fxml", "Inicio", true, true);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

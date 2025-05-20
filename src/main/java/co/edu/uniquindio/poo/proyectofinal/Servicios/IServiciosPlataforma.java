@@ -3,9 +3,7 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 
 import java.time.LocalDate;
@@ -28,11 +26,14 @@ public interface IServiciosPlataforma {
     List<Alojamiento> listarHoteles();
     Alojamiento agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto,
                       ArrayList<String> servicios, int numeroHabitaciones) throws Exception;
-    void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios,
-                     double costoExtra);
+    void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios
+                     )throws Exception;
     void eliminarHotel(UUID id,String rutaRelativa) throws Exception;
-    void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception;
+    ProductoHabitacion crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception;
+    void asignarHabitaciones(List<ProductoHabitacion> habitaciones,UUID idHotel) throws Exception;
     void eliminarHabitacion(UUID id,String rutaRelativa);
+    List<ProductoHabitacion> recuperarHabitaciones(UUID id);
+    ProductoHabitacion obtenerHabitacionPorId(UUID idHabitacion);
 
     void crearOferta(UUID idAlojamiento, double porcentajeDescuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin)
         throws Exception;
@@ -47,4 +48,12 @@ public interface IServiciosPlataforma {
     Persona recuperarPersonaPorEmail(String email);
     void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono) throws Exception;
     void recargarBilletera(float monto, String numeroBilletera) throws Exception;
+    void crearReserva(String cedulaCliente,UUID idAlojamiento, LocalDate fechaInicio,LocalDate fechaFin,
+                             int numeroHuespedes) throws Exception;
+    void crearReservaHoteles(String cedulaCliente, Alojamiento alojamiento, ProductoHabitacion habitacion, LocalDate fechaInicio, LocalDate fechaFin,
+                             int numeroHuespedes) throws Exception;
+    void cancelarReserva(UUID idReserva) throws Exception;
+    List<Reserva> recuperarReservasUsuario(String cedula) throws Exception;
+    void pagarReserva(UUID idReserva) throws Exception;
+    Factura recuperarFactura(Reserva reserva) throws Exception;
 }

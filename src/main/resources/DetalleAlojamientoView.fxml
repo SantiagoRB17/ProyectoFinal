@@ -90,10 +90,10 @@
             <DatePicker fx:id="datePickerLLegada" maxWidth="Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" HBox.hgrow="ALWAYS" />
             <DatePicker fx:id="datePickerSalida" maxWidth="Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" HBox.hgrow="ALWAYS" />
             <Label text="Cantidad de Huespedes" GridPane.rowIndex="2" />
-            <TextField fx:id="datePickerCantidadHuespedes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtFieldCantidadHuespedes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         </GridPane>
         <HBox alignment="CENTER">
-            <JFXButton fx:id="btnAnadirReserva" text="Reservar Alojamiento" />
+            <JFXButton fx:id="btnAnadirReserva" onAction="#crearReserva" text="Reservar Alojamiento" />
         </HBox>
     </VBox>
 </HBox>

@@ -21,8 +21,9 @@ public class ProductoHabitacion {
     private boolean activo=true;
     @Builder.Default @Getter
     private UUID id=UUID.randomUUID();
+    private UUID idHotel;
 
     public double calcularCosto() {
-        return 0.0;
+        return precio;
     }
 }
