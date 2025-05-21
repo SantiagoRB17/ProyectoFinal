@@ -123,7 +123,7 @@ public class DetalleHotelesOfertaViewController implements Initializable {
         clNumeroHabitacionHotelDetalle.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getNumeroHabitacion()));
         clPrecioHabitacionHotelDetalle.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
         clCantidadHuespedesHabitacionHotelDetalle.setCellValueFactory(cellData->new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
-
+        listViewResenasHotel.setItems(FXCollections.observableArrayList(hotelObservable.getResenas()));
 
         tbHabitacionesDetalleAlojamiento.setOnMouseClicked(mouseEvent -> {
             habitacionSeleccionada=tbHabitacionesDetalleAlojamiento.getSelectionModel().getSelectedItem();

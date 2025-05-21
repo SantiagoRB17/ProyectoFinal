@@ -217,6 +217,8 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
 
         Persona cliente = servicioPersonas.recuperarPersona(reserva.getCedulaCliente());
 
+        servicioReserva.verificarVigencia(idReserva);
+
         double descuentoAplicado=calcularPorcentajeDescuentoAplicable(alojamiento,reserva.getFechaInicio(),reserva.getFechaFin());
         float monto=servicioReserva.calcularCostoReserva(idReserva,habitacion,alojamiento,descuentoAplicado);
 
@@ -234,8 +236,21 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
         return servicioReserva.recuperarFacturaReservaPorId(reserva.getIdFactura());
     }
 
+    @Override
     public double calcularPorcentajeDescuentoAplicable(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin)
             throws Exception{
         return servicioOfertas.calcularPorcentajeDescuentoAplicable(alojamiento,fechaInicio,fechaFin);
+    }
+
+    @Override
+    public void verificarEstadoReservaCompletado(UUID idReserva) throws Exception{
+        servicioReserva.verificarEstadoReservaCompletado(idReserva);
+    }
+
+    @Override
+    public void anadirResena(UUID idReserva, int valoracion, String resena, UUID idAlojamiento) throws Exception{
+        verificarEstadoReservaCompletado(idReserva);
+        servicioAlojamientos.anadirResena(valoracion,resena,idAlojamiento);
+        notificarObservadores();
     }
 }

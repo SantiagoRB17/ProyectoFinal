@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Reserva;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.util.Objects;
 
@@ -52,6 +55,13 @@ public class ventanaResenasViewController {
 
     private Image estrellaVacia;
     private Image estrellaLlena;
+
+    private VentanaController ventanasController = VentanaController.getInstancia();
+    @Setter
+    private Reserva reservaObservable;
+    @Setter
+    private Alojamiento alojamientoObservable;
+
     /**
      * Inicializa el controlador
      */
@@ -70,6 +80,7 @@ public class ventanaResenasViewController {
 
     /**
      * Establece el nombre del alojamiento en el título
+     *
      * @param nombreAlojamiento Nombre del alojamiento a reseñar
      */
     public void setNombreAlojamiento(String nombreAlojamiento) {
@@ -81,7 +92,6 @@ public class ventanaResenasViewController {
      */
     @FXML
     private void seleccionarEstrella(javafx.scene.input.MouseEvent event) {
-        // Determinar qué estrella se ha seleccionado
         Object source = event.getSource();
 
         if (source == estrella1) {
@@ -116,7 +126,6 @@ public class ventanaResenasViewController {
      */
     @FXML
     private void cancelar() {
-        // Cerrar la ventana sin confirmar
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
@@ -130,6 +139,12 @@ public class ventanaResenasViewController {
             // Guardar el comentario
             comentario = txtComentario.getText();
             confirmado = true;
+            try{
+                ventanasController.getPlataforma().anadirResena(reservaObservable.getIdReserva(),valoracion,comentario
+                        ,alojamientoObservable.getId());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             // Cerrar la ventana
             Stage stage = (Stage) btnEnviar.getScene().getWindow();
@@ -137,27 +152,4 @@ public class ventanaResenasViewController {
         }
     }
 
-    /**
-     * Obtiene la valoración seleccionada por el usuario
-     * @return Valoración (1-5)
-     */
-    public int getValoracion() {
-        return valoracion;
-    }
-
-    /**
-     * Obtiene el comentario escrito por el usuario
-     * @return Texto del comentario
-     */
-    public String getComentario() {
-        return comentario;
-    }
-
-    /**
-     * Indica si el usuario confirmó la reseña
-     * @return true si el usuario envió la reseña, false si canceló
-     */
-    public boolean isConfirmado() {
-        return confirmado;
-    }
 }

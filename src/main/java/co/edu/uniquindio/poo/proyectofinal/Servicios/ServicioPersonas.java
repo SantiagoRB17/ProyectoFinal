@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Billetera;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioPersonas;
+import co.edu.uniquindio.poo.proyectofinal.Utils.EncriptacionContrasena;
 import javafx.scene.control.Alert;
 
 import static co.edu.uniquindio.poo.proyectofinal.Model.validaciones.ValidacionCorreo.validarExpresionRegular;
@@ -12,7 +13,7 @@ import static co.edu.uniquindio.poo.proyectofinal.Model.validaciones.ValidarTele
 public class ServicioPersonas {
 
     private final RepositorioPersonas repositorioPersonas = new RepositorioPersonas();
-
+    private final EncriptacionContrasena encriptacionContrasena = new EncriptacionContrasena();
 
     private void validarCampos(String nombre, String apellidos, String cedula, String email, String telefono) throws Exception {
         if (nombre == null || apellidos == null || cedula == null || nombre.isEmpty() || apellidos.isEmpty() || cedula.isEmpty()) {
@@ -50,6 +51,8 @@ public class ServicioPersonas {
 
         validarCampos(nombre, apellidos, cedula, email, telefono, password, rol);
 
+        String hashedPassword = encriptacionContrasena.hashPasswordSHA256(password);
+
         if (rol == Rol.ADMINISTRADOR) {
             boolean yaExisteAdministrador = repositorioPersonas.getPersonas().stream()
                     .anyMatch(persona -> persona.getRol() == Rol.ADMINISTRADOR);
@@ -64,7 +67,7 @@ public class ServicioPersonas {
                 .cedula(cedula)
                 .email(email)
                 .telefono(telefono)
-                .password(password)
+                .password(hashedPassword)
                 .rol(rol)
                 .cuentaActiva(true)
                 .build();
@@ -102,7 +105,10 @@ public class ServicioPersonas {
         if (persona == null) {
             throw new Exception("No existe un persona con el correo: " + correo);
         }
-        if (persona.getPassword().equals(newPassword)) {
+
+        String newHashedPassword = encriptacionContrasena.hashPasswordSHA256(newPassword);
+
+        if (persona.getPassword().equals(newHashedPassword)) {
             throw new Exception("La nueva contraseña debe ser diferente a la anterior");
         }
         persona.setPassword(newPassword);
@@ -114,7 +120,11 @@ public class ServicioPersonas {
         if (persona == null) {
             throw new Exception("La persona no existe");
         }
-        if (!persona.getPassword().equals(password)) {
+
+        String hashedInput = encriptacionContrasena.hashPasswordSHA256(password);
+        System.out.println(hashedInput);
+
+        if (!persona.getPassword().equals(hashedInput)) {
             throw new Exception("Credenciales incorrectas");
         }
 

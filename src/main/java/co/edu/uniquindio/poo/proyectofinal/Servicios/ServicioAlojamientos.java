@@ -353,6 +353,33 @@ public class ServicioAlojamientos {
         }
     }
 
+    public void anadirResena(int valoracion, String resena, UUID idAlojamiento) throws Exception {
+        Alojamiento alojamiento = repositorioAlojamientos.obtenerPorId(idAlojamiento);
+        if (alojamiento == null) {
+            throw new Exception("Alojamiento no encontrado.");
+        }
+        if (alojamiento instanceof ProductoHotel hotel) {
+            hotel.getResenas().add(resena);
+            hotel.setValoracion(
+                    (hotel.getValoracion() * (hotel.getResenas().size() - 1) + valoracion) / hotel.getResenas().size()
+            );
+            repositorioAlojamientos.editarAlojamiento(hotel);
+        } else if (alojamiento instanceof ProductoCasa casa) {
+            casa.getResenas().add(resena);
+            casa.setValoracion(
+                    (casa.getValoracion() * (casa.getResenas().size() - 1) + valoracion) / casa.getResenas().size()
+            );
+            repositorioAlojamientos.editarAlojamiento(casa);
+        } else if (alojamiento instanceof ProductoApartamento apto) {
+            apto.getResenas().add(resena);
+            apto.setValoracion(
+                    (apto.getValoracion() * (apto.getResenas().size() - 1) + valoracion) / apto.getResenas().size()
+            );
+            repositorioAlojamientos.editarAlojamiento(apto);
+        }
+    }
+
+
     /**
      * Metodo para crear una lista con las opciones de alojamiento para el combo box
      * @return lista de tipos de alojamientos

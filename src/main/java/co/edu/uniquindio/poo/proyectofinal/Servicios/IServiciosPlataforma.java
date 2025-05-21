@@ -56,4 +56,8 @@ public interface IServiciosPlataforma {
     List<Reserva> recuperarReservasUsuario(String cedula) throws Exception;
     void pagarReserva(UUID idReserva) throws Exception;
     Factura recuperarFactura(Reserva reserva) throws Exception;
+    double calcularPorcentajeDescuentoAplicable(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin)
+            throws Exception;
+    void anadirResena(UUID idReserva, int valoracion, String resena, UUID idAlojamiento) throws Exception;
+    void verificarEstadoReservaCompletado(UUID idReserva) throws Exception;
 }

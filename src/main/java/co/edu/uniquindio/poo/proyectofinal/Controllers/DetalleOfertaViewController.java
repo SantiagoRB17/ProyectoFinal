@@ -98,6 +98,8 @@ public class DetalleOfertaViewController {
         txtFieldCiudadAlojamientoOferta.setText(alojamientoObservable.getCiudad());
         txtAreaDescripcionAlojamientoOferta.setText(alojamientoObservable.getDescripcion());
         txtFieldPrecioAlojamientoOferta.setText(String.valueOf(alojamientoObservable.calcularCosto()));
+        listViewResenasAlojamientoOferta.setItems(FXCollections.observableArrayList(alojamientoObservable.getResenas()));
+
         int cantidadHuespedes = 0;
         if (alojamientoObservable instanceof ProductoCasa casa) {
             cantidadHuespedes = casa.getCapacidadMaxima();

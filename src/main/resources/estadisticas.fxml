@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.estadisticasViewController">
+    <center>
+        <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
+            <content>
+                <VBox spacing="20.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <!-- Sección 1: Estadísticas de Alojamientos -->
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label text="Estadísticas de Alojamientos" textFill="#333333">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <HBox spacing="20.0">
+                                    <children>
+                                        <!-- Gráfico de Ocupación -->
+                                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label text="Ocupación Porcentual">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <BarChart fx:id="chartOcupacion" legendVisible="false" prefHeight="300.0">
+                                                    <xAxis>
+                                                        <CategoryAxis side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis side="LEFT" />
+                                                    </yAxis>
+                                                </BarChart>
+                                            </children>
+                                        </VBox>
+                                        <!-- Gráfico de Ganancias -->
+                                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label text="Ganancias Totales (€)">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <BarChart fx:id="chartGanancias" legendVisible="false" prefHeight="300.0">
+                                                    <xAxis>
+                                                        <CategoryAxis side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis side="LEFT" />
+                                                    </yAxis>
+                                                </BarChart>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <!-- Sección 2: Alojamientos Populares por Ciudad -->
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label text="Alojamientos Más Populares por Ciudad" textFill="#333333">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <TableView fx:id="tablaPopularidad" prefHeight="200.0">
+                                    <columns>
+                                        <TableColumn fx:id="colPosicion" prefWidth="50.0" text="Pos." />
+                                        <TableColumn fx:id="colNombreAlojamiento" prefWidth="200.0" text="Alojamiento" />
+                                        <TableColumn fx:id="colCiudad" prefWidth="150.0" text="Ciudad" />
+                                        <TableColumn fx:id="colNumReservas" prefWidth="120.0" text="Nº Reservas" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+
+                        <!-- Sección 3: Tipos de Alojamiento Rentables -->
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label text="Tipos de Alojamiento Más Rentables" textFill="#333333">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <HBox spacing="20.0">
+                                    <children>
+                                        <!-- Gráfico de Rentabilidad por Tipo -->
+                                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <BarChart fx:id="chartTiposRentables" prefHeight="300.0">
+                                                    <xAxis>
+                                                        <CategoryAxis side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis side="LEFT" />
+                                                    </yAxis>
+                                                </BarChart>
+                                            </children>
+                                        </VBox>
+                                        <!-- Gráfico de Distribución de Ingresos -->
+                                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <PieChart fx:id="chartDistribucionTipos" labelsVisible="true" prefHeight="300.0" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @JsonTypeInfo(
@@ -41,6 +42,8 @@ public interface Alojamiento {
     boolean isActivo();
 
     ArrayList<String> getServicios();
+
+    List<String> getResenas();
 
     double getCostoExtra();
 

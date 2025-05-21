@@ -9,11 +9,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -63,10 +67,6 @@ public class usuarioReservasController implements Initializable, AlojamientosObs
     @FXML
     private TableView<Reserva> tbReservas;
 
-    @FXML
-    void resenarReserva(ActionEvent event) {
-
-    }
 
     VentanaController ventanaController=VentanaController.getInstancia();
     Sesion sesion=Sesion.getInstancia();
@@ -206,6 +206,33 @@ public class usuarioReservasController implements Initializable, AlojamientosObs
             error.showAndWait();
         }
     }
+
+    public void resenarReserva(ActionEvent event) {
+            if (reservaSeleccinada == null) {
+                ventanaController.mostrarAlerta("Debe seleccionar una reserva", Alert.AlertType.ERROR);
+                return;
+            }
+            try {
+                ventanaController.getPlataforma().verificarEstadoReservaCompletado(reservaSeleccinada.getIdReserva());
+                Alojamiento alojamiento = ventanaController.getPlataforma().buscarAlojamientoPorId(reservaSeleccinada.getIdAlojamiento());
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventanaResenasView.fxml"));
+                Parent root = loader.load();
+                ventanaResenasViewController controller = loader.getController();
+                controller.setNombreAlojamiento(alojamiento.getNombre());
+                controller.setAlojamientoObservable(alojamiento);
+                controller.setReservaObservable(reservaSeleccinada);
+                Stage stage = new Stage();
+                stage.setTitle("Valorar alojamiento");
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                ventanaController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
+
 
 
     @Override

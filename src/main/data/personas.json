@@ -1,20 +1,10 @@
 [ {
-  "nombre" : "Compa",
-  "apellidos" : "Nocha",
-  "cedula" : "121214",
-  "email" : "companocha007@gmail.com",
-  "telefono" : "322547874",
-  "password" : "1212@",
-  "rol" : "USUARIO",
-  "cuentaActiva" : true,
-  "numeroBilletera" : "0981234567"
-}, {
   "nombre" : "Obi Wan",
   "apellidos" : "Kenobi",
   "cedula" : "7778987",
   "email" : "Kenobi@gmail.com",
   "telefono" : "35457847474",
-  "password" : "1415",
+  "password" : "0c86f2dfd04b5d52de85408b658cd99e053d9010b38c56da20673c9a891e9746",
   "rol" : "ADMINISTRADOR",
   "cuentaActiva" : true,
   "numeroBilletera" : null
@@ -24,7 +14,7 @@
   "cedula" : "474849",
   "email" : "perezsergio@gmail.com",
   "telefono" : "321454747",
-  "password" : "1111",
+  "password" : "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
   "rol" : "USUARIO",
   "cuentaActiva" : true,
   "numeroBilletera" : "1230987456"
@@ -34,7 +24,7 @@
   "cedula" : "1097890",
   "email" : "santiago@gmail.com",
   "telefono" : "3211776553",
-  "password" : "lucas123",
+  "password" : "ad1e10c7f2d809520c2191e442ed016ed7507debeaad03d061a97ec69dc2361e",
   "rol" : "USUARIO",
   "cuentaActiva" : true,
   "numeroBilletera" : "3716651780"

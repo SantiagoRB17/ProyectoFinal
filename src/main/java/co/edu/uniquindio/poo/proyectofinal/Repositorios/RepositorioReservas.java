@@ -63,6 +63,9 @@ public class RepositorioReservas {
      * @throws Exception
      */
     private void guardarReservas() throws Exception {
+        if (reservas == null) {
+            reservas = new ArrayList<>();
+        }
         try {
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             objectMapper.writerFor(new TypeReference<List<Reserva>>() {})
@@ -105,7 +108,6 @@ public class RepositorioReservas {
             if (archivo.exists() && archivo.length() > 0) {
                 todos = objectMapper.readValue(archivo, new TypeReference<List<Reserva>>() {
                 });
-                actualizarReservasCompletadas(todos);
                 return new ArrayList<>(todos);
             }
         } catch (IOException e) {
@@ -136,20 +138,16 @@ public class RepositorioReservas {
      * @param reservas lista de reservas a comprobar
      */
     private void actualizarReservasCompletadas(List<Reserva> reservas) {
-        boolean actualizo = false;
-        LocalDate hoy = LocalDate.now();
-        for (Reserva reserva : reservas) {
-            if (reserva.getEstado() != Estado.COMPLETADO && reserva.getFechaFin().isBefore(hoy)) {
-                reserva.setEstado(Estado.COMPLETADO);
-                actualizo = true;
+        try{
+            LocalDate hoy = LocalDate.now();
+            for (Reserva reserva : reservas) {
+                if ((reserva.getEstado() != Estado.COMPLETADO && reserva.getEstado() == Estado.PAGADO ) && reserva.getFechaFin().isBefore(hoy) ) {
+                    reserva.setEstado(Estado.COMPLETADO);
+                    actualizarReserva(reserva);
+                }
             }
-        }
-        if (actualizo) {
-            try {
-                guardarReservas();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -163,9 +161,11 @@ public class RepositorioReservas {
         if(cedula == null){
             throw new Exception("La cedula no puede ser nula");
         }
-        return reservas.stream()
+        List<Reserva> reservasUsuario=reservas.stream()
                 .filter(r -> cedula.equals(r.getCedulaCliente()))
                 .toList();
+        actualizarReservasCompletadas(reservasUsuario);
+        return reservasUsuario;
     }
 
 }

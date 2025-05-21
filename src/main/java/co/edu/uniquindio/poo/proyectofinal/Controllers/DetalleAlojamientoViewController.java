@@ -92,6 +92,7 @@ public class DetalleAlojamientoViewController {
             cantidadHuespedes = apartamento.getCapacidadMaxima();
         }
         txtFieldCapacidadHuespedes.setText(String.valueOf(cantidadHuespedes));
+        listViewResenasAlojamiento.setItems(FXCollections.observableArrayList(alojamientoObservable.getResenas()));
         listViewServiciosAlojamiento.setItems(FXCollections.observableArrayList(alojamientoObservable.getServicios()));
         txtFieldValoracionAlojamiento.setText(String.valueOf(alojamientoObservable.getValoracion()));
         try{
