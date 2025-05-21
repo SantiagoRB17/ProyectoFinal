@@ -98,7 +98,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
     @Setter
     private HotelViewController observer;
     private final VentanaController ventanasController= VentanaController.getInstancia();
-    ProductoHabitacion habitacionSeleccionada;
+    private ProductoHabitacion habitacionSeleccionada;
     private File fotoSeleccionada;
     private final Image imagenPorDefecto=new Image(Objects.requireNonNull(getClass()
             .getResourceAsStream("/imagenes/habitacion.png")));

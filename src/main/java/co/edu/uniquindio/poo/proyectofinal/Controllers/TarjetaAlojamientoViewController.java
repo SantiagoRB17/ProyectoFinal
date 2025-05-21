@@ -43,7 +43,7 @@ public class TarjetaAlojamientoViewController {
 
     @Getter
     @Setter
-    Alojamiento alojamientoObservable;
+    private Alojamiento alojamientoObservable;
     @FXML
     void abrirDetallesAlojamientos(ActionEvent event) {
         try {

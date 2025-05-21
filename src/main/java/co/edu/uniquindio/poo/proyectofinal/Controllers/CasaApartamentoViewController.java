@@ -72,11 +72,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     private JFXButton btnEliminarServicio;
 
     @FXML
-    private JFXButton btnRefrescar;
-
-
-
-    @FXML
     private TableColumn<Alojamiento, Integer> clCantidadHuespedes;
 
 
@@ -97,9 +92,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     private TableColumn<Alojamiento, Double> clPrecio;
 
     @FXML
-    private ComboBox<?> cmbBoxFiltroOpciones;
-
-    @FXML
     private SearchableComboBox<String> cmbBoxListaServicios;
 
     @FXML
@@ -108,8 +100,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     @FXML
     private GridPane gridPaneFormulario;
 
-    @FXML
-    private HBox hboxContenedorFiltros;
 
     @FXML
     private HBox hboxContenedorPrincipal;
@@ -140,11 +130,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     @FXML
     private TextField txtFieldCostoExtra;
 
-
-    @FXML
-    private TextField txtFieldFiltro;
-
-
     @FXML
     private TextField txtFieldNombre;
 
@@ -166,17 +151,13 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
 
     private File fotoSeleccionada;
 
-    @FXML
-    void refrescarTabla(ActionEvent event) {
-
-    }
 
     private final Image imagenAlojamientoPorDefecto=new Image(Objects.requireNonNull(getClass()
             .getResourceAsStream("/imagenes/imagenAlojamientoPorDefecto.png")));
     private ObservableList<String> serviciosDisponibles;
     private final VentanaController ventanasController= VentanaController.getInstancia();
     private Alojamiento alojamientoSeleccionado;
-    Sesion sesion=Sesion.getInstancia();
+    private Sesion sesion=Sesion.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);

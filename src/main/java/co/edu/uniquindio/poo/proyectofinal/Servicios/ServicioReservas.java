@@ -16,7 +16,7 @@ public class ServicioReservas {
 
     private final RepositorioReservas repositorioReservas =new RepositorioReservas();
     private final RepositorioFacturas repositorioFacturas=new RepositorioFacturas();
-
+    private double topeMaxDescuento = 60.0;
     public void crearReserva(String cedulaCliente, Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin,
                              int numeroHuespedes) throws Exception{
         if(fechaInicio == null || fechaFin == null){
@@ -99,7 +99,7 @@ public class ServicioReservas {
         repositorioReservas.actualizarReserva(reserva);
     }
 
-    public float calcularCostoReserva(UUID idReserva,ProductoHabitacion habitacion,Alojamiento alojamiento) throws Exception{
+    public float calcularCostoReserva(UUID idReserva,ProductoHabitacion habitacion,Alojamiento alojamiento,double descuento) throws Exception{
         Reserva reserva = repositorioReservas.obtenerPorId(idReserva);
         if (reserva == null) {
             throw new Exception("Reserva no encontrada");
@@ -112,6 +112,11 @@ public class ServicioReservas {
         double subTotal=calcularSubTotalReserva(habitacion,alojamiento);
 
         float total = (float) (subTotal * noches);
+        if (descuento > 0.0) {
+            double descuentoAplicable = Math.min(descuento, topeMaxDescuento);
+            total = (float) (total * (1 - descuentoAplicable / 100));
+        }
+
         return total;
 
     }
@@ -126,12 +131,14 @@ public class ServicioReservas {
         return precioBase;
     }
 
-    public void generarFactura(UUID idReserva,ProductoHabitacion habitacion,Alojamiento alojamiento) throws Exception{
+    public void generarFactura(UUID idReserva,ProductoHabitacion habitacion,Alojamiento alojamiento,double descuento) throws Exception{
         Reserva reserva = repositorioReservas.obtenerPorId(idReserva);
         double subTotal=calcularSubTotalReserva(habitacion,alojamiento);
-        float total=calcularCostoReserva(idReserva,habitacion,alojamiento);
+        float total=calcularCostoReserva(idReserva,habitacion,alojamiento,descuento);
         Factura factura=Factura.builder()
                 .subtotal(subTotal)
+                .descuento(descuento)
+                .idReserva(reserva.getIdReserva())
                 .total(total)
                 .build();
         reserva.setIdFactura(factura.getIdFactura());

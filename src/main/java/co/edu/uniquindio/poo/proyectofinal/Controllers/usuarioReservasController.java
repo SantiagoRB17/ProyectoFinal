@@ -43,6 +43,9 @@ public class usuarioReservasController implements Initializable, AlojamientosObs
     private TableColumn<Reserva, String> clEstado;
 
     @FXML
+    private TableColumn<Reserva, String> clDescuento;
+
+    @FXML
     private TableColumn<Reserva, String> clFechaEntrada;
 
     @FXML
@@ -71,6 +74,24 @@ public class usuarioReservasController implements Initializable, AlojamientosObs
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanaController.getPlataforma().registrarObservador(this);
+        clDescuento.setCellValueFactory(cellData -> {
+                Reserva reserva = cellData.getValue();
+                Alojamiento alojamiento=ventanaController.getPlataforma().buscarAlojamientoPorId(reserva.getIdAlojamiento());
+
+                try {
+                    double descuento = ventanaController.getPlataforma().calcularPorcentajeDescuentoAplicable(
+                            alojamiento,reserva.getFechaInicio(),reserva.getFechaFin()
+                    );
+                    if (descuento > 0.0) {
+                        return new SimpleObjectProperty<>(descuento + "%");
+                    } else {
+                        return new SimpleStringProperty("Sin descuento");
+                    }
+                } catch (Exception e) {
+                    return new SimpleStringProperty("Error");
+                }
+            });
+
         clAlojamiento.setCellValueFactory(cellData-> {
             Reserva reserva = cellData.getValue();
             if(reserva.getIdHabitacion() != null) {
@@ -167,10 +188,12 @@ public class usuarioReservasController implements Initializable, AlojamientosObs
                     "Reserva: %s\n" +
                             "Fecha de emisión: %s\n" +
                             "Precio Base: $%,.2f\n" +
+                            "Descuento aplicado: %.2f%%\n" +
                             "Total a pagar: $%,.2f",
                     reservaSeleccinada.getIdReserva(),
                     factura.getFechaEmision().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),
                     factura.getSubtotal(),
+                    factura.getDescuento(),
                     factura.getTotal()
             );
 

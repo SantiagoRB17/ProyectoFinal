@@ -78,19 +78,13 @@ public class DetalleAlojamientoViewController {
     private final Sesion sesion= Sesion.getInstancia();
     private final VentanaController ventanaController=VentanaController.getInstancia();
     @Setter
-    Alojamiento alojamientoObservable;
+    private Alojamiento alojamientoObservable;
 
     public void cargarDatosAlojamiento(Alojamiento alojamientoObservable) {
         txtFieldNombreAlojamiento.setText(alojamientoObservable.getNombre());
         txtFieldCiudadAlojamiento.setText(alojamientoObservable.getCiudad());
         txtAreaDescripcion.setText(alojamientoObservable.getDescripcion());
-        double precioAlojamiento = 0;
-        if (alojamientoObservable instanceof ProductoCasa casa) {
-            precioAlojamiento = casa.getPrecio();
-        } else if (alojamientoObservable instanceof ProductoApartamento apartamento) {
-            precioAlojamiento = apartamento.getPrecio();
-        }
-        txtFieldPrecioAlojamiento.setText(String.valueOf(precioAlojamiento));
+        txtFieldPrecioAlojamiento.setText(String.valueOf(alojamientoObservable.calcularCosto()));
         int cantidadHuespedes = 0;
         if (alojamientoObservable instanceof ProductoCasa casa) {
             cantidadHuespedes = casa.getCapacidadMaxima();

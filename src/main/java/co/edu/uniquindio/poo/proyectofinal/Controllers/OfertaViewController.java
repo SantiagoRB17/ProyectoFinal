@@ -49,11 +49,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private JFXButton btnLimpiarOferta;
 
-    @FXML
-    private JFXButton btnRefrescartablaAlojamientosEnOfertas;
-
-    @FXML
-    private JFXButton btnRefrescartablaOfertas;
 
     @FXML
     private TableColumn<Alojamiento, Integer> clCantidadHuespedesAlojamientoEnOfertas;
@@ -82,11 +77,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private TableColumn<Oferta, LocalDate> clfinDescuento;
 
-    @FXML
-    private ComboBox<?> cmbBoxFiltroOpcionesAlojamientosEnOfertas;
-
-    @FXML
-    private ComboBox<?> cmbBoxFiltroOpcionesOfertas;
 
     @FXML
     private DatePicker datePickerFinOferta;
@@ -97,11 +87,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private GridPane gridPaneFormularioOfertas;
 
-    @FXML
-    private HBox hboxContenedorFiltrosAlojamientos;
-
-    @FXML
-    private HBox hboxContenedorFiltrosAlojamientosEnOfertas;
 
     @FXML
     private MenuButton menButtonOpcionesOferta;
@@ -109,8 +94,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private MenuItem menItemCerrarSesionOferta;
 
-    @FXML
-    private MenuItem menItemGuardarOferta;
 
     @FXML
     private TableView<Alojamiento> tbAlojamientosEnOfertas;
@@ -122,26 +105,12 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private TextField txtFieldDescuento;
 
-    @FXML
-    private TextField txtFieldFiltroAlojamientosEnOfertas;
-
-    @FXML
-    private TextField txtFieldFiltroOfertas;
 
     @FXML
     void editarOferta(ActionEvent event) {
 
     }
 
-    @FXML
-    void refrescarTablaAlojamientosEnOfertas(ActionEvent event) {
-
-    }
-
-    @FXML
-    void refrescarTablaOfertas(ActionEvent event) {
-
-    }
 
     private final VentanaController ventanasController= VentanaController.getInstancia();
     private Oferta ofertaSeleccionado;

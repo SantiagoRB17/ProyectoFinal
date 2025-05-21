@@ -48,10 +48,10 @@ public class TarjetaAlojamientoOfertaViewController {
 
     @Getter
     @Setter
-    Alojamiento alojamientoObservable;
+    private Alojamiento alojamientoObservable;
     @Getter
     @Setter
-    Oferta ofertaObervable;
+    private Oferta ofertaObervable;
 
     @FXML
     void abrirDetallesOferta(ActionEvent event) throws Exception {
@@ -61,12 +61,12 @@ public class TarjetaAlojamientoOfertaViewController {
             FXMLLoader loader;
 
             if (alojamientoObservable instanceof ProductoHotel) {
-                loader = new FXMLLoader(getClass().getResource("/DetalleHotelesView.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/detalleHotelesOfertaView.fxml"));
                 root = loader.load();
 
                 // Obtener el controlador y pasarle el objeto hotel
-                DetalleHotelesViewController controller = loader.getController();
-                controller.cargarDatosHotel((ProductoHotel) alojamientoObservable);
+                DetalleHotelesOfertaViewController controller = loader.getController();
+                controller.cargarDatosHotel((ProductoHotel) alojamientoObservable,ofertaObervable);
                 controller.setHotelObservable((ProductoHotel) alojamientoObservable);
 
             } else {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -70,11 +69,6 @@
         </VBox>
         <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="Hoteles" />
-            <HBox fx:id="hboxContenedorFiltrosHotel" alignment="CENTER" spacing="20.0">
-                <ComboBox fx:id="cmbBoxFiltroOpcionesHotel" prefWidth="150.0" />
-                <TextField fx:id="txtFieldFiltroHotel" />
-                <JFXButton fx:id="btnRefrescartablaHotel" onAction="#refrescarTablaHotel" text="Refrescar" />
-            </HBox>
             <TableView fx:id="tbHoteles" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="clNombreHotel" prefWidth="75.0" sortable="false" text="Nombre" />
@@ -89,11 +83,6 @@
         </VBox>
         <VBox alignment="CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="Habitaciones" />
-            <HBox fx:id="hboxContenedorFiltrosHabitaciones" alignment="CENTER" spacing="20.0">
-                <ComboBox fx:id="cmbBoxFiltroOpcionesHabitaciones" prefWidth="150.0" />
-                <TextField fx:id="txtFieldFiltroHabitaciones" />
-                <JFXButton fx:id="btnRefrescartablaHabitacion" onAction="#refrescarTablaHabitacion" text="Refrescar" />
-            </HBox>
             <TableView fx:id="tbHabitaciones" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="clNumeroHabitacionHotel" prefWidth="75.0" sortable="false" text="Numero" />

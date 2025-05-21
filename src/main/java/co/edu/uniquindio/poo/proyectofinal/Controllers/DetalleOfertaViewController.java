@@ -97,13 +97,7 @@ public class DetalleOfertaViewController {
         txtFieldNombreAlojamientoOferta.setText(alojamientoObservable.getNombre());
         txtFieldCiudadAlojamientoOferta.setText(alojamientoObservable.getCiudad());
         txtAreaDescripcionAlojamientoOferta.setText(alojamientoObservable.getDescripcion());
-        double precioAlojamiento = 0;
-        if (alojamientoObservable instanceof ProductoCasa casa) {
-            precioAlojamiento = casa.getPrecio();
-        } else if (alojamientoObservable instanceof ProductoApartamento apartamento) {
-            precioAlojamiento = apartamento.getPrecio();
-        }
-        txtFieldPrecioAlojamientoOferta.setText(String.valueOf(precioAlojamiento));
+        txtFieldPrecioAlojamientoOferta.setText(String.valueOf(alojamientoObservable.calcularCosto()));
         int cantidadHuespedes = 0;
         if (alojamientoObservable instanceof ProductoCasa casa) {
             cantidadHuespedes = casa.getCapacidadMaxima();

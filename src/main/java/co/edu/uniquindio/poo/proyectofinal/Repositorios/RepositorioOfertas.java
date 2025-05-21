@@ -118,4 +118,11 @@ public class RepositorioOfertas {
             throw new Exception("Oferta no encontrada");
         }
     }
+
+    public List<Oferta> listarOfertasAlojamiento(UUID idAlojamiento) throws Exception{
+        if(idAlojamiento == null){
+            throw new Exception("Seleccione un alojamiento");
+        }
+        return ofertas.stream().filter(o -> o.getIdAlojamiento().equals(idAlojamiento)).toList();
+    }
 }

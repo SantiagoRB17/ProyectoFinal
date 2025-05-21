@@ -12,4 +12,11 @@
   "descripcionOferta" : "Dia del padre",
   "fechaInicio" : "2025-05-14",
   "fechaFin" : "2025-05-31"
+}, {
+  "tipo" : "Oferta",
+  "idAlojamiento" : "1ff18b72-3bbb-4953-9aec-3fb0f7c1a101",
+  "porcentajeDescuento" : 50.0,
+  "descripcionOferta" : "Dia del niño",
+  "fechaInicio" : "2025-05-21",
+  "fechaFin" : "2025-07-12"
 } ]

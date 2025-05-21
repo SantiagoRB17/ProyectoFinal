@@ -1,8 +1,8 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import com.dlsc.gemsfx.ResizableTextArea;
 import com.jfoenix.controls.JFXButton;
@@ -11,18 +11,23 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import lombok.Setter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DetalleHotelesViewController implements Initializable {
+public class DetalleHotelesOfertaViewController implements Initializable {
 
     @FXML
-    private JFXButton btnAnadirReserva;
+    private JFXButton btnLimpiarSeleccion;
 
     @FXML
     private TableColumn<ProductoHabitacion, Integer> clCantidadHuespedesHabitacionHotelDetalle;
@@ -34,23 +39,28 @@ public class DetalleHotelesViewController implements Initializable {
     private TableColumn<ProductoHabitacion, Double> clPrecioHabitacionHotelDetalle;
 
     @FXML
-    private DatePicker datePickerLLegada;
-
-
-    @FXML
-    private JFXButton btnLimpiarSeleccion;
-
-    @FXML
-    private DatePicker datePickerSalida;
-
-    @FXML
-    private GridPane gridPaneFormularioReserva;
-
-    @FXML
     private GridPane gridPaneInformacionAlojamiento;
 
     @FXML
+    private GridPane gridPaneInformacionOferta;
+
+    @FXML
     private ImageView imgViewFotoHotel;
+
+    @FXML
+    private Label lblCantidadDeHuespedes;
+
+    @FXML
+    private Label lblCiudad;
+
+    @FXML
+    private Label lblEsloganOferta;
+
+    @FXML
+    private Label lblNombre;
+
+    @FXML
+    private Label lblPrecio;
 
     @FXML
     private Label lblResenas;
@@ -68,16 +78,31 @@ public class DetalleHotelesViewController implements Initializable {
     private ListView<String> listViewServiciosHotel;
 
     @FXML
+    private VBox oferta;
+
+    @FXML
     private TableView<ProductoHabitacion> tbHabitacionesDetalleAlojamiento;
 
     @FXML
     private ResizableTextArea txtAreaDescripcion;
 
     @FXML
+    private ResizableTextArea txtAreaDescripcionOferta;
+
+    @FXML
+    private TextField txtFielDescuento;
+
+    @FXML
     private TextField txtFieldCapacidadHuespedesHabitacion;
 
     @FXML
     private TextField txtFieldCiudadHotel;
+
+    @FXML
+    private TextField txtFieldFinOferta;
+
+    @FXML
+    private TextField txtFieldInicioOferta;
 
     @FXML
     private TextField txtFieldNombreHotel;
@@ -88,31 +113,17 @@ public class DetalleHotelesViewController implements Initializable {
     @FXML
     private TextField txtFieldValoracionHotel;
 
-    @FXML
-    private Label lblCantidadDeHuespedes;
-
-    @FXML
-    private TextField txtFieldCantidadHuespedes;
-
-    @FXML
-    private Label lblNombre;
-
-    @FXML
-    private Label lblCiudad;
-
-    @FXML
-    private Label lblPrecio;
 
     private ProductoHabitacion habitacionSeleccionada;
-    private final Sesion sesion= Sesion.getInstancia();
-    private final VentanaController ventanaController=VentanaController.getInstancia();
     @Setter
     private ProductoHotel hotelObservable;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clNumeroHabitacionHotelDetalle.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getNumeroHabitacion()));
         clPrecioHabitacionHotelDetalle.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
         clCantidadHuespedesHabitacionHotelDetalle.setCellValueFactory(cellData->new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
+
 
         tbHabitacionesDetalleAlojamiento.setOnMouseClicked(mouseEvent -> {
             habitacionSeleccionada=tbHabitacionesDetalleAlojamiento.getSelectionModel().getSelectedItem();
@@ -143,37 +154,10 @@ public class DetalleHotelesViewController implements Initializable {
 
     }
 
-    public void limpiarSeleccion(ActionEvent event){
-        limpiarSeleccionHabitacion();
-    }
-
-    private void limpiarSeleccionHabitacion(){
-            lblNombre.setText("Nombre");
-            txtFieldNombreHotel.setText(hotelObservable.getNombre());
-            lblCiudad.setVisible(true);
-            lblCiudad.setManaged(true);
-            txtFieldCiudadHotel.setVisible(true);
-            txtFieldCiudadHotel.setManaged(true);
-            txtAreaDescripcion.setText(hotelObservable.getDescripcion());
-            lblPrecio.setVisible(false);
-            lblPrecio.setManaged(false);
-            txtFieldPrecioHabitacion.setVisible(false);
-            txtFieldPrecioHabitacion.setManaged(false);
-            lblCantidadDeHuespedes.setVisible(false);
-            lblCantidadDeHuespedes.setManaged(false);
-            txtFieldCapacidadHuespedesHabitacion.setVisible(false);
-            try{
-                imgViewFotoHotel.setImage(RepositorioImagenes.cargarImagen(hotelObservable.getRutaFoto()));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            habitacionSeleccionada=null;
-    }
-
-    public void cargarDatosHotel(ProductoHotel hotel){
-        txtFieldNombreHotel.setText(hotel.getNombre());
-        txtFieldCiudadHotel.setText(hotel.getCiudad());
-        txtAreaDescripcion.setText(hotel.getDescripcion());
+    public void cargarDatosHotel(ProductoHotel hotelObservable,Oferta ofertaObservable){
+        txtFieldNombreHotel.setText(hotelObservable.getNombre());
+        txtFieldCiudadHotel.setText(hotelObservable.getCiudad());
+        txtAreaDescripcion.setText(hotelObservable.getDescripcion());
         lblPrecio.setVisible(false);
         lblPrecio.setManaged(false);
         txtFieldPrecioHabitacion.setVisible(false);
@@ -181,39 +165,48 @@ public class DetalleHotelesViewController implements Initializable {
         lblCantidadDeHuespedes.setVisible(false);
         lblCantidadDeHuespedes.setManaged(false);
         txtFieldCapacidadHuespedesHabitacion.setVisible(false);
-        listViewServiciosHotel.setItems(FXCollections.observableArrayList(hotel.getServicios()));
-        txtFieldValoracionHotel.setText(String.valueOf(hotel.getValoracion()));
+        listViewServiciosHotel.setItems(FXCollections.observableArrayList(hotelObservable.getServicios()));
+        txtFieldValoracionHotel.setText(String.valueOf(hotelObservable.getValoracion()));
         try{
-            imgViewFotoHotel.setImage(RepositorioImagenes.cargarImagen(hotel.getRutaFoto()));
+            imgViewFotoHotel.setImage(RepositorioImagenes.cargarImagen(hotelObservable.getRutaFoto()));
         }catch (Exception e){
             e.printStackTrace();
         }
-        tbHabitacionesDetalleAlojamiento.setItems(FXCollections.observableArrayList(hotel.getHabitaciones()));
+        tbHabitacionesDetalleAlojamiento.setItems(FXCollections.observableArrayList(hotelObservable.getHabitaciones()));
         habitacionSeleccionada=null;
-        listViewResenasHotel.setItems(FXCollections.observableArrayList(hotel.getResenas()));
+        listViewResenasHotel.setItems(FXCollections.observableArrayList(hotelObservable.getResenas()));
+
+        txtFielDescuento.setText(String.valueOf(ofertaObservable.getPorcentajeDescuento()));
+        txtAreaDescripcionOferta.setText(ofertaObservable.getDescripcionOferta());
+        txtFieldInicioOferta.setText(ofertaObservable.getFechaInicio().toString());
+        txtFieldFinOferta.setText(ofertaObservable.getFechaFin().toString());
     }
 
-    public void crearReserva(ActionEvent event) {
-        if(sesion.getPersona()==null){
-            ventanaController.mostrarAlerta("Debe inciar sesion para poder reservar", Alert.AlertType.ERROR);
-            return;
+    public void limpiarSeleccion(ActionEvent event){
+        limpiarSeleccionHabitacion();
+    }
+
+    private void limpiarSeleccionHabitacion(){
+        lblNombre.setText("Nombre");
+        txtFieldNombreHotel.setText(hotelObservable.getNombre());
+        lblCiudad.setVisible(true);
+        lblCiudad.setManaged(true);
+        txtFieldCiudadHotel.setVisible(true);
+        txtFieldCiudadHotel.setManaged(true);
+        txtAreaDescripcion.setText(hotelObservable.getDescripcion());
+        lblPrecio.setVisible(false);
+        lblPrecio.setManaged(false);
+        txtFieldPrecioHabitacion.setVisible(false);
+        txtFieldPrecioHabitacion.setManaged(false);
+        lblCantidadDeHuespedes.setVisible(false);
+        lblCantidadDeHuespedes.setManaged(false);
+        txtFieldCapacidadHuespedesHabitacion.setVisible(false);
+        try{
+            imgViewFotoHotel.setImage(RepositorioImagenes.cargarImagen(hotelObservable.getRutaFoto()));
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        if(habitacionSeleccionada == null){
-            ventanaController.mostrarAlerta("Debe seleccionar una habitacion para poder reservar", Alert.AlertType.ERROR);
-            return;
-        }
-        else{
-            try{
-                ventanaController.getPlataforma().crearReservaHoteles(sesion.getPersona().getCedula(),hotelObservable,
-                        habitacionSeleccionada,
-                        datePickerLLegada.getValue(),datePickerSalida.getValue(),
-                        Integer.parseInt(txtFieldCantidadHuespedes.getText()));
-                ventanaController.mostrarAlerta("Exito, revisa tus reservas para completar el proceso",
-                        Alert.AlertType.INFORMATION);
-            }catch (Exception e){
-                ventanaController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
-            }
-        }
+        habitacionSeleccionada=null;
     }
 }
 

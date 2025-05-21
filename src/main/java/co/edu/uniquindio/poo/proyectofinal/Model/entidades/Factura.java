@@ -14,7 +14,8 @@ public class Factura {
     private UUID idFactura=UUID.randomUUID();
     private double subtotal;
     private double total;
-    UUID idReserva;
+    private double descuento;
+    private UUID idReserva;
     @Builder.Default
     private LocalDateTime fechaEmision=LocalDateTime.now();
 }

@@ -217,10 +217,12 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
 
         Persona cliente = servicioPersonas.recuperarPersona(reserva.getCedulaCliente());
 
-        servicioBilleteras.realizarPago(servicioReserva.calcularCostoReserva(idReserva,habitacion,alojamiento),
-                cliente.getNumeroBilletera());
+        double descuentoAplicado=calcularPorcentajeDescuentoAplicable(alojamiento,reserva.getFechaInicio(),reserva.getFechaFin());
+        float monto=servicioReserva.calcularCostoReserva(idReserva,habitacion,alojamiento,descuentoAplicado);
 
-        servicioReserva.generarFactura(idReserva, habitacion, alojamiento);
+        servicioBilleteras.realizarPago(monto, cliente.getNumeroBilletera());
+
+        servicioReserva.generarFactura(idReserva, habitacion, alojamiento,descuentoAplicado);
 
         servicioReserva.pagarReserva(idReserva);
 
@@ -230,5 +232,10 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     @Override
     public Factura recuperarFactura(Reserva reserva) throws Exception{
         return servicioReserva.recuperarFacturaReservaPorId(reserva.getIdFactura());
+    }
+
+    public double calcularPorcentajeDescuentoAplicable(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin)
+            throws Exception{
+        return servicioOfertas.calcularPorcentajeDescuentoAplicable(alojamiento,fechaInicio,fechaFin);
     }
 }
