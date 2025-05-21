@@ -38,7 +38,7 @@ public class RecargarBilleteraViewController {
             String numeroBilletera=sesion.getPersona().getNumeroBilletera();
             ventanasController.getPlataforma().recargarBilletera(monto, numeroBilletera);
 
-            VentanaController.getInstancia().mostrarAlerta("Se recargaron los saldos correctamente", Alert.AlertType.INFORMATION);
+            VentanaController.getInstancia().mostrarAlerta("Saldo recargado correctamente", Alert.AlertType.INFORMATION);
             txtSaldoMontoRecarga.clear();
         }catch (Exception e) {
             e.printStackTrace();

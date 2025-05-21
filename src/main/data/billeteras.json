@@ -5,9 +5,9 @@
 }, {
   "numero" : "1230987456",
   "saldo" : 0.0,
-  "cedulaUsuario" : null
+  "cedulaUsuario" : "474849"
 }, {
   "numero" : "3716651780",
-  "saldo" : 30000.0,
+  "saldo" : 4586324.0,
   "cedulaUsuario" : "1097890"
 } ]

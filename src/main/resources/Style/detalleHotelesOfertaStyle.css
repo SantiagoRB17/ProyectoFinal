@@ -1,0 +1,128 @@
+.root{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #FBA518, #E16A54);
+}
+#lblSaludoDetalles{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+#lblEsloganOferta{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+#lblResenas{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+#lblSaludoReservaDetalles{
+    -fx-font-family: "Satoshi-Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+#gridPaneInformacionAlojamiento .label{
+    -fx-font-family: "Satoshi-Variable";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+#gridPaneInformacionAlojamiento{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #88304E, #522546);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+#gridPaneFormularioReserva .label{
+    -fx-font-family: "Satoshi-Variable";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 17px;
+}
+#gridPaneFormularioReserva{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #88304E, #522546);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+#btnAnadirReserva{
+    -fx-font-family: "Satoshi-Variable";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8;
+    -fx-border-color: black;
+    -fx-font-size: 18px;
+    -fx-background-color: #2C2C2C;
+    -fx-background-radius: 8;
+}
+#gridPaneInformacionOferta{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #88304E, #522546);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+#gridPaneInformacionOferta .label{
+    -fx-font-family: "Satoshi-Variable";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 17px;
+}
+.table-view .table-cell {
+    -fx-text-fill: white;
+}
+#tbHabitacionesDetalleAlojamiento{
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #88304E, #522546);
+    -fx-border-radius: 8px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+}
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #88304E, #522546);
+    -fx-text-fill: white;
+}
+
+.table-row-cell {
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+.table-row-cell:odd {
+    -fx-background-color: #88304E;
+    -fx-text-fill: white;
+}
+
+
+.table-row-cell:even {
+    -fx-background-color: #522546;
+    -fx-text-fill: white;
+}
+.table-view .label {
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+.table-row-cell:selected {
+    -fx-background-color: #FBA518;
+    -fx-text-fill: white;
+}
+#btnLimpiarSeleccion{
+    -fx-background-color: #E52020;
+    -fx-background-radius: 12;
+    -fx-font-family: 'Satoshi-Bold';
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-border-width: 1px;
+    -fx-border-color: #E52020;
+    -fx-border-radius: 10;
+}
+#btnLimpiarSeleccion:hover{
+    -fx-translate-x: 1.1;
+    -fx-translate-y: 1.1;
+}
+@font-face {
+    font-family: 'Satoshi-Bold';
+    src: url('/Fonts/Satoshi-Bold.otf');
+}
+@font-face {
+    font-family: 'Satoshi-Variable';
+    src: url('/Fonts/Satoshi-Variable.ttf');
+}

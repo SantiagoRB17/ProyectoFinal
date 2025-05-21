@@ -10,6 +10,7 @@ module co.edu.uniquindio.poo.proyectofinal {
     requires org.simplejavamail;
     requires com.dlsc.gemsfx;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires java.desktop;
 
 
     opens co.edu.uniquindio.poo.proyectofinal.Model.entidades to com.fasterxml.jackson.databind;

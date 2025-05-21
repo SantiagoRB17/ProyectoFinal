@@ -73,7 +73,7 @@ public class ServicioBilleteras {
             throw new Exception("No hay saldo suficiente en la billetera");
         }else{
             billetera.setSaldo(billetera.getSaldo() - monto);
-            repositorioBilleteras.agregarBilletera(billetera);
+            repositorioBilleteras.actualizarBilletera(billetera);
         }
     }
 

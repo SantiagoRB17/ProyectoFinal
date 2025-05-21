@@ -149,6 +149,7 @@ public class RepositorioAlojamientos {
         }
         return new ArrayList<>();
     }
+
     /**
      * Metodo que elimina un alojamiento buscando por su UUID.
      * Si se encuentra, se borra y se guarda el cambio
@@ -190,6 +191,27 @@ public class RepositorioAlojamientos {
         }
         alojamientoAEliminar.setActivo(false);
         guardarAlojamiento();
+    }
+
+    /**
+     * Recupera una habitación a partir de su id, recorriendo todos los hoteles y sus habitaciones.
+     * @param idHabitacion UUID de la habitación a buscar
+     * @return la instancia de ProductoHabitacion o null si no la encuentra
+     */
+    public ProductoHabitacion obtenerHabitacionPorId(UUID idHabitacion) {
+        if(idHabitacion==null){
+            return null;
+        }
+        for (Alojamiento alojamiento : alojamientos) {
+            if (alojamiento instanceof ProductoHotel productoHotel) {
+                for (ProductoHabitacion habitacion : productoHotel.getHabitaciones()) {
+                    if (habitacion.getId().equals(idHabitacion) && habitacion.isActivo()) {
+                        return habitacion;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 }

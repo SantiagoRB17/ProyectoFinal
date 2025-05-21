@@ -11,7 +11,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-    <HBox fx:id="hboxContenedorPrincipal" alignment="CENTER" maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" stylesheets="@Style/servicioAlojamientosViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.CasaApartamentoViewController">
+<HBox fx:id="hboxContenedorPrincipal" alignment="CENTER" maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" stylesheets="@Style/servicioAlojamientosViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.CasaApartamentoViewController">
         <ScrollPane fx:id="scrollPaneContenedorFormulario" hbarPolicy="NEVER" vbarPolicy="ALWAYS">
             <VBox fx:id="vboxContenedorFormulario" maxHeight="Infinity" spacing="10.0" style="-fx-padding: 20px" HBox.hgrow="ALWAYS">
                 <MenuButton fx:id="menButtonOpciones" alignment="TOP_LEFT" mnemonicParsing="false" text="¿Que desea hacer?">
@@ -81,11 +80,6 @@
             </VBox>
         </ScrollPane>
         <VBox fx:id="vboxContenedorTablaFiltro" spacing="5.0" HBox.hgrow="ALWAYS">
-            <HBox fx:id="hboxContenedorFiltros" alignment="CENTER" spacing="20.0">
-                <ComboBox fx:id="cmbBoxFiltroOpciones" prefWidth="150.0" />
-                <TextField fx:id="txtFieldFiltro" />
-                <JFXButton fx:id="btnRefrescar" onAction="#refrescarTabla" text="Refrescar" />
-            </HBox>
             <TableView fx:id="tbAlojamientos" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="clTipoAlojamiento" prefWidth="75.0" text="Tipo" />

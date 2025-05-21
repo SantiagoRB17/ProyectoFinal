@@ -72,11 +72,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     private JFXButton btnEliminarServicio;
 
     @FXML
-    private JFXButton btnRefrescar;
-
-
-
-    @FXML
     private TableColumn<Alojamiento, Integer> clCantidadHuespedes;
 
 
@@ -97,9 +92,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     private TableColumn<Alojamiento, Double> clPrecio;
 
     @FXML
-    private ComboBox<?> cmbBoxFiltroOpciones;
-
-    @FXML
     private SearchableComboBox<String> cmbBoxListaServicios;
 
     @FXML
@@ -108,8 +100,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     @FXML
     private GridPane gridPaneFormulario;
 
-    @FXML
-    private HBox hboxContenedorFiltros;
 
     @FXML
     private HBox hboxContenedorPrincipal;
@@ -140,11 +130,6 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     @FXML
     private TextField txtFieldCostoExtra;
 
-
-    @FXML
-    private TextField txtFieldFiltro;
-
-
     @FXML
     private TextField txtFieldNombre;
 
@@ -166,25 +151,20 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
 
     private File fotoSeleccionada;
 
-    @FXML
-    void refrescarTabla(ActionEvent event) {
-
-    }
 
     private final Image imagenAlojamientoPorDefecto=new Image(Objects.requireNonNull(getClass()
             .getResourceAsStream("/imagenes/imagenAlojamientoPorDefecto.png")));
     private ObservableList<String> serviciosDisponibles;
     private final VentanaController ventanasController= VentanaController.getInstancia();
     private Alojamiento alojamientoSeleccionado;
-    Sesion sesion=Sesion.getInstancia();
+    private Sesion sesion=Sesion.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);
         // Configuración de columnas de la tabla de casas y apartamentos
         clTipoAlojamiento.setCellValueFactory(cellData -> {
             Alojamiento alojamiento = cellData.getValue();
-            String tipo = "";
-
+            String tipo;
             if (alojamiento instanceof ProductoCasa) {
                 tipo = "Casa";
             } else if (alojamiento instanceof ProductoApartamento) {
@@ -380,37 +360,38 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
      * @param event
      */
     public void editarAlojamiento(ActionEvent event) {
-        try{
+        try {
+            if (alojamientoSeleccionado == null) {
+                ventanasController.mostrarAlerta("Seleccione un alojamiento", Alert.AlertType.ERROR);
+                return;
+            }
             ArrayList<String> serviciosActualizados = new ArrayList<>(serviciosDisponibles);
 
-            String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
-            String rutaFotoGuardada = new File(rutaRelativa).getName();
-
             String rutaFoto;
-            if (fotoSeleccionada != null && !rutaFotoGuardada.equals(alojamientoSeleccionado.getRutaFoto())) {
-                ventanasController.getPlataforma().eliminarImagen(alojamientoSeleccionado.getRutaFoto());
+            if (fotoSeleccionada != null) {
+                String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
+                String rutaFotoGuardada = new File(rutaRelativa).getName();
+                if (!rutaFotoGuardada.equals(alojamientoSeleccionado.getRutaFoto())) {
+                    // Eliminas la anterior
+                    ventanasController.getPlataforma().eliminarImagen(alojamientoSeleccionado.getRutaFoto());
+                }
                 rutaFoto = rutaFotoGuardada;
             } else {
-                ventanasController.getPlataforma().eliminarImagen(alojamientoSeleccionado.getRutaFoto());
                 rutaFoto = alojamientoSeleccionado.getRutaFoto();
             }
-            if(alojamientoSeleccionado == null){
-                ventanasController.mostrarAlerta("Seleccione un alojamiento",Alert.AlertType.ERROR);
-            }else{
-                ventanasController.getPlataforma().editarAlojamiento(alojamientoSeleccionado.getId()
-                        , txtFieldNombre.getText()
-                        , txtFieldCiudad.getText()
-                        , txtAreaDescripcion.getText()
-                        , rutaFoto
-                        , Double.parseDouble(txtFieldPrecio.getText())
-                        , serviciosActualizados
-                        , Integer.parseInt(txtFieldCantidadHuespedes.getText())
-                        , Double.parseDouble(txtFieldCostoExtra.getText()));
-                limpiarCampos();
-                ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
-            }
 
-        }catch (Exception e){
+            ventanasController.getPlataforma().editarAlojamiento(alojamientoSeleccionado.getId()
+                    , txtFieldNombre.getText()
+                    , txtFieldCiudad.getText()
+                    , txtAreaDescripcion.getText()
+                    , rutaFoto
+                    , Double.parseDouble(txtFieldPrecio.getText())
+                    , serviciosActualizados
+                    , Integer.parseInt(txtFieldCantidadHuespedes.getText())
+                    , Double.parseDouble(txtFieldCostoExtra.getText()));
+            limpiarCampos();
+            ventanasController.mostrarAlerta("Alojamiento editado con exito", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -472,11 +453,16 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
         return false;
     }
 
+    /**
+     * Metodo que permite cerrar la sesion del administrador actual.
+     *
+     * @param event
+     */
     public void cerrarSesion(ActionEvent event) {
         sesion.cerrarSesion();
-        try{
-            ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
-        }catch (Exception e){
+        try {
+            ventanasController.navegarVentanas("/InicioView.fxml", "Inicio", true, true);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

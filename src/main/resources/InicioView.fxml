@@ -25,7 +25,7 @@
       <HBox fx:id="hboxUsuarioLogeado">
          <MenuButton fx:id="menItemOpcionesUsuario" alignment="CENTER" maxWidth="Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40" prefWidth="120" text="Opciones" HBox.hgrow="ALWAYS">
             <items>
-               <MenuItem mnemonicParsing="false" text="Reservas" />
+               <MenuItem fx:id="menItemReservas" mnemonicParsing="false" onAction="#irAReservas" text="Reservas" />
                <MenuItem fx:id="menItemEditarPerfil" mnemonicParsing="false" onAction="#irAEditarPerfil" text="Editar Perfil" />
                <MenuItem fx:id="menItemBilletera" mnemonicParsing="false" onAction="#abrirBilletera" text="Billetera" />
                <MenuItem fx:id="menItemCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />

@@ -77,12 +77,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     private JFXButton btnLimpiarCamposHotel;
 
 
-    @FXML
-    private JFXButton btnRefrescartablaHabitacion;
-
-    @FXML
-    private JFXButton btnRefrescartablaHotel;
-
 
     @FXML
     private TableColumn<ProductoHabitacion, Integer> clCantidadHuespedesHabitacionHotel;
@@ -112,12 +106,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     private TableColumn<ProductoHabitacion, Double> clPrecioHabitacionHotel;
 
 
-    @FXML
-    private ComboBox<?> cmbBoxFiltroOpcionesHabitaciones;
-
-    @FXML
-    private ComboBox<?> cmbBoxFiltroOpcionesHotel;
-
 
     @FXML
     private SearchableComboBox<String> cmbBoxListaServiciosHotel;
@@ -125,13 +113,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
     @FXML
     private GridPane gridPaneFormularioHoteles;
-
-
-    @FXML
-    private HBox hboxContenedorFiltrosHabitaciones;
-
-    @FXML
-    private HBox hboxContenedorFiltrosHotel;
 
 
     @FXML
@@ -145,9 +126,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     @FXML
     private MenuItem menItemCerrarSesionHotel;
 
-
-    @FXML
-    private MenuItem menItemGuardarHotel;
 
 
     @FXML
@@ -169,12 +147,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     private TextField txtFieldNumeroHabitaciones;
 
 
-    @FXML
-    private TextField txtFieldFiltroHabitaciones;
-
-    @FXML
-    private TextField txtFieldFiltroHotel;
-
 
     @FXML
     private TextField txtFieldNombreHotel;
@@ -190,21 +162,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
     private File fotoSeleccionada;
 
-
-    @FXML
-    void editarHotel(ActionEvent event) {
-
-    }
-
-    @FXML
-    void refrescarTablaHabitacion(ActionEvent event) {
-
-    }
-
-    @FXML
-    void refrescarTablaHotel(ActionEvent event) {
-
-    }
 
 
     private final Image imagenAlojamientoPorDefecto=new Image(Objects.requireNonNull(getClass()
@@ -386,6 +343,39 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
         }
     }
 
+    public void editarHotel(ActionEvent event) {
+        try {
+            if(hotelSeleccionado == null){
+                ventanasController.mostrarAlerta("Seleccione un Hotel",Alert.AlertType.ERROR);
+                return;
+            }
+            ArrayList<String> serviciosActualizados = new ArrayList<>(serviciosDisponiblesHotel);
+
+            String rutaFoto;
+            if (fotoSeleccionada != null) {
+                String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
+                String rutaFotoGuardada = new File(rutaRelativa).getName();
+                if (!rutaFotoGuardada.equals(hotelSeleccionado.getRutaFoto())) {
+                    ventanasController.getPlataforma().eliminarImagen(hotelSeleccionado.getRutaFoto());
+                }
+                rutaFoto = rutaFotoGuardada;
+            } else {
+                rutaFoto = hotelSeleccionado.getRutaFoto();
+            }
+
+            ventanasController.getPlataforma().editarHotel(hotelSeleccionado.getId()
+                    , txtFieldNombreHotel.getText()
+                    , txtFieldCiudadHotel.getText()
+                    , txtAreaDescripcionHotel.getText()
+                    , rutaFoto
+                    , serviciosActualizados);
+            limpiarCamposHotel();
+            ventanasController.mostrarAlerta("Hotel editado con exito", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
     /**
      * Metodo que abre una nueva ventana para la edición de habitaciónes.
      */
@@ -468,6 +458,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
             tbHabitaciones.getItems().clear();
         }
         fotoSeleccionada = null;
+        hotelSeleccionado=null;
     }
 
     /**

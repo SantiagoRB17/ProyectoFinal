@@ -3,9 +3,7 @@ package co.edu.uniquindio.poo.proyectofinal.Servicios;
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 
@@ -21,6 +19,7 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     private final ServicioPersonas servicioPersonas=new ServicioPersonas();
     private final List<AlojamientosObserver> observadores=new ArrayList<>();
     private final ServicioBilleteras servicioBilleteras=new ServicioBilleteras();
+    private final ServicioReservas servicioReserva=new ServicioReservas();
 
     public void registrarObservador(AlojamientosObserver observador){
         observadores.add(observador);
@@ -121,8 +120,9 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios, double costoExtra) {
-
+    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios) throws Exception{
+        servicioAlojamientos.editarHotel(id,nombre,ciudad,descripcion,rutaFoto,servicios);
+        notificarObservadores();
     }
 
     @Override
@@ -132,10 +132,25 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
+    public ProductoHabitacion crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion
             , String descripcion) throws Exception {
-        servicioAlojamientos.crearHabitacion(hotel,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
+        return servicioAlojamientos.crearHabitacion(hotel,numeroHabitacion,precio,capacidad,rutaImagenHabitacion,descripcion);
+    }
+
+    @Override
+    public void asignarHabitaciones(List<ProductoHabitacion> habitaciones,UUID idHotel) throws Exception{
+        servicioAlojamientos.asignarHabitaciones(habitaciones,idHotel);
         notificarObservadores();
+    }
+
+    @Override
+    public List<ProductoHabitacion> recuperarHabitaciones(UUID id){
+        return servicioAlojamientos.recuperarHabitaciones(id);
+    }
+
+    @Override
+    public ProductoHabitacion obtenerHabitacionPorId(UUID idHabitacion){
+        return servicioAlojamientos.obtenerHabitacionPorId(idHabitacion);
     }
 
     @Override
@@ -165,6 +180,77 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
         servicioOfertas.eliminarOferta(id);
         notificarObservadores();
     }
+    @Override
+    public void crearReserva(String cedulaCliente,UUID idAlojamiento,LocalDate fechaInicio,LocalDate fechaFin,
+                      int numeroHuespedes) throws Exception{
+        Alojamiento alojamiento=servicioAlojamientos.obtenerPorId(idAlojamiento);
+        servicioReserva.crearReserva(cedulaCliente,alojamiento,fechaInicio,fechaFin,numeroHuespedes);
+    }
+    @Override
+    public void crearReservaHoteles(String cedulaCliente, Alojamiento alojamiento, ProductoHabitacion habitacion, LocalDate fechaInicio, LocalDate fechaFin,
+                                    int numeroHuespedes) throws Exception{
+        Alojamiento alojamientoHotel=servicioAlojamientos.obtenerPorId(alojamiento.getId());
+        ProductoHabitacion habitacionHotel=servicioAlojamientos.obtenerHabitacionPorId(habitacion.getId());
+        servicioReserva.crearReservaHoteles(cedulaCliente,alojamientoHotel,habitacionHotel,fechaInicio,fechaFin,numeroHuespedes);
+    }
+
+    @Override
+    public void cancelarReserva(UUID idReserva) throws Exception{
+        servicioReserva.cancelarReserva(idReserva);
+        notificarObservadores();
+    }
+
+    @Override
+    public List<Reserva> recuperarReservasUsuario(String cedula) throws Exception{
+        return servicioReserva.recuperarReservasUsuario(cedula);
+    }
+
+    @Override
+    public void pagarReserva(UUID idReserva) throws Exception{
+        Reserva reserva = servicioReserva.recuperarReservaPorId(idReserva);
+
+        ProductoHabitacion habitacion=servicioAlojamientos.obtenerHabitacionPorId(reserva.getIdHabitacion());
 
 
+        Alojamiento alojamiento=servicioAlojamientos.obtenerPorId(reserva.getIdAlojamiento());
+
+
+        Persona cliente = servicioPersonas.recuperarPersona(reserva.getCedulaCliente());
+
+        servicioReserva.verificarVigencia(idReserva);
+
+        double descuentoAplicado=calcularPorcentajeDescuentoAplicable(alojamiento,reserva.getFechaInicio(),reserva.getFechaFin());
+        float monto=servicioReserva.calcularCostoReserva(idReserva,habitacion,alojamiento,descuentoAplicado);
+
+        servicioBilleteras.realizarPago(monto, cliente.getNumeroBilletera());
+
+        servicioReserva.generarFactura(idReserva, habitacion, alojamiento,descuentoAplicado);
+
+        servicioReserva.pagarReserva(idReserva);
+
+        notificarObservadores();
+
+    }
+    @Override
+    public Factura recuperarFactura(Reserva reserva) throws Exception{
+        return servicioReserva.recuperarFacturaReservaPorId(reserva.getIdFactura());
+    }
+
+    @Override
+    public double calcularPorcentajeDescuentoAplicable(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin)
+            throws Exception{
+        return servicioOfertas.calcularPorcentajeDescuentoAplicable(alojamiento,fechaInicio,fechaFin);
+    }
+
+    @Override
+    public void verificarEstadoReservaCompletado(UUID idReserva) throws Exception{
+        servicioReserva.verificarEstadoReservaCompletado(idReserva);
+    }
+
+    @Override
+    public void anadirResena(UUID idReserva, int valoracion, String resena, UUID idAlojamiento) throws Exception{
+        verificarEstadoReservaCompletado(idReserva);
+        servicioAlojamientos.anadirResena(valoracion,resena,idAlojamiento);
+        notificarObservadores();
+    }
 }

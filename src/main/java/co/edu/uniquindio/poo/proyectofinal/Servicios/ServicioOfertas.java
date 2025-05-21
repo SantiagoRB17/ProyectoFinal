@@ -32,6 +32,22 @@ public class ServicioOfertas {
         repositorioOfertas.agregarOferta(oferta);
     }
 
+    public double calcularPorcentajeDescuentoAplicable(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin)
+    throws Exception{
+        // Simulación: Obtén las ofertas del alojamiento desde algún repositorio o lista.
+        List<Oferta> ofertas = repositorioOfertas.listarOfertasAlojamiento(alojamiento.getId());
+
+        double totalDescuento = 0.0;
+        for (Oferta oferta : ofertas) {
+            if (!(fechaFin.isBefore(oferta.getFechaInicio()) || fechaInicio.isAfter(oferta.getFechaFin()))) {
+                totalDescuento += oferta.getPorcentajeDescuento();
+            }
+        }
+        return totalDescuento;
+    }
+
+
+
     public List<Oferta> listarOfertas(){
 
         return repositorioOfertas.getOfertas();

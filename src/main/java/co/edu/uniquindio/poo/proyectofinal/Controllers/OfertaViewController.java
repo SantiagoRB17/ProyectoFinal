@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
@@ -48,11 +49,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private JFXButton btnLimpiarOferta;
 
-    @FXML
-    private JFXButton btnRefrescartablaAlojamientosEnOfertas;
-
-    @FXML
-    private JFXButton btnRefrescartablaOfertas;
 
     @FXML
     private TableColumn<Alojamiento, Integer> clCantidadHuespedesAlojamientoEnOfertas;
@@ -81,11 +77,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private TableColumn<Oferta, LocalDate> clfinDescuento;
 
-    @FXML
-    private ComboBox<?> cmbBoxFiltroOpcionesAlojamientosEnOfertas;
-
-    @FXML
-    private ComboBox<?> cmbBoxFiltroOpcionesOfertas;
 
     @FXML
     private DatePicker datePickerFinOferta;
@@ -96,11 +87,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private GridPane gridPaneFormularioOfertas;
 
-    @FXML
-    private HBox hboxContenedorFiltrosAlojamientos;
-
-    @FXML
-    private HBox hboxContenedorFiltrosAlojamientosEnOfertas;
 
     @FXML
     private MenuButton menButtonOpcionesOferta;
@@ -108,8 +94,6 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private MenuItem menItemCerrarSesionOferta;
 
-    @FXML
-    private MenuItem menItemGuardarOferta;
 
     @FXML
     private TableView<Alojamiento> tbAlojamientosEnOfertas;
@@ -121,35 +105,17 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     @FXML
     private TextField txtFieldDescuento;
 
-    @FXML
-    private TextField txtFieldFiltroAlojamientosEnOfertas;
-
-    @FXML
-    private TextField txtFieldFiltroOfertas;
-
-    @FXML
-    void cerrarSesion(ActionEvent event) {
-
-    }
 
     @FXML
     void editarOferta(ActionEvent event) {
 
     }
 
-    @FXML
-    void refrescarTablaAlojamientosEnOfertas(ActionEvent event) {
-
-    }
-
-    @FXML
-    void refrescarTablaOfertas(ActionEvent event) {
-
-    }
 
     private final VentanaController ventanasController= VentanaController.getInstancia();
     private Oferta ofertaSeleccionado;
     private Alojamiento alojamientoSeleccionado;
+    private final Sesion sesion= Sesion.getInstancia();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);
@@ -322,6 +288,19 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
     public void actualizar() {
         cargarDatosAlojamientoEnOfertas();
         cargarDatosTablaOfertas();
+    }
+
+    /**
+     * Metodo que permite cerrar la sesion del administrador actual.
+     * @param event
+     */
+    public void cerrarSesion(ActionEvent event) {
+        sesion.cerrarSesion();
+        try{
+            ventanasController.navegarVentanas("/InicioView.fxml","Inicio",true,true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 

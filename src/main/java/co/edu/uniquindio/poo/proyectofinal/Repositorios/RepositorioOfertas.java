@@ -9,6 +9,7 @@ import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -61,10 +62,13 @@ public class RepositorioOfertas {
      * @return lista de alojamientos cargados
      */
     private List<Oferta> cargarOfertas() {
+        List<Oferta> todos;
         try {
             if (archivo.exists() && archivo.length() > 0) {
-                return objectMapper.readValue(archivo, new TypeReference<List<Oferta>>() {
+                todos= objectMapper.readValue(archivo, new TypeReference<List<Oferta>>() {
                 });
+                validarVigenciaOferta(todos);
+                return new ArrayList<>(todos);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,6 +85,29 @@ public class RepositorioOfertas {
                 .findFirst().orElse(null);
     }
 
+    /**
+     * Metodo que valida la vigencia de las ofertas
+     * @param ofertas todas las ofertas
+     * @return ofertas que siguen vigentes con el dia
+     * @throws Exception
+     */
+    private List<Oferta> validarVigenciaOferta(List<Oferta> ofertas) {
+        List<Oferta> ofertasVigentes = new ArrayList<>();
+        LocalDate hoy = LocalDate.now();
+        for (Oferta oferta : ofertas) {
+            if (oferta.getFechaFin().isBefore(hoy)) {
+                try {
+                    eliminarOferta(oferta.getIdAlojamiento());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                ofertasVigentes.add(oferta);
+            }
+        }
+        return ofertasVigentes;
+    }
+
 
     public void eliminarOferta(UUID idOferta) throws Exception {
         Oferta ofertaAEliminar = obtenerOfertaPorId(idOferta);
@@ -90,5 +117,12 @@ public class RepositorioOfertas {
         }else{
             throw new Exception("Oferta no encontrada");
         }
+    }
+
+    public List<Oferta> listarOfertasAlojamiento(UUID idAlojamiento) throws Exception{
+        if(idAlojamiento == null){
+            throw new Exception("Seleccione un alojamiento");
+        }
+        return ofertas.stream().filter(o -> o.getIdAlojamiento().equals(idAlojamiento)).toList();
     }
 }

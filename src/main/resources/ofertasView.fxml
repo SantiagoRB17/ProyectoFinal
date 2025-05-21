@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -52,11 +51,6 @@
         </VBox>
         <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="Alojamientos" />
-            <HBox fx:id="hboxContenedorFiltrosAlojamientosEnOfertas" alignment="CENTER" spacing="20.0">
-                <ComboBox fx:id="cmbBoxFiltroOpcionesAlojamientosEnOfertas" prefWidth="150.0" />
-                <TextField fx:id="txtFieldFiltroAlojamientosEnOfertas" />
-                <JFXButton fx:id="btnRefrescartablaAlojamientosEnOfertas" onAction="#refrescarTablaAlojamientosEnOfertas" text="Refrescar" />
-            </HBox>
             <TableView fx:id="tbAlojamientosEnOfertas" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="clNombreAlojamientoEnOfertas" prefWidth="75.0" sortable="false" text="Nombre" />
@@ -72,11 +66,6 @@
         </VBox>
         <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
             <Label text="Alojamientos en Oferta" />
-            <HBox fx:id="hboxContenedorFiltrosAlojamientos" alignment="CENTER" spacing="20.0">
-                <ComboBox fx:id="cmbBoxFiltroOpcionesOfertas" prefWidth="150.0" />
-                <TextField fx:id="txtFieldFiltroOfertas" />
-                <JFXButton fx:id="btnRefrescartablaOfertas" onAction="#refrescarTablaOfertas" text="Refrescar" />
-            </HBox>
             <TableView fx:id="tbOfertas" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="clNombreOferta" prefWidth="75.0" text="Nombre" />

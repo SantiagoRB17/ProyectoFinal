@@ -43,7 +43,7 @@ public class TarjetaAlojamientoViewController {
 
     @Getter
     @Setter
-    Alojamiento alojamientoObservable;
+    private Alojamiento alojamientoObservable;
     @FXML
     void abrirDetallesAlojamientos(ActionEvent event) {
         try {
@@ -66,6 +66,7 @@ public class TarjetaAlojamientoViewController {
                 // Obtener el controlador y pasarle el objeto alojamiento normal
                 DetalleAlojamientoViewController controller = loader.getController();
                 controller.cargarDatosAlojamiento(alojamientoObservable);
+                controller.setAlojamientoObservable(alojamientoObservable);
             }
 
 

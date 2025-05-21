@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="930.0" spacing="20.0" style="-fx-padding: 20" stylesheets="@Style/DetalleAlojamientoViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.DetalleHotelesViewController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="930.0" spacing="20.0" style="-fx-padding: 20" stylesheets="@Style/DetalleHotelesViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.DetalleHotelesViewController">
    <VBox spacing="20" HBox.hgrow="ALWAYS">
       <Label fx:id="lblSaludoDetalles" text="Tu proximo destino" />
       <GridPane fx:id="gridPaneInformacionAlojamiento" alignment="CENTER" hgap="10.0" maxWidth="Infinity" minWidth="-Infinity" vgap="10.0" HBox.hgrow="ALWAYS">
@@ -110,10 +110,10 @@
          <DatePicker fx:id="datePickerLLegada" maxWidth="Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" HBox.hgrow="ALWAYS" />
          <DatePicker fx:id="datePickerSalida" maxWidth="Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" HBox.hgrow="ALWAYS" />
          <Label text="Cantidad de Huespedes" GridPane.rowIndex="2" />
-         <TextField fx:id="datePickerCantidadHuespedes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <TextField fx:id="txtFieldCantidadHuespedes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       </GridPane>
       <HBox alignment="CENTER">
-         <JFXButton fx:id="btnAnadirReserva" text="Reservar Alojamiento" />
+         <JFXButton fx:id="btnAnadirReserva" onAction="#crearReserva" text="Reservar Alojamiento" />
       </HBox>
    </VBox>
 </HBox>

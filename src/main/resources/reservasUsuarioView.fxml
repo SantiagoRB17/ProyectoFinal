@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1000" spacing="20" style="-fx-padding: 30px" stylesheets="@Style/reservarUsuarioViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.usuarioReservasController">
+    <HBox alignment="BOTTOM_LEFT">
+        <VBox HBox.hgrow="ALWAYS">
+            <Label fx:id="lblReservas" text="Mis reservas" textFill="#333333" />
+            <Label fx:id="lblEsloganReservas" text="Gestiona tus reservas de alojamiento" textFill="#818181" />
+        </VBox>
+    </HBox>
+    <HBox spacing="10" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tbReservas" maxWidth="Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="clAlojamiento" prefWidth="250.0" text="Alojamiento" />
+                <TableColumn fx:id="clFechaEntrada" prefWidth="120.0" text="Fecha Entrada" />
+            <TableColumn fx:id="clFechaSalida" prefWidth="120.0" text="Fecha Salida" />
+            <TableColumn fx:id="clEstado" prefWidth="120.0" text="Estado" />
+            <TableColumn fx:id="clPrecio" prefWidth="100.0" text="Precio" />
+            <TableColumn fx:id="clDescuento" prefWidth="75.0" text="Descuento" />
+            </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+        </TableView>
+        <VBox alignment="CENTER" spacing="30">
+         <Region VBox.vgrow="ALWAYS" />
+            <JFXButton fx:id="btnPagar" onAction="#pagarReserva" prefHeight="40" prefWidth="120" text="Pagar" />
+            <JFXButton fx:id="btnCancelarReserva" onAction="#cancelarReserva" prefHeight="40" prefWidth="120" text="Cancelar Reserva" />
+            <JFXButton fx:id="btnResenarReserva" onAction="#resenarReserva" prefHeight="40" prefWidth="120" text="Reseñar" />
+         <Region VBox.vgrow="ALWAYS" />
+         <JFXButton fx:id="btnVolverAlInicio" onAction="#volverAlInicio" prefHeight="40" prefWidth="120" text="Volver al inicio" />
+        </VBox>
+    </HBox>
+</VBox>
