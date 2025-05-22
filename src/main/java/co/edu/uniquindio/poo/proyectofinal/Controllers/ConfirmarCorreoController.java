@@ -57,7 +57,7 @@ public class ConfirmarCorreoController {
         CodigoTemporal.setCodigo(codigo);
         CodigoTemporal.setModo("recuperacion");
 
-        servicioEnvioEmail.enviarNotificacion(correo, "Código de recuperación", "Tu código de verificación es: " + codigo);
+        servicioEnvioEmail.enviarNotificacion(correo, "Código de recuperación", "Tu código de verificación para recuperación de contraseña es: " + codigo);
         ventanasController.mostrarAlerta("Correo enviado", Alert.AlertType.INFORMATION);
 
         try{

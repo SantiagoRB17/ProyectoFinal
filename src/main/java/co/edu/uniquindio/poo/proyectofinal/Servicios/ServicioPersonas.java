@@ -111,7 +111,7 @@ public class ServicioPersonas {
         if (persona.getPassword().equals(newHashedPassword)) {
             throw new Exception("La nueva contraseña debe ser diferente a la anterior");
         }
-        persona.setPassword(newPassword);
+        persona.setPassword(newHashedPassword);
         repositorioPersonas.editarPersona(persona);
     }
 

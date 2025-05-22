@@ -117,6 +117,6 @@ public class confirmarCodigoController {
      */
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
-            ventanasController.navegarVentanas("/IniciarSesion.fxml", "Inicio de Sesión", false, false);
+            ventanasController.navegarVentanas("/IniciarSesion.fxml", "Inicio de Sesión", true, true);
     }
 }

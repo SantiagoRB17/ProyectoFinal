@@ -34,7 +34,7 @@
   "cedula" : "555555",
   "email" : "carloss@gmail.com",
   "telefono" : "31247474855",
-  "password" : "555555",
+  "password" : "af41e68e1309fa29a5044cbdc36b90a3821d8807e68c7675a6c495112bc8a55f",
   "rol" : "USUARIO",
   "cuentaActiva" : true,
   "numeroBilletera" : "6811492340"
@@ -48,4 +48,14 @@
   "rol" : "USUARIO",
   "cuentaActiva" : true,
   "numeroBilletera" : "6074648023"
+}, {
+  "nombre" : "Santiago",
+  "apellidos" : "Guevara",
+  "cedula" : "1096670377",
+  "email" : "santiguevar420@gmail.com",
+  "telefono" : "3172747021",
+  "password" : "41177165eddb7d6d754a4f8e6f9758cf06f052c1b2448bd9b5e5e292ce38ea74",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true,
+  "numeroBilletera" : "5586990524"
 } ]
