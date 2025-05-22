@@ -123,7 +123,6 @@ public class DetalleHotelesOfertaViewController implements Initializable {
         clNumeroHabitacionHotelDetalle.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getNumeroHabitacion()));
         clPrecioHabitacionHotelDetalle.setCellValueFactory(cellData-> new SimpleObjectProperty<>(cellData.getValue().getPrecio()));
         clCantidadHuespedesHabitacionHotelDetalle.setCellValueFactory(cellData->new SimpleObjectProperty<>(cellData.getValue().getCapacidad()));
-        listViewResenasHotel.setItems(FXCollections.observableArrayList(hotelObservable.getResenas()));
 
         tbHabitacionesDetalleAlojamiento.setOnMouseClicked(mouseEvent -> {
             habitacionSeleccionada=tbHabitacionesDetalleAlojamiento.getSelectionModel().getSelectedItem();
@@ -166,6 +165,7 @@ public class DetalleHotelesOfertaViewController implements Initializable {
         lblCantidadDeHuespedes.setManaged(false);
         txtFieldCapacidadHuespedesHabitacion.setVisible(false);
         listViewServiciosHotel.setItems(FXCollections.observableArrayList(hotelObservable.getServicios()));
+        listViewResenasHotel.setItems(FXCollections.observableArrayList(hotelObservable.getResenas()));
         txtFieldValoracionHotel.setText(String.valueOf(hotelObservable.getValoracion()));
         try{
             imgViewFotoHotel.setImage(RepositorioImagenes.cargarImagen(hotelObservable.getRutaFoto()));

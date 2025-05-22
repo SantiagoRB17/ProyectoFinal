@@ -20,17 +20,95 @@
   "idReserva" : "e6545179-4c31-489a-9c64-9852a8386124",
   "fechaEmision" : [ 2025, 5, 21, 10, 32, 51, 16189400 ]
 }, {
-  "idFactura" : "e7ecbfa6-044f-4644-8cc7-604e4fb8eafc",
-  "subtotal" : 25000.0,
-  "total" : 25000.0,
+  "idFactura" : "70905f24-445e-48a7-ac2c-695acdadba37",
+  "subtotal" : 67000.0,
+  "total" : 536000.0,
   "descuento" : 0.0,
-  "idReserva" : "497d26d4-1e85-4086-afdd-9d4811935da7",
-  "fechaEmision" : [ 2025, 5, 22, 13, 27, 1, 56372300 ]
+  "idReserva" : "2d328349-94ad-43d1-b223-80b6bd570f88",
+  "fechaEmision" : [ 2025, 5, 21, 17, 4, 19, 359743800 ]
 }, {
-  "idFactura" : "13e5fb21-f1f9-4d13-a4af-fdf0ad4bc2f7",
-  "subtotal" : 25000.0,
-  "total" : 25000.0,
+  "idFactura" : "c35b68d0-3f80-41b2-873c-14ce209bb50e",
+  "subtotal" : 107000.0,
+  "total" : 963000.0,
   "descuento" : 0.0,
-  "idReserva" : "497d26d4-1e85-4086-afdd-9d4811935da7",
-  "fechaEmision" : [ 2025, 5, 22, 13, 34, 33, 165806700 ]
-} ]
+  "idReserva" : "aaec88de-da75-4c8d-afb5-69304bdf128c",
+  "fechaEmision" : [ 2025, 5, 21, 19, 16, 44, 147747700 ]
+}, {
+  "idFactura": "ff368697-0b14-4101-ab3e-3f4110fb4092",
+  "subtotal": 600000,
+  "total": 600000,
+  "descuento": 0.0,
+  "idReserva": "e59752a4-afb4-4220-89f6-43c97a067243",
+  "fechaEmision": [2025, 5, 22, 3, 22, 54, 348422000]
+},
+  {
+    "idFactura": "6db65dc4-40ae-4b0a-b395-742af8caa3f2",
+    "subtotal": 165000,
+    "total": 165000,
+    "descuento": 0.0,
+    "idReserva": "5ac920dd-447d-4d19-8c1b-61ad74d93305",
+    "fechaEmision": [2025, 5, 22, 3, 22, 54, 348504000]
+  },
+  {
+    "idFactura": "2e3982fc-d3b8-465c-8be9-6b378489e0d2",
+    "subtotal": 300000,
+    "total": 300000,
+    "descuento": 0.0,
+    "idReserva": "9341d8ee-7135-4de7-8145-1b2b67de2fd1",
+    "fechaEmision": [2025, 5, 22, 3, 22, 54, 348556000]
+  },
+  {
+    "idFactura": "b15d61ce-6749-4c93-a521-7dfa630c8f0d",
+    "subtotal": 120000,
+    "total": 120000,
+    "descuento": 0.0,
+    "idReserva": "0f25080d-29c4-4797-8718-ae978f6ec9fd",
+    "fechaEmision": [2025, 5, 22, 3, 22, 54, 348701000]
+  },
+  {
+    "idFactura": "7fc2724f-9a25-4835-9af1-dce5b34fe254",
+    "subtotal": 540000,
+    "total": 540000,
+    "descuento": 0.0,
+    "idReserva": "58a9fe1c-6c82-4d13-b239-3efbea4e3463",
+    "fechaEmision": [2025, 5, 22, 3, 22, 54, 348824000]
+  },{
+  "idFactura": "8ef0bb49-b430-43ce-b745-74dbda26eb69",
+  "subtotal": 280000,
+  "total": 280000,
+  "descuento": 0.0,
+  "idReserva": "fe271b80-02cf-406f-bcb3-bee00c4de812",
+  "fechaEmision": [2025, 5, 22, 3, 25, 47, 915973000]
+},
+  {
+    "idFactura": "96b576a8-2b3e-476e-b72f-f0704e9ae4aa",
+    "subtotal": 390000,
+    "total": 390000,
+    "descuento": 0.0,
+    "idReserva": "12a1e8c1-5b5e-472a-893b-474ee6e768d1",
+    "fechaEmision": [2025, 5, 22, 3, 25, 47, 916169000]
+  },
+  {
+    "idFactura": "2508cd77-e049-4f2d-9240-738e7e3104fc",
+    "subtotal": 315000,
+    "total": 315000,
+    "descuento": 0.0,
+    "idReserva": "3ede20ba-b72a-47ed-a8fb-da02023716e5",
+    "fechaEmision": [2025, 5, 22, 3, 25, 47, 916497000]
+  },
+  {
+    "idFactura": "531b2042-0c11-4cc4-b021-0bc95ef6abb4",
+    "subtotal": 285000,
+    "total": 285000,
+    "descuento": 0.0,
+    "idReserva": "af5f36a7-87b9-423a-9061-e2a14e11af8f",
+    "fechaEmision": [2025, 5, 22, 3, 25, 47, 916657000]
+  },
+  {
+    "idFactura": "462f4d29-2f39-46f0-a921-64cb4d746d08",
+    "subtotal": 880000,
+    "total": 880000,
+    "descuento": 0.0,
+    "idReserva": "ab3fcf17-40e1-4e7a-8133-27351135f899",
+    "fechaEmision": [2025, 5, 22, 3, 25, 47, 916876000]
+  } ]

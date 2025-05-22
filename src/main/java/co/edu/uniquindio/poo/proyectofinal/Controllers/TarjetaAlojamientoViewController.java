@@ -57,8 +57,8 @@ public class TarjetaAlojamientoViewController {
 
                 // Obtener el controlador y pasarle el objeto hotel
                 DetalleHotelesViewController controller = loader.getController();
-                controller.cargarDatosHotel((ProductoHotel) alojamientoObservable);
                 controller.setHotelObservable((ProductoHotel) alojamientoObservable);
+                controller.cargarDatosHotel((ProductoHotel) alojamientoObservable);
 
             } else {
                 loader = new FXMLLoader(getClass().getResource("/DetalleAlojamientoView.fxml"));
