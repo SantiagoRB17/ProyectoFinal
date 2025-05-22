@@ -8,6 +8,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
+import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -389,6 +390,10 @@ public class ServicioAlojamientos {
         opciones.add(TipoAlojamiento.APARTAMENTO);
         opciones.add(TipoAlojamiento.CASA);
         return opciones;
+    }
+
+    public List<Alojamiento> filtrarAlojamientos(String ciudadFiltro, String nombreFiltro, TipoAlojamiento tipoFiltro, RangoPrecio rangoPrecio){
+        return repositorioAlojamientos.filtrarAlojamientos(ciudadFiltro, nombreFiltro, tipoFiltro, rangoPrecio);
     }
 
 }

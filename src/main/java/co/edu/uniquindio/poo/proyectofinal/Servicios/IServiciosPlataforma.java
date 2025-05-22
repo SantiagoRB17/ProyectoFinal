@@ -5,6 +5,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
+import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,4 +61,5 @@ public interface IServiciosPlataforma {
             throws Exception;
     void anadirResena(UUID idReserva, int valoracion, String resena, UUID idAlojamiento) throws Exception;
     void verificarEstadoReservaCompletado(UUID idReserva) throws Exception;
+    List<Alojamiento> filtrarAlojamientos(String ciudadFiltro, String nombreFiltro, TipoAlojamiento tipoFiltro, RangoPrecio rangoPrecio);
 }

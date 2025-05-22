@@ -6,6 +6,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
+import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -252,5 +253,9 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
         verificarEstadoReservaCompletado(idReserva);
         servicioAlojamientos.anadirResena(valoracion,resena,idAlojamiento);
         notificarObservadores();
+    }
+    @Override
+    public List<Alojamiento> filtrarAlojamientos(String ciudadFiltro, String nombreFiltro, TipoAlojamiento tipoFiltro, RangoPrecio rangoPrecio){
+        return servicioAlojamientos.filtrarAlojamientos(ciudadFiltro,nombreFiltro,tipoFiltro,rangoPrecio);
     }
 }

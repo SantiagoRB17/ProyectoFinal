@@ -232,7 +232,7 @@ public class OfertaViewController implements Initializable, AlojamientosObserver
             }else{
                 ventanasController.getPlataforma().eliminarOferta(ofertaSeleccionado.getIdAlojamiento());
                 limpiarCampos();
-                ventanasController.mostrarAlerta("Alojamiento eliminado con exito", Alert.AlertType.INFORMATION);
+                ventanasController.mostrarAlerta("Oferta eliminada con exito", Alert.AlertType.INFORMATION);
             }
         }catch (Exception e){
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);

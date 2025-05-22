@@ -9,8 +9,10 @@ import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
+import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -98,7 +100,7 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
     private Separator sepSeparadorSaludoYAlojamientos;
 
     @FXML
-    private ComboBox<Double> textFieldFiltroPrecio;
+    private ComboBox<RangoPrecio> textFieldFiltroPrecio;
 
     @FXML
     private TextField txtFieldFiltroCiudad;
@@ -124,7 +126,7 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
     @FXML
     private VBox vboxPrincipal;
 
-    private final int CANTIDAD_RANDOM = 7;
+    private final int CANTIDAD_RANDOM = 6;
     private List<Alojamiento> alojamientosTotales;
     private final VentanaController ventanasController = VentanaController.getInstancia();
     private final Sesion sesion = Sesion.getInstancia();
@@ -132,12 +134,18 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ventanasController.getPlataforma().registrarObservador(this);
         cmbTipoAlojamiento.getItems().addAll(TipoAlojamiento.values());
-
+        textFieldFiltroPrecio.setItems(FXCollections.observableArrayList(
+                new RangoPrecio(null, 50000.0, "Menos de 50.000"),
+                new RangoPrecio(50000.0, 100000.0, "50.000 - 100.000"),
+                new RangoPrecio(100000.0, 200000.0, "100.000 - 200.000"),
+                new RangoPrecio(200000.0, null, "Más de 200.000")
+        ));
         if(sesion.getPersona()!=null){
             conSesion();
         }else{
             sinSesion();
         }
+
         alojamientosTotales = null;
         cargarAlojamientos();
         cargarOfertas();
@@ -179,37 +187,7 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
         if (alojamientosTotales == null) {
             alojamientosTotales = ventanasController.getPlataforma().listarAlojamientos();
         }
-        flowPaneVistaTarjetasAlojamiento.getChildren().clear();
-        for (Alojamiento alojamiento : alojamientosTotales) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoView.fxml"));
-                Node nodoTarjeta = loader.load();
-                TarjetaAlojamientoViewController controller = loader.getController();
-                controller.setAlojamientoObservable(alojamiento);
-
-                Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamiento");
-                Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamiento");
-                Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamiento");
-                ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamiento");
-
-
-                lblNombre.setText("Alojamiento " + (alojamiento.getNombre()));
-                lblUbicacion.setText("Ubicacion " + (alojamiento.getCiudad()));
-                if(alojamiento instanceof ProductoHotel){
-                    lblPrecio.visibleProperty().setValue(false);
-                    lblPrecio.managedProperty().setValue(false);
-                }else{
-                    lblPrecio.setText("Precio " + (alojamiento.calcularCosto()));
-                }
-
-
-                img.setImage(RepositorioImagenes.cargarImagen(alojamiento.getRutaFoto()));
-
-                flowPaneVistaTarjetasAlojamiento.getChildren().add(nodoTarjeta);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        cargarAlojamientos(alojamientosTotales);
     }
 
     private void cargarAlojamientos() {
@@ -219,35 +197,7 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
         List<Alojamiento> copia = new ArrayList<>(alojamientosTotales);
         Collections.shuffle(copia);
         List<Alojamiento> seleccionados = copia.stream().limit(CANTIDAD_RANDOM).toList();
-        flowPaneVistaTarjetasAlojamiento.getChildren().clear();
-        for (Alojamiento alojamiento : seleccionados) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoView.fxml"));
-                Node nodoTarjeta = loader.load();
-                TarjetaAlojamientoViewController controller = loader.getController();
-                controller.setAlojamientoObservable(alojamiento);
-
-                Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamiento");
-                Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamiento");
-                Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamiento");
-                ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamiento");
-
-                lblNombre.setText("Alojamiento " + (alojamiento.getNombre()));
-                lblUbicacion.setText("Ubicacion " + (alojamiento.getCiudad()));
-                if(alojamiento instanceof ProductoHotel){
-                    lblPrecio.visibleProperty().setValue(false);
-                    lblPrecio.managedProperty().setValue(false);
-                }else{
-                    lblPrecio.setText("Precio " + (alojamiento.calcularCosto()));
-                }
-
-                img.setImage(RepositorioImagenes.cargarImagen(alojamiento.getRutaFoto()));
-
-                flowPaneVistaTarjetasAlojamiento.getChildren().add(nodoTarjeta);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        cargarAlojamientos(seleccionados);
     }
 
     private void cargarOfertas() {
@@ -321,6 +271,56 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
     public void actualizar() {
         cargarAlojamientos();
         cargarOfertas();
+    }
+
+    public void aplicarFiltro(ActionEvent event) {
+        List<Alojamiento> alojamientosFiltrados=ventanasController.getPlataforma().filtrarAlojamientos(
+                txtFieldFiltroCiudad.getText(),txtFieldNombre.getText(),cmbTipoAlojamiento.getValue(),textFieldFiltroPrecio.getValue()
+        );
+        cargarAlojamientos(alojamientosFiltrados);
+    }
+
+    private void cargarAlojamientos(List<Alojamiento> alojamientos) {
+        flowPaneVistaTarjetasAlojamiento.getChildren().clear();
+        for (Alojamiento alojamiento : alojamientos) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/TarjetaAlojamientoView.fxml"));
+                Node nodoTarjeta = loader.load();
+                TarjetaAlojamientoViewController controller = loader.getController();
+                controller.setAlojamientoObservable(alojamiento);
+
+                Label lblNombre = (Label) nodoTarjeta.lookup("#lblNombreAlojamiento");
+                Label lblUbicacion = (Label) nodoTarjeta.lookup("#lblUbicacionAlojamiento");
+                Label lblPrecio = (Label) nodoTarjeta.lookup("#lblPrecioAlojamiento");
+                ImageView img = (ImageView) nodoTarjeta.lookup("#imgViewFotoAlojamiento");
+
+                lblNombre.setText("Alojamiento " + (alojamiento.getNombre()));
+                lblUbicacion.setText("Ubicacion " + (alojamiento.getCiudad()));
+                if(alojamiento instanceof ProductoHotel){
+                    lblPrecio.visibleProperty().setValue(false);
+                    lblPrecio.managedProperty().setValue(false);
+                }else{
+                    lblPrecio.setText("Precio " + (alojamiento.calcularCosto()));
+                }
+
+                img.setImage(RepositorioImagenes.cargarImagen(alojamiento.getRutaFoto()));
+
+                flowPaneVistaTarjetasAlojamiento.getChildren().add(nodoTarjeta);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void limpiarFiltro(ActionEvent event) {
+        cargarAlojamientos();
+        limpiarCamposFiltro();
+    }
+    private void limpiarCamposFiltro(){
+        txtFieldFiltroCiudad.clear();
+        txtFieldNombre.clear();
+        cmbTipoAlojamiento.getSelectionModel().clearSelection();
+        textFieldFiltroPrecio.getSelectionModel().clearSelection();
     }
 }
 
