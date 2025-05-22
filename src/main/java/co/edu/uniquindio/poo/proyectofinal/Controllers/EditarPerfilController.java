@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import javafx.event.ActionEvent;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
@@ -47,11 +48,18 @@ public class EditarPerfilController {
         String email = txtEmailEditar.getText();
         String nombreCompleto = txtNombreCompletoEditar.getText();
         String numeroTelefono = txtNumeroTelefonoEditar.getText();
+        String password = passwordEditar.getText();
 
         Persona persona = Sesion.getInstancia().getPersona();
-        try{
-            ventanasController.getPlataforma().editarPersona(nombreCompleto,apellidos,persona.getCedula(), email
-                    ,numeroTelefono);
+        try {
+            ventanasController.getPlataforma().editarPersona(nombreCompleto, apellidos, persona.getCedula(), email
+                    , numeroTelefono, password);
+            ventanasController.mostrarAlerta("Perfil editado con exito", Alert.AlertType.INFORMATION);
+            if (persona.getRol().equals(Rol.ADMINISTRADOR)) {
+                ventanasController.navegarVentanas("/ServicioAlojamientosView.fxml", "Inicio", true, true);
+            }else {
+                ventanasController.navegarVentanas("/InicioView.fxml", "Cliente", true, true);
+            }
         }catch (Exception e){
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }

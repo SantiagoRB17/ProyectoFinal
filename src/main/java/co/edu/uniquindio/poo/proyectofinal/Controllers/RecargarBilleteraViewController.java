@@ -40,6 +40,8 @@ public class RecargarBilleteraViewController {
 
             VentanaController.getInstancia().mostrarAlerta("Saldo recargado correctamente", Alert.AlertType.INFORMATION);
             txtSaldoMontoRecarga.clear();
+
+            ventanasController.navegarVentanas("/ConsultarSaldoView.fxml","Consultar Saldo",true,true);
         }catch (Exception e) {
             e.printStackTrace();
             VentanaController.getInstancia().mostrarAlerta("Error al recargar el saldo", Alert.AlertType.ERROR);

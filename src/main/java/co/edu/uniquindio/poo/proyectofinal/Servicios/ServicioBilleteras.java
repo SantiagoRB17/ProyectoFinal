@@ -77,4 +77,9 @@ public class ServicioBilleteras {
         }
     }
 
+    public Billetera buscarPorNumero(String numero) {
+        return repositorioBilleteras.buscarPorNumero(numero);
+
+    }
+
 }

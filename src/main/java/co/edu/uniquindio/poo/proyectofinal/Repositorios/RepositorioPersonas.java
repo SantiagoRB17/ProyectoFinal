@@ -26,11 +26,11 @@ public class RepositorioPersonas {
     }
 
     public void agregarPersona(Persona persona) throws Exception {
-        if (obtenerPorId(persona.getCedula()) == null) {
+        if (obtenerPorId(persona.getCedula()) == null && obtenerPorEmail(persona.getEmail()) == null) {
             personas.add(persona);
             guardarPersonas();
         } else {
-            throw new Exception("Ya existe una persona con la cédula " + persona.getCedula());
+            throw new Exception("Ya existe una persona registrada con ese ID o email");
         }
     }
 

@@ -40,7 +40,7 @@ public class confirmarPasswordController {
         try{
             ventanasController.getPlataforma().cambiarContrasena(correo,newPassword);
             ventanasController.mostrarAlerta("Contraseña cambiada con exito", Alert.AlertType.INFORMATION);
-            ventanasController.navegarVentanas("/IniciarSesion.fxml","IniciarSesion",false,false);
+            ventanasController.navegarVentanas("/IniciarSesion.fxml","IniciarSesion",true,true);
             CodigoTemporal.setCorreo(null);
             CodigoTemporal.setCodigo(null);
         }catch (Exception e){
@@ -51,7 +51,7 @@ public class confirmarPasswordController {
 
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("/IniciarSesion.fxml","inicioSesion",false,false);
+        ventanasController.navegarVentanas("/IniciarSesion.fxml","inicioSesion",true,true);
 
     }
 
