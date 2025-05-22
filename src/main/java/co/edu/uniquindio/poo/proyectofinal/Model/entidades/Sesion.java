@@ -5,23 +5,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 public class Sesion {
-    public static Sesion INSTANCIA;
+    private static Sesion instancia;
+    private Persona persona;
 
-   private  Persona persona;
     private Sesion() {
-
     }
 
     public static Sesion getInstancia() {
-        if(INSTANCIA== null){
-            INSTANCIA= new Sesion();
+        if (instancia == null) {
+            instancia = new Sesion();
         }
-        return INSTANCIA;
+        return instancia;
     }
 
-    public void cerrarSesion(){
+    public void cerrarSesion() {
         persona = null;
     }
 }

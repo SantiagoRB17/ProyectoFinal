@@ -471,4 +471,11 @@ public class CasaApartamentoViewController implements Initializable, Alojamiento
     public void actualizar() {
         cargarDatosTabla();
     }
+
+    @FXML
+    public void irEditarPerfil(ActionEvent actionEvent) throws Exception {
+        ventanasController.navegarVentanas("/EditarPerfil.fxml","editar perfil",true,true);
+    }
 }
+
+

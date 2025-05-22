@@ -11,6 +11,8 @@ module co.edu.uniquindio.poo.proyectofinal {
     requires com.dlsc.gemsfx;
     requires com.fasterxml.jackson.datatype.jsr310;
     requires java.desktop;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
 
 
     opens co.edu.uniquindio.poo.proyectofinal.Model.entidades to com.fasterxml.jackson.databind;

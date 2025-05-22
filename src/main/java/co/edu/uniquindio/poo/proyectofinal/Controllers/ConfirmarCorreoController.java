@@ -27,7 +27,7 @@ public class ConfirmarCorreoController {
     private GridPane gridPaneFormularioIniciarSesion;
 
     @FXML
-    private TextField txtEmail;
+    private TextField txtCorreo;
     private final VentanaController ventanasController = VentanaController.getInstancia();
     private ServicioEnvioEmail servicioEnvioEmail=new ServicioEnvioEmail();
 
@@ -40,7 +40,7 @@ public class ConfirmarCorreoController {
 
     @FXML
     void EnviarMail(ActionEvent event) {
-        String correo = txtEmail.getText();
+        String correo = txtCorreo.getText();
 
         if (correo.isBlank() || correo == null) {
             ventanasController.mostrarAlerta("Error,El correo no puede estar vacio", Alert.AlertType.ERROR);
@@ -55,19 +55,20 @@ public class ConfirmarCorreoController {
         String codigo = CodigoVerificacion.generarCodigo();
         CodigoTemporal.setCorreo(correo);
         CodigoTemporal.setCodigo(codigo);
+        CodigoTemporal.setModo("recuperacion");
 
         servicioEnvioEmail.enviarNotificacion(correo, "Código de recuperación", "Tu código de verificación es: " + codigo);
         ventanasController.mostrarAlerta("Correo enviado", Alert.AlertType.INFORMATION);
 
         try{
-            ventanasController.navegarVentanas("/CodigoConfirmacion.fxml","confirmarcodigo",false,false);
+            ventanasController.navegarVentanas("/CodigoConfirmacion.fxml","confirmarcodigo",true,true);
         } catch ( Exception e){
             e.printStackTrace();
         }
     }
     @FXML
     void volverInicioSesion(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("IniciarSesion.fxml","InicioSesion",false,false);
+        ventanasController.navegarVentanas("/IniciarSesion.fxml","InicioSesion",true,true);
 
     }
 
