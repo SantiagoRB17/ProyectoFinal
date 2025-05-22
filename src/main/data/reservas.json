@@ -18,4 +18,142 @@
   "numeroHuespedes" : 2,
   "estado" : "COMPLETADO",
   "idFactura" : "037d7b4a-205e-4e67-83d0-c6aef5b95673"
-} ]
+}, {
+  "idReserva" : "2d328349-94ad-43d1-b223-80b6bd570f88",
+  "cedulaCliente" : "1094878423",
+  "idAlojamiento" : "f444be52-fbeb-4b11-9cdc-b1cda711a102",
+  "idHabitacion" : null,
+  "fechaInicio" : [ 2025, 5, 22 ],
+  "fechaFin" : [ 2025, 5, 30 ],
+  "numeroHuespedes" : 2,
+  "estado" : "PAGADO",
+  "idFactura" : "70905f24-445e-48a7-ac2c-695acdadba37"
+}, {
+  "idReserva" : "6280bcbf-bd02-4b6b-a0d2-15145e4d08a6",
+  "cedulaCliente" : "1094878423",
+  "idAlojamiento" : "119cde2d-dec6-4e61-9836-0e952bee3158",
+  "idHabitacion" : null,
+  "fechaInicio" : [ 2025, 5, 22 ],
+  "fechaFin" : [ 2025, 5, 31 ],
+  "numeroHuespedes" : 4,
+  "estado" : "PENDIENTE",
+  "idFactura" : null
+}, {
+  "idReserva" : "aaec88de-da75-4c8d-afb5-69304bdf128c",
+  "cedulaCliente" : "1097890",
+  "idAlojamiento" : "b123fa68-cb43-4fd3-b6be-dc94d51991bb",
+  "idHabitacion" : null,
+  "fechaInicio" : [ 2025, 5, 22 ],
+  "fechaFin" : [ 2025, 5, 31 ],
+  "numeroHuespedes" : 3,
+  "estado" : "PAGADO",
+  "idFactura" : "c35b68d0-3f80-41b2-873c-14ce209bb50e"
+},{
+  "idReserva": "e59752a4-afb4-4220-89f6-43c97a067243",
+  "cedulaCliente": "1094878423",
+  "idAlojamiento": "f3a4b688-eabc-4369-b17b-1bfce88486d1",
+  "idHabitacion": null,
+  "fechaInicio": [2025, 5, 10],
+  "fechaFin": [2025, 5, 14],
+  "numeroHuespedes": 4,
+  "estado": "COMPLETADO",
+  "idFactura": "ff368697-0b14-4101-ab3e-3f4110fb4092"
+},
+  {
+    "idReserva": "5ac920dd-447d-4d19-8c1b-61ad74d93305",
+    "cedulaCliente": "1039265841",
+    "idAlojamiento": "e333ac41-2db6-4dd6-a2a9-78c1db4e1e8e",
+    "idHabitacion": null,
+    "fechaInicio": [2025, 5, 16],
+    "fechaFin": [2025, 5, 19],
+    "numeroHuespedes": 3,
+    "estado": "COMPLETADO",
+    "idFactura": "6db65dc4-40ae-4b0a-b395-742af8caa3f2"
+  },
+  {
+    "idReserva": "9341d8ee-7135-4de7-8145-1b2b67de2fd1",
+    "cedulaCliente": "123456789",
+    "idAlojamiento": "0dd08c04-5a6c-4341-8603-6ffca7eab524",
+    "idHabitacion": "0fa2de2a-f938-4b3f-b05f-3e18cf1dabb8",
+    "fechaInicio": [2025, 5, 12],
+    "fechaFin": [2025, 5, 14],
+    "numeroHuespedes": 2,
+    "estado": "COMPLETADO",
+    "idFactura": "2e3982fc-d3b8-465c-8be9-6b378489e0d2"
+  },
+  {
+    "idReserva": "0f25080d-29c4-4797-8718-ae978f6ec9fd",
+    "cedulaCliente": "953742186",
+    "idAlojamiento": "d222bc22-4aca-42c1-976e-026d7c2146c6",
+    "idHabitacion": null,
+    "fechaInicio": [2025, 5, 20],
+    "fechaFin": [2025, 5, 23],
+    "numeroHuespedes": 2,
+    "estado": "COMPLETADO",
+    "idFactura": "b15d61ce-6749-4c93-a521-7dfa630c8f0d"
+  },
+  {
+    "idReserva": "58a9fe1c-6c82-4d13-b239-3efbea4e3463",
+    "cedulaCliente": "117654323",
+    "idAlojamiento": "5fae6778-82de-41c5-b8e0-6876c2257a9a",
+    "idHabitacion": null,
+    "fechaInicio": [2025, 5, 18],
+    "fechaFin": [2025, 5, 22],
+    "numeroHuespedes": 4,
+    "estado": "COMPLETADO",
+    "idFactura": "7fc2724f-9a25-4835-9af1-dce5b34fe254"
+  }, {
+  "idReserva": "fe271b80-02cf-406f-bcb3-bee00c4de812",
+  "cedulaCliente": "1097890",
+  "idAlojamiento": "a111ea21-7ad1-4e36-9d18-7c5776c691ab",
+  "idHabitacion": null,
+  "fechaInicio": [2025, 5, 2],
+  "fechaFin": [2025, 5, 6],
+  "numeroHuespedes": 3,
+  "estado": "COMPLETADO",
+  "idFactura": "8ef0bb49-b430-43ce-b745-74dbda26eb69"
+},
+  {
+    "idReserva": "12a1e8c1-5b5e-472a-893b-474ee6e768d1",
+    "cedulaCliente": "1097890",
+    "idAlojamiento": "0dd08c04-5a6c-4341-8603-6ffca7eab524",
+    "idHabitacion": "d406266a-0bcc-43da-b5f8-1826fe058bc9",
+    "fechaInicio": [2025, 5, 8],
+    "fechaFin": [2025, 5, 11],
+    "numeroHuespedes": 3,
+    "estado": "COMPLETADO",
+    "idFactura": "96b576a8-2b3e-476e-b72f-f0704e9ae4aa"
+  },
+  {
+    "idReserva": "3ede20ba-b72a-47ed-a8fb-da02023716e5",
+    "cedulaCliente": "117654323",
+    "idAlojamiento": "77d66b5c-aaca-4f74-82e6-9d1faeabb826",
+    "idHabitacion": "1270bc55-7b8b-4c60-aba0-b46986adbbee",
+    "fechaInicio": [2025, 5, 4],
+    "fechaFin": [2025, 5, 7],
+    "numeroHuespedes": 2,
+    "estado": "COMPLETADO",
+    "idFactura": "2508cd77-e049-4f2d-9240-738e7e3104fc"
+  },
+  {
+    "idReserva": "af5f36a7-87b9-423a-9061-e2a14e11af8f",
+    "cedulaCliente": "123456789",
+    "idAlojamiento": "b123fa68-cb43-4fd3-b6be-dc94d51991bb",
+    "idHabitacion": null,
+    "fechaInicio": [2025, 5, 15],
+    "fechaFin": [2025, 5, 18],
+    "numeroHuespedes": 5,
+    "estado": "COMPLETADO",
+    "idFactura": "531b2042-0c11-4cc4-b021-0bc95ef6abb4"
+  },
+  {
+    "idReserva": "ab3fcf17-40e1-4e7a-8133-27351135f899",
+    "cedulaCliente": "953742186",
+    "idAlojamiento": "3487e3c2-0cdc-4bb5-95cf-49e6b41d10f2",
+    "idHabitacion": "e5f5a5b5-5678-9012-cdef-3e4f5e6a7b8c",
+    "fechaInicio": [2025, 5, 20],
+    "fechaFin": [2025, 5, 24],
+    "numeroHuespedes": 4,
+    "estado": "COMPLETADO",
+    "idFactura": "462f4d29-2f39-46f0-a921-64cb4d746d08"
+  }]

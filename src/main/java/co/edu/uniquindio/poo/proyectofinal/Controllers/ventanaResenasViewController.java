@@ -3,6 +3,7 @@ package co.edu.uniquindio.poo.proyectofinal.Controllers;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Reserva;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -52,7 +53,6 @@ public class ventanaResenasViewController {
     private int valoracion = 0;
     private String comentario = "";
     private boolean confirmado = false;
-
     private Image estrellaVacia;
     private Image estrellaLlena;
 
@@ -93,7 +93,7 @@ public class ventanaResenasViewController {
     @FXML
     private void seleccionarEstrella(javafx.scene.input.MouseEvent event) {
         Object source = event.getSource();
-
+        
         if (source == estrella1) {
             valoracion = 1;
         } else if (source == estrella2) {
@@ -114,11 +114,36 @@ public class ventanaResenasViewController {
      * Actualiza la visualización de las estrellas según la valoración seleccionada
      */
     private void actualizarEstrellas() {
-        estrella1.setImage(valoracion >= 1 ? estrellaLlena : estrellaVacia);
-        estrella2.setImage(valoracion >= 2 ? estrellaLlena : estrellaVacia);
-        estrella3.setImage(valoracion >= 3 ? estrellaLlena : estrellaVacia);
-        estrella4.setImage(valoracion >= 4 ? estrellaLlena : estrellaVacia);
-        estrella5.setImage(valoracion >= 5 ? estrellaLlena : estrellaVacia);
+        if (valoracion >= 1) {
+            estrella1.setImage(estrellaLlena);
+        } else {
+            estrella1.setImage(estrellaVacia);
+        }
+
+        if (valoracion >= 2) {
+            estrella2.setImage(estrellaLlena);
+        } else {
+            estrella2.setImage(estrellaVacia);
+        }
+
+        if (valoracion >= 3) {
+            estrella3.setImage(estrellaLlena);
+        } else {
+            estrella3.setImage(estrellaVacia);
+        }
+
+        if (valoracion >= 4) {
+            estrella4.setImage(estrellaLlena);
+        } else {
+            estrella4.setImage(estrellaVacia);
+        }
+
+        if (valoracion >= 5) {
+            estrella5.setImage(estrellaLlena);
+        } else {
+            estrella5.setImage(estrellaVacia);
+        }
+
     }
 
     /**
@@ -135,8 +160,7 @@ public class ventanaResenasViewController {
      */
     @FXML
     private void enviar() {
-        if (valoracion > 0) {
-            // Guardar el comentario
+        if (valoracion > 0 || !comentario.isEmpty()) {
             comentario = txtComentario.getText();
             confirmado = true;
             try{
@@ -149,6 +173,8 @@ public class ventanaResenasViewController {
             // Cerrar la ventana
             Stage stage = (Stage) btnEnviar.getScene().getWindow();
             stage.close();
+        }else{
+            ventanasController.mostrarAlerta("Debe seleccionar una estrella y agregar un comentario", Alert.AlertType.ERROR);
         }
     }
 

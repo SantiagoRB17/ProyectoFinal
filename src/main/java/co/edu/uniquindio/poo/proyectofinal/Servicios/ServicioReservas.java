@@ -168,7 +168,7 @@ public class ServicioReservas {
 
     public void verificarEstadoReservaCompletado(UUID idReserva) throws Exception{
         Reserva reserva = repositorioReservas.obtenerPorId(idReserva);
-        if(reserva.getEstado() != Estado.COMPLETADO && reserva.getEstado() == Estado.PAGADO){
+        if(reserva.getEstado() != Estado.COMPLETADO){
             throw new Exception("La reserva no se encuentra pagada o no se ha completado");
         }
     }

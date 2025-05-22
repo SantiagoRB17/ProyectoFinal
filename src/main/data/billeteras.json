@@ -1,13 +1,38 @@
-[ {
-  "numero" : "0981234567",
-  "saldo" : 0.0,
-  "cedulaUsuario" : null
-}, {
+[{
   "numero" : "1230987456",
   "saldo" : 0.0,
   "cedulaUsuario" : "474849"
 }, {
   "numero" : "3716651780",
-  "saldo" : 4586324.0,
+  "saldo" : 3623324.0,
   "cedulaUsuario" : "1097890"
-} ]
+}, {
+  "numero" : "6460251314",
+  "saldo" : 4464.0,
+  "cedulaUsuario" : "1094878423"
+}, {
+  "numero": "9921534875",
+  "saldo": 0.0,
+  "cedulaUsuario": "7265483"
+},
+  {
+    "numero": "7159632442",
+    "saldo": 3623324.0,
+    "cedulaUsuario": "1039265841"
+  },
+  {
+    "numero": "6457893201",
+    "saldo": 4464.0,
+    "cedulaUsuario": "123456789"
+  },
+  {
+    "numero": "9921534875",
+    "saldo": 0.0,
+    "cedulaUsuario": "117654323"
+  },
+  {
+    "numero": "1047852936",
+    "saldo": 0.0,
+    "cedulaUsuario": "953742186"
+  }
+]

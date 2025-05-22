@@ -307,4 +307,70 @@
   "servicios" : [ "Restaurante", "WiFi", "Alquiler de bicicletas" ],
   "costoExtra" : 0.0,
   "numeroDeHabitaciones" : 2
-} ]
+},{
+  "tipo": "casa",
+  "id": "5fae6778-82de-41c5-b8e0-6876c2257a9a",
+  "resenas": [],
+  "valoracion": 4.0,
+  "activo": true,
+  "nombre": "CasaOrquídea",
+  "ciudad": "La Tebaida",
+  "descripcion": "Hermosa casa campestre con jardín y piscina privada.",
+  "rutaFoto": "5fae6778-82de-41c5-b8e0-6876c2257a9a_casaorquidea.jpg",
+  "precio": 135000.0,
+  "servicios": [ "Piscina", "Jardín", "Zona BBQ", "WiFi" ],
+  "capacidadMaxima": 8,
+  "costoExtra": 10000.0
+},
+  {
+    "tipo": "apartamento",
+    "id": "b2ed96a3-3c6d-41d2-81df-94c78dd216c9",
+    "resenas": [],
+    "valoracion": 3.0,
+    "activo": true,
+    "nombre": "Apartamento Rivera del Río",
+    "ciudad": "Armenia",
+    "descripcion": "Apartamento moderno cerca al río, excelente ubicación turística.",
+    "rutaFoto": "b2ed96a3-3c6d-41d2-81df-94c78dd216c9_riverario.jpg",
+    "precio": 78000.0,
+    "servicios": [ "Cocina", "WiFi", "Ascensor", "Parqueadero" ],
+    "capacidadMaxima": 5,
+    "costoExtra": 7000.0
+  },
+  {
+    "tipo": "hotel",
+    "id": "77d66b5c-aaca-4f74-82e6-9d1faeabb826",
+    "resenas": [],
+    "valoracion": 4.0,
+    "activo": true,
+    "habitaciones": [
+      {
+        "numeroHabitacion": 10,
+        "precio": 105000.0,
+        "capacidad": 2,
+        "rutaImagenHabitacion": "77d66b5c-aaca-4f74-82e6-9d1faeabb826_habitacion10.jpg",
+        "descripcion": "Habitación doble estándar",
+        "activo": true,
+        "id": "1270bc55-7b8b-4c60-aba0-b46986adbbee",
+        "idHotel": "77d66b5c-aaca-4f74-82e6-9d1faeabb826"
+      },
+      {
+        "numeroHabitacion": 11,
+        "precio": 155000.0,
+        "capacidad": 4,
+        "rutaImagenHabitacion": "77d66b5c-aaca-4f74-82e6-9d1faeabb826_habitacion11.jpg",
+        "descripcion": "Suite familiar con balcón y vista al jardín",
+        "activo": true,
+        "id": "055e09e3-650b-4527-8347-7fc2bd987c86",
+        "idHotel": "77d66b5c-aaca-4f74-82e6-9d1faeabb826"
+      }
+    ],
+    "nombre": "Hotel El Edén",
+    "ciudad": "Montenegro",
+    "descripcion": "Hotel boutique con restaurante, piscina y cerca del parque del café.",
+    "rutaFoto": "77d66b5c-aaca-4f74-82e6-9d1faeabb826_eleden.jpg",
+    "servicios": [ "Piscina", "Restaurante", "WiFi", "Desayuno incluido" ],
+    "costoExtra": 0.0,
+    "numeroDeHabitaciones": 2
+  }
+]
