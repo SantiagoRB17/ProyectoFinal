@@ -141,7 +141,8 @@ public class RepositorioReservas {
         try{
             LocalDate hoy = LocalDate.now();
             for (Reserva reserva : reservas) {
-                if ((reserva.getEstado() != Estado.COMPLETADO && reserva.getEstado() == Estado.PAGADO ) && reserva.getFechaFin().isBefore(hoy) ) {
+                if ((reserva.getEstado() != Estado.COMPLETADO && reserva.getEstado() == Estado.PAGADO )
+                        && reserva.getFechaFin().isBefore(hoy) ) {
                     reserva.setEstado(Estado.COMPLETADO);
                     actualizarReserva(reserva);
                 }
