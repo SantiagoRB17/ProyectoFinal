@@ -195,34 +195,36 @@ public class ServicioReservas {
         } catch (Exception e) {
             System.err.println("Error al generar o enviar el QR de la factura: " + e.getMessage());
             throw new Exception("No fue posible generar y enviar el QR de la factura.");
+
         }
     }
 
-    /**
-     * Recupera una factura por su ID.
-     */
-    public Factura recuperarFacturaReservaPorId(UUID idFactura) throws Exception {
-        return repositorioFacturas.obtenerPorId(idFactura);
-    }
-
-    /**
-     * Recupera una reserva por su ID.
-     */
-    public Reserva recuperarReservaPorId(UUID idReserva) throws Exception {
-        Reserva reserva = repositorioReservas.obtenerPorId(idReserva);
-        if (reserva == null) {
-            throw new Exception("No existe reserva");
+        /**
+         * Recupera una factura por su ID.
+         */
+        public Factura recuperarFacturaReservaPorId (UUID idFactura) throws Exception {
+            return repositorioFacturas.obtenerPorId(idFactura);
         }
-        return reserva;
-    }
 
-    /**
-     * Verifica que una reserva esté en estado COMPLETADO y PAGADO.
-     */
-    public void verificarEstadoReservaCompletado(UUID idReserva) throws Exception {
-        Reserva reserva = repositorioReservas.obtenerPorId(idReserva);
-        if (reserva.getEstado() != Estado.COMPLETADO && reserva.getEstado() == Estado.PAGADO) {
-            throw new Exception("La reserva no se encuentra pagada o no se ha completado");
+        /**
+         * Recupera una reserva por su ID.
+         */
+        public Reserva recuperarReservaPorId (UUID idReserva) throws Exception {
+            Reserva reserva = repositorioReservas.obtenerPorId(idReserva);
+            if (reserva == null) {
+                throw new Exception("No existe reserva");
+            }
+            return reserva;
         }
+
+        /**
+         * Verifica que una reserva esté en estado COMPLETADO y PAGADO.
+         */
+        public void verificarEstadoReservaCompletado (UUID idReserva) throws Exception {
+            Reserva reserva = repositorioReservas.obtenerPorId(idReserva);
+            if (reserva.getEstado() != Estado.COMPLETADO && reserva.getEstado() == Estado.PAGADO) {
+                throw new Exception("La reserva no se encuentra pagada o no se ha completado");
+            }
+
     }
 }

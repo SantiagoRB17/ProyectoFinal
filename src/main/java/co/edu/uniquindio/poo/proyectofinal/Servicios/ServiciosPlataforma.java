@@ -211,10 +211,10 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public  double consultarSaldo(String email) throws Exception {
+    public  double consultarSaldo(String email,Billetera billetera) throws Exception {
         Persona persona= servicioPersonas.recuperarPorEmail(email);
         email=persona.getEmail();
-        return servicioPersonas.consultarSaldo(email,servicioBilleteras.buscarPorNumero(persona.getNumeroBilletera()));
+        return servicioPersonas.consultarSaldo(email,billetera);
     }
 
     @Override
@@ -258,6 +258,11 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     @Override
     public void verificarEstadoReservaCompletado(UUID idReserva) throws Exception{
         servicioReserva.verificarEstadoReservaCompletado(idReserva);
+    }
+
+    public Billetera buscarPorNumero(String numero) {
+        return servicioBilleteras.buscarPorNumero(numero);
+
     }
 
 

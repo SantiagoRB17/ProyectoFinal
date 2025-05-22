@@ -1,5 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
+import jakarta.activation.DataSource;
+import jakarta.activation.FileDataSource;
 import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.api.mailer.config.TransportStrategy;
@@ -38,7 +40,7 @@ public class ServicioEnvioEmail {
                 .to(destinatario)
                 .withSubject(asunto)
                 .withPlainText(mensaje)
-                .withAttachment("codigo_qr_factura.png",qrAdjunto)
+                .withAttachment("codigo_qr_factura.png", new FileDataSource(qrAdjunto))
                 .buildEmail();
 
         try {

@@ -13,6 +13,7 @@ module co.edu.uniquindio.poo.proyectofinal {
     requires java.desktop;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires jakarta.activation;
 
 
     opens co.edu.uniquindio.poo.proyectofinal.Model.entidades to com.fasterxml.jackson.databind;

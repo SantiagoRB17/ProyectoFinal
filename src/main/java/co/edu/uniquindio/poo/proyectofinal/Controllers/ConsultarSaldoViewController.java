@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Billetera;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioPersonas;
@@ -33,10 +34,11 @@ public class ConsultarSaldoViewController {
     @FXML
     void initialize() {
         Persona persona = sesion.getPersona();
+        Billetera billetera=ventanasController.getPlataforma().buscarPorNumero(persona.getNumeroBilletera());
         if (persona != null) {
             try {
                 System.out.println("Email actual: " + persona.getEmail());
-                double saldo = ventanasController.getPlataforma().consultarSaldo(persona.getEmail());
+                double saldo = ventanasController.getPlataforma().consultarSaldo(persona.getEmail(), billetera);
                 txtSaldo.setText("$" + String.format("%,.2f", saldo));
             } catch (Exception e) {
                 txtSaldo.setText("Error al consultar el saldo: " + e.getMessage());

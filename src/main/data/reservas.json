@@ -18,4 +18,14 @@
   "numeroHuespedes" : 2,
   "estado" : "COMPLETADO",
   "idFactura" : "037d7b4a-205e-4e67-83d0-c6aef5b95673"
+}, {
+  "idReserva" : "497d26d4-1e85-4086-afdd-9d4811935da7",
+  "cedulaCliente" : "474849",
+  "idAlojamiento" : "38c4df19-5e42-49a4-b7c4-5d6202ebf4c1",
+  "idHabitacion" : null,
+  "fechaInicio" : [ 2025, 5, 23 ],
+  "fechaFin" : [ 2025, 5, 24 ],
+  "numeroHuespedes" : 2,
+  "estado" : "PAGADO",
+  "idFactura" : "13e5fb21-f1f9-4d13-a4af-fdf0ad4bc2f7"
 } ]

@@ -289,5 +289,5 @@ public interface IServiciosPlataforma {
      * @return El saldo disponible en la billetera.
      * @throws Exception Si hay errores al consultar el saldo.
      */
-    double consultarSaldo(String email) throws Exception;
+    double consultarSaldo(String email,Billetera billetera) throws Exception;
 }
