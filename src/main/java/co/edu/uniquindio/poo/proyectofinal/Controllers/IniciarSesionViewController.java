@@ -30,6 +30,7 @@ public class IniciarSesionViewController {
 
     @FXML
     void iniciarSesion(ActionEvent event) throws Exception {
+        try {
         String email = txtEmailInicioSesion.getText();
         String password = passFieldContrasenaInicioSesion.getText();
         Persona persona = ventanasController.getPlataforma().iniciarSesion(email, password);
@@ -46,7 +47,7 @@ public class IniciarSesionViewController {
             ventanasController.mostrarAlerta("Debe ingresar una contraseña válida", Alert.AlertType.ERROR);
             return;
         }
-        try {
+
             Sesion.getInstancia().setPersona(persona);
 
             if (persona.getRol().equals(Rol.ADMINISTRADOR)) {

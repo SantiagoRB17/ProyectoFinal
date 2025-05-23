@@ -1,7 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.AlojamientoDecorator;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioOfertas;
 

@@ -1,10 +1,7 @@
-package co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator;
+package co.edu.uniquindio.poo.proyectofinal.Model.entidades;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
-import lombok.extern.jackson.Jacksonized;
 
 import java.time.LocalDate;
 import java.util.UUID;

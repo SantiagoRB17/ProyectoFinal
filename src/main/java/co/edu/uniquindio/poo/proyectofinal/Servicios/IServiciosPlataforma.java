@@ -1,14 +1,16 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
+import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -104,8 +106,7 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores al agregar el hotel.
      */
     Alojamiento agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto,
-                             ArrayList<String> servicios, int numeroHabitaciones) throws Exception;
-
+                      ArrayList<String> servicios, int numeroHabitaciones) throws Exception;
     /**
      * Edita los detalles de un hotel existente.
      *
@@ -115,11 +116,9 @@ public interface IServiciosPlataforma {
      * @param descripcion La descripción del hotel.
      * @param rutaFoto    La ruta de la foto del hotel.
      * @param servicios   Una lista de servicios que ofrece el hotel.
-     * @param costoExtra  Costos adicionales asociados al hotel.
      */
-    void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios,
-                     double costoExtra);
-
+    void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios
+                     )throws Exception;
     /**
      * Elimina un hotel de la plataforma.
      *
@@ -127,19 +126,7 @@ public interface IServiciosPlataforma {
      * @param rutaRelativa La ruta relativa del recurso asociado al hotel.
      * @throws Exception Si hay errores al eliminar el hotel.
      */
-    void eliminarHotel(UUID id, String rutaRelativa) throws Exception;
-
-
-    /**
-     * Elimina una habitación de un hotel.
-     *
-     * @param id           El identificador único de la habitación.
-     * @param rutaRelativa La ruta relativa del recurso asociado a la habitación.
-     */
-    void eliminarHabitacion(UUID id, String rutaRelativa);
-
-    void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios
-                     )throws Exception;
+    void eliminarHotel(UUID id,String rutaRelativa) throws Exception;
     /**
      * Crea una nueva habitación dentro de un hotel.
      *
@@ -153,8 +140,17 @@ public interface IServiciosPlataforma {
      */
     ProductoHabitacion crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception;
     void asignarHabitaciones(List<ProductoHabitacion> habitaciones,UUID idHotel) throws Exception;
+    /**
+     * Elimina una habitación de un hotel.
+     *
+     * @param id           El identificador único de la habitación.
+     * @param rutaRelativa La ruta relativa del recurso asociado a la habitación.
+     */
+    void eliminarHabitacion(UUID id,String rutaRelativa) throws Exception;
     List<ProductoHabitacion> recuperarHabitaciones(UUID id);
     ProductoHabitacion obtenerHabitacionPorId(UUID idHabitacion);
+    void editarHabitacion(UUID idHabitacion, int numeroHabitacion, double precio, int capacidad,
+                          String descripcion, String rutaImagen, UUID idHotel) throws Exception;
 
     /**
      * Crea una nueva oferta para un alojamiento.
@@ -167,15 +163,13 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores al crear la oferta.
      */
     void crearOferta(UUID idAlojamiento, double porcentajeDescuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin)
-            throws Exception;
-
+        throws Exception;
     /**
      * Lista todas las ofertas registradas.
      *
      * @return Una lista de objetos de tipo Oferta.
      */
     List<Oferta> listarOfertas();
-
     /**
      * Recupera las habitaciones asociadas a un hotel específico.
      *
@@ -183,7 +177,6 @@ public interface IServiciosPlataforma {
      * @return Una lista de habitaciones pertenecientes al hotel.
      */
     List<ProductoHabitacion> recuperarHabitacionesPorHotel(UUID idHotel);
-
     /**
      * Elimina una oferta registrada.
      *
@@ -191,7 +184,6 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores al eliminar la oferta.
      */
     void eliminarOferta(UUID id) throws Exception;
-
     /**
      * Busca un alojamiento por su identificador único.
      *
@@ -199,14 +191,12 @@ public interface IServiciosPlataforma {
      * @return El objeto de tipo Alojamiento encontrado, o null si no se encuentra.
      */
     Alojamiento buscarAlojamientoPorId(UUID id);
-
     /**
      * Recupera las casas y apartamentos registrados en la plataforma.
      *
      * @return Una lista de objetos de tipo Alojamiento que representan casas y apartamentos.
      */
     List<Alojamiento> recuperarCasasYApartamentos();
-
     /**
      * Crea un nuevo usuario en la plataforma.
      *
@@ -220,7 +210,6 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores al crear el usuario.
      */
     void crearUsuario(String nombre, String apellidos, String cedula, String email, String telefono, String password, Rol rol) throws Exception;
-
     /**
      * Inicia sesión en la plataforma.
      *
@@ -230,7 +219,6 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores de autenticación.
      */
     Persona iniciarSesion(String email, String password) throws Exception;
-
     /**
      * Cambia la contraseña de un usuario.
      *
@@ -239,7 +227,6 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores al cambiar la contraseña.
      */
     void cambiarContrasena(String correo, String newPassword) throws Exception;
-
     /**
      * Recupera la información de una persona por su correo electrónico.
      *
@@ -247,7 +234,6 @@ public interface IServiciosPlataforma {
      * @return El objeto Persona encontrado, o null si no existe.
      */
     Persona recuperarPersonaPorEmail(String email);
-
     /**
      * Edita la información de un usuario específico.
      *
@@ -259,8 +245,7 @@ public interface IServiciosPlataforma {
      * @param password  La contraseña del usuario.
      * @throws Exception Si hay errores al editar la persona.
      */
-    void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono, String password) throws Exception;
-
+    void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono,String password) throws Exception;
     /**
      * Recarga dinero en la billetera electrónica de un usuario.
      *
@@ -281,6 +266,7 @@ public interface IServiciosPlataforma {
             throws Exception;
     void anadirResena(UUID idReserva, int valoracion, String resena, UUID idAlojamiento) throws Exception;
     void verificarEstadoReservaCompletado(UUID idReserva) throws Exception;
+    List<Alojamiento> filtrarAlojamientos(String ciudadFiltro, String nombreFiltro, TipoAlojamiento tipoFiltro, RangoPrecio rangoPrecio);
 
     /**
      * Consulta el saldo de la billetera de un usuario.
@@ -290,4 +276,8 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores al consultar el saldo.
      */
     double consultarSaldo(String email,Billetera billetera) throws Exception;
+    Map<Alojamiento, Double> calcularOcupacionPorAlojamiento();
+    Map<Alojamiento, Double> obtenerGananciasPorAlojamiento();
+    Map<Alojamiento, Long> obtenerNumeroReservasPorAlojamiento();
+    Map<String, Double> obtenerTiposAlojamientoMasRentables();
 }

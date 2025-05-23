@@ -122,6 +122,7 @@ public class ServicioPersonas {
         if (!validarExpresionRegular(email)) { // Valida el formato del correo
             throw new Exception("El formato del correo es incorrecto");
         }
+
         Persona persona = repositorioPersonas.obtenerPorEmail(email);
         if (persona == null) {
             throw new Exception("La persona no existe");

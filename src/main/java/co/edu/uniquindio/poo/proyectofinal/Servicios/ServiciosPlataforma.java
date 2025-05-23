@@ -1,15 +1,17 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
+import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class ServiciosPlataforma implements IServiciosPlataforma {
@@ -20,6 +22,7 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     private final List<AlojamientosObserver> observadores=new ArrayList<>();
     private final ServicioBilleteras servicioBilleteras=new ServicioBilleteras();
     private final ServicioReservas servicioReserva=new ServicioReservas();
+    private final ServicioEstadisticas servicioEstadisticas=new ServicioEstadisticas();
 
     public void registrarObservador(AlojamientosObserver observador){
         observadores.add(observador);
@@ -120,11 +123,6 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios, double costoExtra) {
-
-    }
-
-    @Override
     public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios) throws Exception{
         servicioAlojamientos.editarHotel(id,nombre,ciudad,descripcion,rutaFoto,servicios);
         notificarObservadores();
@@ -159,8 +157,9 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void eliminarHabitacion(UUID id, String rutaRelativa) {
-
+    public void eliminarHabitacion(UUID id, String rutaRelativa) throws Exception{
+        servicioAlojamientos.eliminarHabitacion(id,rutaRelativa);
+        notificarObservadores();
     }
 
     @Override
@@ -271,5 +270,29 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
         verificarEstadoReservaCompletado(idReserva);
         servicioAlojamientos.anadirResena(valoracion,resena,idAlojamiento);
         notificarObservadores();
+    }
+    @Override
+    public List<Alojamiento> filtrarAlojamientos(String ciudadFiltro, String nombreFiltro, TipoAlojamiento tipoFiltro, RangoPrecio rangoPrecio){
+        return servicioAlojamientos.filtrarAlojamientos(ciudadFiltro,nombreFiltro,tipoFiltro,rangoPrecio);
+    }
+    @Override
+    public void editarHabitacion(UUID idHabitacion, int numeroHabitacion, double precio, int capacidad,
+                                 String descripcion, String rutaImagen, UUID idHotel) throws Exception{
+        servicioAlojamientos.editarHabitacion(idHabitacion,numeroHabitacion,precio,capacidad,descripcion,rutaImagen,idHotel);
+        notificarObservadores();
+    }
+
+    public Map<Alojamiento, Double> calcularOcupacionPorAlojamiento(){
+        return servicioEstadisticas.calcularOcupacionPorAlojamiento();
+    }
+
+    public Map<Alojamiento, Double> obtenerGananciasPorAlojamiento(){
+        return servicioEstadisticas.obtenerGananciasPorAlojamiento();
+    }
+    public Map<Alojamiento, Long> obtenerNumeroReservasPorAlojamiento(){
+        return  servicioEstadisticas.obtenerNumeroReservasPorAlojamiento();
+    }
+    public Map<String, Double> obtenerTiposAlojamientoMasRentables(){
+        return servicioEstadisticas.obtenerTiposAlojamientoMasRentables();
     }
 }

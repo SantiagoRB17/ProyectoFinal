@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHabitacion;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
+import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import co.edu.uniquindio.poo.proyectofinal.Observers.HotelDataOberserver;
 import com.jfoenix.controls.JFXButton;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class ServicioEditarHabitacionViewController implements HotelDataOberserver, Initializable {
+public class ServicioEditarHabitacionViewController implements HotelDataOberserver, Initializable, AlojamientosObserver {
 
     @FXML
     private JFXButton btnCargarFotoHabitacion;
@@ -84,16 +85,6 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
     private VBox vboxContenedorFormulario;
 
 
-    @FXML
-    void editarHabitacion(ActionEvent event) {
-
-    }
-
-    @FXML
-    void eliminarHabitacion(ActionEvent event) {
-
-    }
-
     private ProductoHotel hotel;
     @Setter
     private HotelViewController observer;
@@ -136,6 +127,8 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
     @Override
     public void actualizardatosHotel(ProductoHotel hotel) {
         this.hotel = hotel;
+        this.habitaciones = new ArrayList<>(hotel.getHabitaciones());
+        cargarTablaHabitaciones();
     }
 
     private List<ProductoHabitacion> habitaciones;
@@ -152,7 +145,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
             String rutaFotoGuardada = new File(rutaRelativa).getName();
 
            ProductoHabitacion habitacion= ventanasController.getPlataforma().crearHabitacion(hotel, Integer.parseInt(txtFieldNumeroHabitacion.getText()),
-                   Integer.parseInt(txtFieldPrecioHabitacion.getText()), Integer.parseInt(txtFieldCantidadHuespedesHabitacion.getText()),
+                   Double.parseDouble(txtFieldPrecioHabitacion.getText()), Integer.parseInt(txtFieldCantidadHuespedesHabitacion.getText()),
                     rutaFotoGuardada, txtAreaDescripcionHabitacion.getText());
 
             habitaciones.add(habitacion);
@@ -164,6 +157,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
 
             if(habitaciones.size()==hotel.getNumeroDeHabitaciones()){
                 ventanasController.getPlataforma().asignarHabitaciones(habitaciones,hotel.getId());
+                cargarTablaHabitaciones();
                 ventanasController.mostrarAlerta("Hotel creado con exito",Alert.AlertType.INFORMATION);
             }
         } catch (Exception e) {
@@ -206,8 +200,7 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
      * Metodo que carga las habitaciones en la tabla de habitaciones
      */
     public void cargarTablaHabitaciones(){
-            tbHabitaciones.setItems(FXCollections.observableArrayList(habitaciones));
-
+        tbHabitaciones.setItems(FXCollections.observableArrayList(hotel.getHabitaciones()));
     }
 
     public void limpiarCamposHabitacion(ActionEvent event){
@@ -225,6 +218,52 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
         imgViewFotoAlojamiento.setImage(imagenPorDefecto);
     }
 
+    public void eliminarHabitacion(ActionEvent event) {
+        if(habitacionSeleccionada==null){
+            ventanasController.mostrarAlerta("Debe seleccionar una habitacion", Alert.AlertType.ERROR);
+        }
+        try{
+            ventanasController.getPlataforma().eliminarHabitacion(habitacionSeleccionada.getId(),habitacionSeleccionada.getRutaImagenHabitacion());
+            ventanasController.mostrarAlerta("Habitacion eliminada con exito",Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    public void editarHabitacion(ActionEvent event) {
+        try {
+            if(habitacionSeleccionada ==null){
+                ventanasController.mostrarAlerta("Debe seleccionar una habitacion", Alert.AlertType.ERROR);
+                return;
+            }
+            String rutaFoto;
+            if (fotoSeleccionada != null) {
+                String rutaRelativa = RepositorioImagenes.guardarImagen(fotoSeleccionada);
+                String rutaFotoGuardada = new File(rutaRelativa).getName();
+                if (!rutaFotoGuardada.equals(habitacionSeleccionada.getRutaImagenHabitacion())) {
+                    ventanasController.getPlataforma().eliminarImagen(habitacionSeleccionada.getRutaImagenHabitacion());
+                }
+                rutaFoto = rutaFotoGuardada;
+            } else {
+                rutaFoto = habitacionSeleccionada.getRutaImagenHabitacion();
+            }
+
+            ventanasController.getPlataforma().editarHabitacion(habitacionSeleccionada.getId()
+                    , Integer.parseInt(txtFieldNumeroHabitacion.getText())
+                    , Double.parseDouble(txtFieldPrecioHabitacion.getText())
+                    , Integer.parseInt(txtFieldCantidadHuespedesHabitacion.getText())
+                    ,txtAreaDescripcionHabitacion.getText()
+                    , rutaFoto
+                    , hotel.getId());
+
+            limpiarCampos();
+            cargarTablaHabitaciones();
+            ventanasController.mostrarAlerta("Habitacion editada con exito", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
 
     private boolean hayCamposVacios(TextInputControl... campos) {
         for (TextInputControl campo : campos) {
@@ -236,5 +275,9 @@ public class ServicioEditarHabitacionViewController implements HotelDataOberserv
     }
 
 
+    @Override
+    public void actualizar() {
+        cargarTablaHabitaciones();
+    }
 }
 

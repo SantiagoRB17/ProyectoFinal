@@ -193,6 +193,7 @@ public class ServicioReservas {
                     archivoQr
             );
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("Error al generar o enviar el QR de la factura: " + e.getMessage());
             throw new Exception("No fue posible generar y enviar el QR de la factura.");
 

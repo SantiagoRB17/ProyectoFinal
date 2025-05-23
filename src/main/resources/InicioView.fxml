@@ -43,7 +43,7 @@
       <VBox fx:id="vboxContenedorAlojamientosOfertas" alignment="CENTER" spacing="10">
          <ScrollPane fx:id="scrollPaneAlojamientos" fitToHeight="false" fitToWidth="true" hbarPolicy="NEVER" prefHeight="400" vbarPolicy="NEVER" VBox.vgrow="NEVER">
             <VBox fx:id="vboxAlojamientos" alignment="CENTER">
-               <VBox fx:id="vboxFiltroAlojamientos" alignment="CENTER">
+               <VBox fx:id="vboxFiltroAlojamientos" alignment="CENTER" spacing="20">
                   <HBox fx:id="hboxFiltroAlojamientosLabels" alignment="CENTER" style="-fx-padding: 8">
                      <Label text=" 📍 Ciudad" />
                      <Region HBox.hgrow="ALWAYS" />
@@ -61,6 +61,13 @@
                      <ComboBox fx:id="cmbTipoAlojamiento" prefWidth="150.0" />
                      <Region HBox.hgrow="ALWAYS" />
                      <ComboBox fx:id="textFieldFiltroPrecio" prefWidth="150.0" />
+                  </HBox>
+                  <HBox>
+                     <Region HBox.hgrow="ALWAYS" />
+                     <JFXButton fx:id="btnAplicarFiltro" onAction="#aplicarFiltro" prefHeight="40" prefWidth="120" text="Aplicar Filtro" />
+                     <Region HBox.hgrow="ALWAYS" />
+                     <JFXButton fx:id="btnLimpiarFiltros" onAction="#limpiarFiltro" prefHeight="40" prefWidth="120" text="Limpiar filtros" />
+                     <Region HBox.hgrow="ALWAYS" />
                   </HBox>
                </VBox>
                <FlowPane fx:id="flowPaneVistaTarjetasAlojamiento" hgap="10" prefWrapLength="900" vgap="10" />

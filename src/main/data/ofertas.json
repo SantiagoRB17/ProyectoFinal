@@ -2,13 +2,6 @@
   "tipo" : "Oferta",
   "idAlojamiento" : "9b8f860b-a6f0-4268-9b0c-a279a3302dd8",
   "porcentajeDescuento" : 20.0,
-  "descripcionOferta" : "Dia de la madre",
-  "fechaInicio" : "2025-05-14",
-  "fechaFin" : "2025-05-31"
-}, {
-  "tipo" : "Oferta",
-  "idAlojamiento" : "9b8f860b-a6f0-4268-9b0c-a279a3302dd8",
-  "porcentajeDescuento" : 20.0,
   "descripcionOferta" : "Dia del padre",
   "fechaInicio" : "2025-05-14",
   "fechaFin" : "2025-05-31"
