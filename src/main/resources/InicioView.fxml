@@ -13,7 +13,8 @@
 <?import jfxtras.scene.layout.HBox?>
 <?import jfxtras.scene.layout.VBox?>
 
-<VBox fx:id="vboxPrincipal" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1000" spacing="10" style="-fx-padding: 20" stylesheets="@Style/InicioViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.InicioViewcontroller">
+
+<VBox fx:id="vboxPrincipal" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1000" spacing="10" style="-fx-padding: 20" stylesheets="@style/InicioViewStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.Controllers.InicioViewcontroller">
    <HBox fx:id="hboxSaludoIniSesionRegistro" alignment="CENTER" spacing="20">
       <Label fx:id="lblBienvenido" text="Bienvenido a BookYourStay!" />
       <Region HBox.hgrow="ALWAYS" />
@@ -27,7 +28,7 @@
             <items>
                <MenuItem fx:id="menItemReservas" mnemonicParsing="false" onAction="#irAReservas" text="Reservas" />
                <MenuItem fx:id="menItemEditarPerfil" mnemonicParsing="false" onAction="#irAEditarPerfil" text="Editar Perfil" />
-               <MenuItem fx:id="menItemBilletera" mnemonicParsing="false" onAction="#abrirBilletera" text="Billetera" />
+               <MenuItem fx:id="menItemConsultarSaldo" mnemonicParsing="false" onAction="#irconsultarSaldo" text="Consultar Saldo" />
                <MenuItem fx:id="menItemCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
             </items>
          </MenuButton>

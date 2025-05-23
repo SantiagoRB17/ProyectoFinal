@@ -34,7 +34,7 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
     @Override
     public Persona iniciarSesion(String email, String password) throws Exception{
-        return servicioPersonas.inicarSesion(email,password);
+        return servicioPersonas.inciarSesion(email,password);
     }
     @Override
     public void crearUsuario(String nombre, String apellidos, String cedula, String email, String telefono, String password, Rol rol) throws Exception{
@@ -45,8 +45,8 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono) throws Exception{
-        servicioPersonas.editarPersona(nombre,apellidos,cedula,email,telefono);
+    public void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono,String password) throws Exception{
+        servicioPersonas.editarPersona(nombre,apellidos,cedula,email,telefono,password);
     }
 
     @Override
@@ -117,6 +117,11 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     @Override
     public Alojamiento agregarHotel(String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios, int numeroHabitaciones) throws Exception {
         return servicioAlojamientos.agregarHotel(nombre,ciudad,descripcion,rutaFoto,servicios,numeroHabitaciones);
+    }
+
+    @Override
+    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios, double costoExtra) {
+
     }
 
     @Override
@@ -206,10 +211,18 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
+    public  double consultarSaldo(String email,Billetera billetera) throws Exception {
+        Persona persona= servicioPersonas.recuperarPorEmail(email);
+        email=persona.getEmail();
+        return servicioPersonas.consultarSaldo(email,billetera);
+    }
+
+    @Override
     public void pagarReserva(UUID idReserva) throws Exception{
         Reserva reserva = servicioReserva.recuperarReservaPorId(idReserva);
 
         ProductoHabitacion habitacion=servicioAlojamientos.obtenerHabitacionPorId(reserva.getIdHabitacion());
+
 
 
         Alojamiento alojamiento=servicioAlojamientos.obtenerPorId(reserva.getIdAlojamiento());
@@ -246,6 +259,12 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     public void verificarEstadoReservaCompletado(UUID idReserva) throws Exception{
         servicioReserva.verificarEstadoReservaCompletado(idReserva);
     }
+
+    public Billetera buscarPorNumero(String numero) {
+        return servicioBilleteras.buscarPorNumero(numero);
+
+    }
+
 
     @Override
     public void anadirResena(UUID idReserva, int valoracion, String resena, UUID idAlojamiento) throws Exception{

@@ -1,12 +1,10 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
-import co.edu.uniquindio.poo.proyectofinal.Controllers.VentanaController;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Billetera;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Persona;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioPersonas;
 import co.edu.uniquindio.poo.proyectofinal.Utils.EncriptacionContrasena;
-import javafx.scene.control.Alert;
 
 import static co.edu.uniquindio.poo.proyectofinal.Model.validaciones.ValidacionCorreo.validarExpresionRegular;
 import static co.edu.uniquindio.poo.proyectofinal.Model.validaciones.ValidarTelefono.validarTelefono;
@@ -15,8 +13,8 @@ public class ServicioPersonas {
     private final RepositorioPersonas repositorioPersonas = new RepositorioPersonas();
     private final EncriptacionContrasena encriptacionContrasena = new EncriptacionContrasena();
 
-    private void validarCampos(String nombre, String apellidos, String cedula, String email, String telefono) throws Exception {
-        if (nombre == null || apellidos == null || cedula == null || nombre.isEmpty() || apellidos.isEmpty() || cedula.isEmpty()) {
+    private void validarCampos(String nombre, String apellidos, String cedula, String email, String telefono, String password) throws Exception {
+        if (nombre == null || apellidos == null || cedula == null || nombre.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || password.isEmpty()) {
             throw new Exception("Todos los campos son obligatorios");
         }
         if (!validarExpresionRegular(email)) {
@@ -27,7 +25,7 @@ public class ServicioPersonas {
         }
     }
 
-    public Persona recuperarPorEmail(String email){
+    public Persona recuperarPorEmail(String email) {
         return repositorioPersonas.obtenerPorEmail(email);
     }
 
@@ -51,6 +49,7 @@ public class ServicioPersonas {
 
         validarCampos(nombre, apellidos, cedula, email, telefono, password, rol);
 
+
         String hashedPassword = encriptacionContrasena.hashPasswordSHA256(password);
 
         if (rol == Rol.ADMINISTRADOR) {
@@ -69,19 +68,20 @@ public class ServicioPersonas {
                 .telefono(telefono)
                 .password(hashedPassword)
                 .rol(rol)
-                .cuentaActiva(true)
+                .cuentaActiva(false)
                 .build();
         repositorioPersonas.agregarPersona(persona);
     }
 
-    public void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono) throws Exception {
+    public void editarPersona(String nombre, String apellidos, String cedula, String email, String telefono, String password) throws Exception {
         Persona persona = repositorioPersonas.obtenerPorId(cedula);
 
-        validarCampos(nombre, apellidos, cedula, email, telefono);
+        validarCampos(nombre, apellidos, cedula, email, telefono, password);
         persona.setNombre(nombre);
         persona.setApellidos(apellidos);
         persona.setEmail(email);
         persona.setTelefono(telefono);
+        persona.setPassword(password);
 
         repositorioPersonas.editarPersona(persona);
     }
@@ -90,7 +90,7 @@ public class ServicioPersonas {
         return repositorioPersonas.obtenerPorId(cedula);
     }
 
-    public void actualizarPersona(Persona persona) throws Exception{
+    public void actualizarPersona(Persona persona) throws Exception {
         repositorioPersonas.editarPersona(persona);
     }
 
@@ -111,19 +111,23 @@ public class ServicioPersonas {
         if (persona.getPassword().equals(newHashedPassword)) {
             throw new Exception("La nueva contraseña debe ser diferente a la anterior");
         }
-        persona.setPassword(newPassword);
+        persona.setPassword(newHashedPassword);
         repositorioPersonas.editarPersona(persona);
     }
 
-    public Persona inicarSesion(String email, String password) throws Exception {
+    public Persona inciarSesion(String email, String password) throws Exception {
+        if (email == null || email.isBlank()) {
+            throw new Exception("El correo no puede estar vacío");
+        }
+        if (!validarExpresionRegular(email)) { // Valida el formato del correo
+            throw new Exception("El formato del correo es incorrecto");
+        }
         Persona persona = repositorioPersonas.obtenerPorEmail(email);
         if (persona == null) {
             throw new Exception("La persona no existe");
         }
 
         String hashedInput = encriptacionContrasena.hashPasswordSHA256(password);
-        System.out.println(hashedInput);
-
         if (!persona.getPassword().equals(hashedInput)) {
             throw new Exception("Credenciales incorrectas");
         }
@@ -132,6 +136,31 @@ public class ServicioPersonas {
             throw new Exception("La cuenta ha sido inhabilitada");
         }
         return persona;
+    }
+
+
+
+
+    public double consultarSaldo(String email,Billetera billetera) throws Exception {
+        {
+            if (email == null || email.isBlank()) {
+                throw new Exception("El email no puede ser nulo o vacío");
+            }
+
+            // Buscar a la persona por el email
+            Persona persona = repositorioPersonas.obtenerPorEmail(email);
+            if (persona == null) {
+                throw new Exception("No se encontró ninguna persona con el email: " + email);
+            }
+
+            // Buscar la billetera asociada
+            if (billetera == null) {
+                throw new Exception("No se encontró una billetera asociada al usuario con email: " + email);
+            }
+
+            // Retornar el saldo disponible
+            return billetera.getSaldo();
+        }
 
     }
 }

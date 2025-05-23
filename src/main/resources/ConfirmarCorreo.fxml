@@ -22,7 +22,7 @@
             <RowConstraints />
         </rowConstraints>
         <Label text="Correo Electronico:" />
-        <TextField fx:id="txtEmail" GridPane.columnIndex="1" />
+        <TextField fx:id="txtCorreo" GridPane.columnIndex="1" />
     </GridPane>
     <HBox spacing="20">
         <Button fx:id="btnVolverAInicio" mnemonicParsing="false" onAction="#volverInicioSesion" text="Volver " HBox.hgrow="ALWAYS" />
