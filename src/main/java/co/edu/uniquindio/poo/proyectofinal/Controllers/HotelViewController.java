@@ -337,7 +337,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     public void cargarDatosTablaHabitaciones(UUID idHotel){
         try{
             tbHabitaciones.setItems(FXCollections.observableArrayList
-                    ( ventanasController.getPlataforma().recuperarHabitacionesPorHotel(idHotel)));
+                    (ventanasController.getPlataforma().recuperarHabitacionesPorHotel(idHotel)));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -487,6 +487,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
     @Override
     public void actualizar() {
         cargarDatosTablaHotel();
+        cargarDatosTablaHabitaciones(hotelSeleccionado.getId());
     }
 
 }

@@ -176,10 +176,12 @@ public class RepositorioAlojamientos {
         }
     }
 
+
     public List<ProductoHabitacion> cargarHabitaciones(UUID id) {
         ProductoHotel hotel = (ProductoHotel) obtenerPorId(id);
         if (hotel != null) {
-            return hotel.getHabitaciones();
+            List<ProductoHabitacion> habitaciones = hotel.getHabitaciones();
+            return habitaciones.stream().filter(ProductoHabitacion::isActivo).toList();
         }
         return new ArrayList<>();
     }
@@ -247,7 +249,16 @@ public class RepositorioAlojamientos {
         boolean maximo = rangoPrecio.getMax() == null || precio < rangoPrecio.getMax();
         return minimo && maximo;
     }
-    // Método principal de filtrado, que delega la lógica de precio
+
+    /**
+     * Filtra los alojamientos de acuerdo a los filtros proporcionados, como ciudad, nombre, tipo de alojamiento y rango de precios.
+     * Los filtros son opcionales, es decir, si alguno de ellos es nulo o está vacío, no se aplicará dicho filtro.
+     * @param ciudadFiltro la ciudad que se usará como filtro; si es nulo o está en blanco, no filtrará por ciudad
+     * @param nombreFiltro parte del nombre del alojamiento que se usará como filtro; si es nulo o está en blanco, no filtrará por nombre
+     * @param tipoFiltro el tipo de alojamiento (casa, apartamento u hotel) que se usará como filtro; si es nulo, no filtrará por tipo
+     * @param rangoPrecio el rango de precios que se usará como filtro; si es nulo, no filtrará por precio
+     * @return una lista de alojamientos que cumplen con los filtros indicados
+     */
     public List<Alojamiento> filtrarAlojamientos(
             String ciudadFiltro,
             String nombreFiltro,
@@ -270,4 +281,59 @@ public class RepositorioAlojamientos {
                 .filter(a -> cumpleFiltroPrecio(a, rangoPrecio))
                 .toList();
     }
+
+    /**
+     * Metodo que elimina una habitación específica de un hotel, identificada por su UUID.
+     * Busca la habitación en los alojamientos del repositorio, la elimina si existe y actualiza el alojamiento correspondiente.
+     * @param idHabitacion UUID de la habitación que se desea eliminar
+     */
+    public void eliminarHabitacion(UUID idHabitacion) {
+        for (Alojamiento alojamiento : alojamientos) {
+            if (alojamiento instanceof ProductoHotel hotel) {
+                List<ProductoHabitacion> habitaciones = hotel.getHabitaciones();
+                ProductoHabitacion habitacionAEliminar = habitaciones.stream()
+                        .filter(h -> h.getId().equals(idHabitacion))
+                        .findFirst()
+                        .orElse(null);
+                if (habitacionAEliminar != null) {
+                    habitacionAEliminar.setActivo(false);
+                    try{
+                        editarAlojamiento(alojamiento);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Edita los datos de una habitación de un hotel.
+     * @param habitacionEditada habitación editada.
+     * @param idHotel id del hotel al que pertenece la habitación.
+     * @throws Exception si no encuentra la habitación.
+     */
+    public void editarHabitacion(ProductoHabitacion habitacionEditada, UUID idHotel) throws Exception {
+        ProductoHotel hotel = (ProductoHotel) obtenerPorId(idHotel);
+        List<ProductoHabitacion> habitaciones = hotel.getHabitaciones();
+
+        boolean encontrada = false;
+        for (int i = 0; i < habitaciones.size(); i++) {
+            if (habitaciones.get(i).getId().equals(habitacionEditada.getId())) {
+                habitaciones.set(i, habitacionEditada);
+                encontrada = true;
+                break;
+            }
+        }
+
+        if (!encontrada) {
+            throw new Exception("Habitación no encontrada en el hotel.");
+        }
+
+        hotel.setHabitaciones(habitaciones);
+        editarAlojamiento(hotel);
+    }
+
+
 }

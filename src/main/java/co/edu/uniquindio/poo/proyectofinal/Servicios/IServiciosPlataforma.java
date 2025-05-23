@@ -32,9 +32,12 @@ public interface IServiciosPlataforma {
     void eliminarHotel(UUID id,String rutaRelativa) throws Exception;
     ProductoHabitacion crearHabitacion(ProductoHotel hotel, int numeroHabitacion, double precio, int capacidad, String rutaImagenHabitacion, String descripcion) throws Exception;
     void asignarHabitaciones(List<ProductoHabitacion> habitaciones,UUID idHotel) throws Exception;
-    void eliminarHabitacion(UUID id,String rutaRelativa);
+    void eliminarHabitacion(UUID id,String rutaRelativa) throws Exception;
     List<ProductoHabitacion> recuperarHabitaciones(UUID id);
     ProductoHabitacion obtenerHabitacionPorId(UUID idHabitacion);
+    void editarHabitacion(UUID idHabitacion, int numeroHabitacion, double precio, int capacidad,
+                          String descripcion, String rutaImagen, UUID idHotel) throws Exception;
+
 
     void crearOferta(UUID idAlojamiento, double porcentajeDescuento, String descripcion, LocalDate fechaInicio, LocalDate fechaFin)
         throws Exception;

@@ -155,8 +155,9 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void eliminarHabitacion(UUID id, String rutaRelativa) {
-
+    public void eliminarHabitacion(UUID id, String rutaRelativa) throws Exception{
+        servicioAlojamientos.eliminarHabitacion(id,rutaRelativa);
+        notificarObservadores();
     }
 
     @Override
@@ -257,5 +258,11 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     @Override
     public List<Alojamiento> filtrarAlojamientos(String ciudadFiltro, String nombreFiltro, TipoAlojamiento tipoFiltro, RangoPrecio rangoPrecio){
         return servicioAlojamientos.filtrarAlojamientos(ciudadFiltro,nombreFiltro,tipoFiltro,rangoPrecio);
+    }
+    @Override
+    public void editarHabitacion(UUID idHabitacion, int numeroHabitacion, double precio, int capacidad,
+                                 String descripcion, String rutaImagen, UUID idHotel) throws Exception{
+        servicioAlojamientos.editarHabitacion(idHabitacion,numeroHabitacion,precio,capacidad,descripcion,rutaImagen,idHotel);
+        notificarObservadores();
     }
 }

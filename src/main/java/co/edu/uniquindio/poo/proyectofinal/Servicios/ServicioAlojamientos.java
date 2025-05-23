@@ -392,8 +392,73 @@ public class ServicioAlojamientos {
         return opciones;
     }
 
+
+    /**
+     * Filtra la lista de alojamientos según los criterios especificados.
+     * @param ciudadFiltro la ciudad para filtrar alojamientos; puede ser nula o vacía para ignorar el filtrado por ciudad
+     * @param nombreFiltro el nombre o parte del nombre para filtrar alojamientos; puede ser nulo o vacío para ignorar el filtro por nombre
+     * @param tipoFiltro el tipo de alojamiento por el que filtrar; puede ser nulo para ignorar el filtro de tipo
+     * @param rangoPrecio el rango de precios para filtrar alojamientos; puede ser nulo para ignorar el filtrado por precio
+     * @return una lista de alojamientos que coinciden con los criterios de filtro especificados
+     */
     public List<Alojamiento> filtrarAlojamientos(String ciudadFiltro, String nombreFiltro, TipoAlojamiento tipoFiltro, RangoPrecio rangoPrecio){
         return repositorioAlojamientos.filtrarAlojamientos(ciudadFiltro, nombreFiltro, tipoFiltro, rangoPrecio);
     }
+
+    /**
+     * Metodo para eliminar una habitacion del repositorio de alojamientos.
+     * @param idHabitacion id de la habitacion a eliminar
+     */
+    public void eliminarHabitacion(UUID idHabitacion,String rutaRelativaImagen) throws Exception{
+        repositorioAlojamientos.eliminarHabitacion(idHabitacion);
+        repositorioImagenes.eliminarImagen(rutaRelativaImagen);
+    }
+
+
+    /**
+     * Edita la información de una habitación existente en un hotel.
+     *
+     * @param idHabitacion Identificador único de la habitación a editar.
+     * @param numeroHabitacion Número asignado a la habitación.
+     * @param precio Precio de la habitación.
+     * @param capacidad Capacidad máxima de huéspedes que puede alojar la habitación.
+     * @param descripcion Breve descripción de la habitación.
+     * @param rutaImagen Ruta de la imagen asociada a la habitación.
+     * @param idHotel Identificador único del hotel al que pertenece la habitación.
+     * @throws Exception Si el hotel no existe, si el número de la habitación, el precio,
+     *         o la capacidad son valores inválidos, si faltan datos como la descripción
+     *         o la imagen, o si el número de habitación ya está en uso.
+     */
+    public void editarHabitacion(UUID idHabitacion, int numeroHabitacion, double precio, int capacidad,
+                                 String descripcion, String rutaImagen, UUID idHotel) throws Exception {
+        ProductoHotel hotel = (ProductoHotel) repositorioAlojamientos.obtenerPorId(idHotel);
+        if(hotel == null){
+            throw new Exception("Alojamiento inexistente o no seleccionado");
+        }
+        if(numeroHabitacion < 1){
+            throw new Exception("El numero de la habitation debe ser mayor a 0");
+        }
+        if(precio < 0){
+            throw new Exception("El precio debe ser mayor que 0");
+        }
+        if(capacidad < 0){
+            throw new Exception("La capacidad debe ser mayor que 0");
+        }
+        if (rutaImagen == null || rutaImagen.isEmpty() || descripcion == null || descripcion.isEmpty()) {
+            throw new Exception("Debe agregar una imagen y descripcion de la habitacion");
+        }
+        ProductoHabitacion habitacionEditada = ProductoHabitacion.builder()
+                .id(idHabitacion)
+                .numeroHabitacion(numeroHabitacion)
+                .precio(precio)
+                .capacidad(capacidad)
+                .descripcion(descripcion)
+                .rutaImagenHabitacion(rutaImagen)
+                .idHotel(hotel.getId())
+                .activo(true)
+                .build();
+        repositorioAlojamientos.editarHabitacion(habitacionEditada,idHotel);
+    }
+
 
 }
