@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;

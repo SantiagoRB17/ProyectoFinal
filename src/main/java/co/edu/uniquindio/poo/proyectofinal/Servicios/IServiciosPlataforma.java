@@ -1,7 +1,7 @@
 package co.edu.uniquindio.poo.proyectofinal.Servicios;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;

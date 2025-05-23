@@ -1,17 +1,14 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import co.edu.uniquindio.poo.proyectofinal.Enums.TipoAlojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator.Oferta;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Oferta;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoApartamento;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.ProductoHotel;
 import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Sesion;
 import co.edu.uniquindio.poo.proyectofinal.Observers.AlojamientosObserver;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioImagenes;
 import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

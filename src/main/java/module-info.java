@@ -24,7 +24,6 @@ module co.edu.uniquindio.poo.proyectofinal {
     exports co.edu.uniquindio.poo.proyectofinal.Enums;
     exports co.edu.uniquindio.poo.proyectofinal.Observers;
     exports co.edu.uniquindio.poo.proyectofinal.Utils;
-    exports co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator;
     opens co.edu.uniquindio.poo.proyectofinal.Enums to com.fasterxml.jackson.databind;
     exports co.edu.uniquindio.poo.proyectofinal.Model.enums;
     opens co.edu.uniquindio.poo.proyectofinal.Model.enums to com.fasterxml.jackson.databind;
@@ -32,6 +31,4 @@ module co.edu.uniquindio.poo.proyectofinal {
     opens co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory to com.fasterxml.jackson.databind;
     opens co.edu.uniquindio.poo.proyectofinal.Servicios to com.fasterxml.jackson.databind;
     opens co.edu.uniquindio.poo.proyectofinal.Observers to javafx.fxml;
-    opens co.edu.uniquindio.poo.proyectofinal.Model.AlojamientoDecorator to com.fasterxml.jackson.databind;
-
 }
