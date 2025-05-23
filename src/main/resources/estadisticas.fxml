@@ -54,7 +54,7 @@
                                         <!-- Gráfico de Ganancias -->
                                         <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                                             <children>
-                                                <Label text="Ganancias Totales (€)">
+                                                <Label text="Ganancias Totales">
                                                     <font>
                                                         <Font name="System Bold" size="14.0" />
                                                     </font>

@@ -12,4 +12,7 @@
     <Tab text="Ofertas">
         <fx:include source="ofertasView.fxml" />
     </Tab>
+    <Tab text="Estadisticas">
+        <fx:include source="estadisticas.fxml"/>
+    </Tab>
 </TabPane>
