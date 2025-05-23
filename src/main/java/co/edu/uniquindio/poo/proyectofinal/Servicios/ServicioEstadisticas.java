@@ -56,7 +56,9 @@ public class ServicioEstadisticas {
         Map<Alojamiento, Double> ocupacion = new HashMap<>();
         for(Alojamiento alojamiento : repositorioAlojamientos.getAlojamientos()){
             List<Reserva> reservas = repositorioReservas.getReservas().stream()
-                    .filter(r->r.getIdAlojamiento().equals(alojamiento.getId())).toList();
+                    .filter(r -> r.getIdAlojamiento() != null && r.getIdAlojamiento().equals(alojamiento.getId()))
+                    .toList();
+
 
             long diasReservados = reservas.stream()
                     .mapToLong(r-> ChronoUnit.DAYS.between(r.getFechaInicio(), r.getFechaFin())).sum();

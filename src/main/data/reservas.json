@@ -159,13 +159,13 @@
   "estado" : "PAGADO",
   "idFactura" : "8951ff00-8494-4578-a1c1-b294ddf50839"
 }, {
-  "idReserva" : "4479a0e1-231e-4ab2-a21f-0094e461abd7",
-  "cedulaCliente" : null,
-  "idAlojamiento" : null,
+  "idReserva" : "83df9287-c675-4bcd-9bfe-0a501a5ef665",
+  "cedulaCliente" : "1097890",
+  "idAlojamiento" : "b123fa68-cb43-4fd3-b6be-dc94d51991bb",
   "idHabitacion" : null,
-  "fechaInicio" : null,
-  "fechaFin" : null,
-  "numeroHuespedes" : 0,
-  "estado" : null,
-  "idFactura" : null
+  "fechaInicio" : [ 2025, 7, 26 ],
+  "fechaFin" : [ 2025, 8, 21 ],
+  "numeroHuespedes" : 3,
+  "estado" : "PAGADO",
+  "idFactura" : "3cd292e3-b1cd-4930-a739-16b812380ed2"
 } ]

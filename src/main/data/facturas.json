@@ -110,4 +110,11 @@
   "descuento" : 0.0,
   "idReserva" : "3d411808-2fe6-4bac-84d1-1c94be619dae",
   "fechaEmision" : [ 2025, 5, 22, 22, 30, 31, 453802800 ]
+}, {
+  "idFactura" : "3cd292e3-b1cd-4930-a739-16b812380ed2",
+  "subtotal" : 107000.0,
+  "total" : 2782000.0,
+  "descuento" : 0.0,
+  "idReserva" : "83df9287-c675-4bcd-9bfe-0a501a5ef665",
+  "fechaEmision" : [ 2025, 5, 22, 22, 54, 11, 772868100 ]
 } ]
