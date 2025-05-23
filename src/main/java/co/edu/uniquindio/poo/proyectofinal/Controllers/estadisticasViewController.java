@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
+import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento;
 import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class estadisticasViewController implements Initializable {
 
@@ -22,7 +26,6 @@ public class estadisticasViewController implements Initializable {
     @FXML
     private BarChart<String, Number> chartGanancias;
 
-    // Tabla de alojamientos populares
     @FXML
     private TableView<AlojamientoPopular> tablaPopularidad;
 
@@ -38,157 +41,114 @@ public class estadisticasViewController implements Initializable {
     @FXML
     private TableColumn<AlojamientoPopular, Integer> colNumReservas;
 
-    // Gráficos de tipos de alojamiento rentables
     @FXML
     private BarChart<String, Number> chartTiposRentables;
 
     @FXML
     private PieChart chartDistribucionTipos;
 
+    private final VentanaController ventanaController=VentanaController.getInstancia();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configurar tabla
-        configurarTabla();
-
-        // Cargar datos de ejemplo
-        cargarDatosOcupacion();
-        cargarDatosGanancias();
-        cargarDatosPopularidad();
-        cargarDatosTiposRentables();
-    }
-
-    private void configurarTabla() {
-        // Configurar columnas de la tabla de popularidad
         colPosicion.setCellValueFactory(new PropertyValueFactory<>("posicion"));
         colNombreAlojamiento.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
         colNumReservas.setCellValueFactory(new PropertyValueFactory<>("numReservas"));
+
+        cargarDatosOcupacion();
+        cargarDatosGanancias();
+        cargarDatosPopularidad();
+        cargarDatosTiposRentables();
+
     }
 
-    private void cargarDatosOcupacion() {
-        // Limpiar datos existentes
-        chartOcupacion.getData().clear();
 
-        // Crear serie de datos
+    private void cargarDatosOcupacion() {
+        chartOcupacion.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Ocupación (%)");
-
-        // Añadir datos de ejemplo
-        series.getData().add(new XYChart.Data<>("Villa con vista al mar", 78));
-        series.getData().add(new XYChart.Data<>("Apartamento céntrico", 85));
-        series.getData().add(new XYChart.Data<>("Cabaña en el bosque", 63));
-        series.getData().add(new XYChart.Data<>("Loft urbano", 73));
-        series.getData().add(new XYChart.Data<>("Casa rural", 68));
-        series.getData().add(new XYChart.Data<>("Ático con terraza", 82));
-        series.getData().add(new XYChart.Data<>("Bungalow en la playa", 89));
-
-        // Añadir serie al gráfico
+            Map<Alojamiento, Double> ocupacion =ventanaController.getPlataforma().calcularOcupacionPorAlojamiento();
+            for (Map.Entry<Alojamiento, Double> entry : ocupacion.entrySet()) {
+                String nombre = entry.getKey().getNombre();
+                Double porcentaje = entry.getValue();
+                series.getData().add(new XYChart.Data<>(nombre, porcentaje));
+            }
         chartOcupacion.getData().add(series);
-
-        // Aplicar estilo a las barras
         aplicarEstiloBarras(chartOcupacion, "#3b82f6");
     }
 
-    private void cargarDatosGanancias() {
-        // Limpiar datos existentes
-        chartGanancias.getData().clear();
 
-        // Crear serie de datos
+    private void cargarDatosGanancias() {
+        chartGanancias.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Ganancias (€)");
-
-        // Añadir datos de ejemplo
-        series.getData().add(new XYChart.Data<>("Villa con vista al mar", 24500));
-        series.getData().add(new XYChart.Data<>("Apartamento céntrico", 18700));
-        series.getData().add(new XYChart.Data<>("Cabaña en el bosque", 15200));
-        series.getData().add(new XYChart.Data<>("Loft urbano", 19800));
-        series.getData().add(new XYChart.Data<>("Casa rural", 16500));
-        series.getData().add(new XYChart.Data<>("Ático con terraza", 22300));
-        series.getData().add(new XYChart.Data<>("Bungalow en la playa", 28600));
-
-        // Añadir serie al gráfico
+        Map<Alojamiento, Double> ganancias = ventanaController.getPlataforma().obtenerGananciasPorAlojamiento();
+        for (Map.Entry<Alojamiento, Double> entry : ganancias.entrySet()) {
+            String nombre = entry.getKey().getNombre();
+            Double ganancia = entry.getValue();
+            series.getData().add(new XYChart.Data<>(nombre, ganancia));
+        }
         chartGanancias.getData().add(series);
-
-        // Aplicar estilo a las barras
         aplicarEstiloBarras(chartGanancias, "#10b981");
+
     }
 
-    private void cargarDatosPopularidad() {
-        // Crear datos de ejemplo para la tabla
-        ObservableList<AlojamientoPopular> datos = FXCollections.observableArrayList(
-                new AlojamientoPopular(1, "Bungalow en la playa", "Málaga", 87),
-                new AlojamientoPopular(2, "Apartamento céntrico", "Madrid", 82),
-                new AlojamientoPopular(3, "Ático con terraza", "Barcelona", 76),
-                new AlojamientoPopular(4, "Piso histórico", "Valencia", 68),
-                new AlojamientoPopular(5, "Villa con vista al mar", "Alicante", 65),
-                new AlojamientoPopular(6, "Estudio moderno", "Madrid", 61),
-                new AlojamientoPopular(7, "Loft urbano", "Barcelona", 58),
-                new AlojamientoPopular(8, "Chalet con piscina", "Sevilla", 52),
-                new AlojamientoPopular(9, "Casa rural", "Granada", 49),
-                new AlojamientoPopular(10, "Cabaña en el bosque", "Asturias", 45)
-        );
 
-        // Asignar datos a la tabla
-        tablaPopularidad.setItems(datos);
-    }
+        private void cargarDatosPopularidad() {
+            tablaPopularidad.getItems().clear();
+            ObservableList<AlojamientoPopular> datos = FXCollections.observableArrayList();
+                Map<Alojamiento, Long> reservaciones = ventanaController.getPlataforma().obtenerNumeroReservasPorAlojamiento();
+                List<Map.Entry<Alojamiento, Long>> ranking = reservaciones.entrySet().stream()
+                        .sorted(Map.Entry.<Alojamiento, Long>comparingByValue().reversed())
+                        .collect(Collectors.toList());
+                int pos = 1;
+                for (Map.Entry<Alojamiento, Long> entry : ranking) {
+                    Alojamiento a = entry.getKey();
+                    datos.add(new AlojamientoPopular(pos++, a.getNombre(), a.getCiudad(), entry.getValue().intValue()));
+                }
+            tablaPopularidad.setItems(datos);
+        }
+
 
     private void cargarDatosTiposRentables() {
-        // Limpiar datos existentes
         chartTiposRentables.getData().clear();
-
-        // Crear serie de datos para el gráfico de barras
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Ganancias Totales (€)");
 
-        // Añadir datos de ejemplo
-        series.getData().add(new XYChart.Data<>("Apartamentos", 45000));
-        series.getData().add(new XYChart.Data<>("Casas", 38000));
-        series.getData().add(new XYChart.Data<>("Villas", 62000));
-        series.getData().add(new XYChart.Data<>("Hostales", 28000));
-        series.getData().add(new XYChart.Data<>("Cabañas", 32000));
-
-        // Añadir serie al gráfico
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            Map<String, Double> gananciasPorTipo = ventanaController.getPlataforma().obtenerTiposAlojamientoMasRentables();
+            for (Map.Entry<String, Double> entry : gananciasPorTipo.entrySet()) {
+                series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+                pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
+        }
         chartTiposRentables.getData().add(series);
-
-        // Aplicar estilo a las barras
         aplicarEstiloBarras(chartTiposRentables, "#8b5cf6");
-
-        // Crear datos para el gráfico de pastel
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Apartamentos", 45000),
-                new PieChart.Data("Casas", 38000),
-                new PieChart.Data("Villas", 62000),
-                new PieChart.Data("Hostales", 28000),
-                new PieChart.Data("Cabañas", 32000)
-        );
-
-        // Asignar datos al gráfico de pastel
         chartDistribucionTipos.setData(pieChartData);
     }
 
+
     private void aplicarEstiloBarras(BarChart<String, Number> chart, String colorHex) {
-        // Aplicar estilos personalizados a las barras del gráfico
         for (XYChart.Series<String, Number> series : chart.getData()) {
             for (XYChart.Data<String, Number> data : series.getData()) {
-                data.getNode().setStyle("-fx-bar-fill: " + colorHex + ";");
+                if (data.getNode() != null)
+                    data.getNode().setStyle("-fx-bar-fill: " + colorHex + ";");
             }
         }
+
     }
 
-    // Clase modelo para la tabla de alojamientos populares
     public static class AlojamientoPopular {
         private final int posicion;
         private final String nombre;
         private final String ciudad;
         private final int numReservas;
-
         public AlojamientoPopular(int posicion, String nombre, String ciudad, int numReservas) {
             this.posicion = posicion;
             this.nombre = nombre;
             this.ciudad = ciudad;
             this.numReservas = numReservas;
         }
-
         public int getPosicion() { return posicion; }
         public String getNombre() { return nombre; }
         public String getCiudad() { return ciudad; }

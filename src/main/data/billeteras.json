@@ -1,10 +1,10 @@
-[{
+[ {
   "numero" : "1230987456",
   "saldo" : 4950000.0,
   "cedulaUsuario" : "474849"
 }, {
   "numero" : "3716651780",
-  "saldo" : 3623324.0,
+  "saldo" : 3631324.0,
   "cedulaUsuario" : "1097890"
 }, {
   "numero" : "6460251314",
@@ -28,10 +28,14 @@
   "cedulaUsuario" : "117654323"
 }, {
   "numero" : "1047852936",
-  "saldo" : 0.0,
+  "saldo" : 500.0,
   "cedulaUsuario" : "953742186"
 }, {
   "numero" : "8111669644",
   "saldo" : 0.0,
   "cedulaUsuario" : "1094885938"
+}, {
+  "numero" : "8066919787",
+  "saldo" : 1.0E18,
+  "cedulaUsuario" : "10934515"
 } ]

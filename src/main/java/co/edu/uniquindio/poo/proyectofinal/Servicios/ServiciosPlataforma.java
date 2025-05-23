@@ -11,6 +11,7 @@ import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class ServiciosPlataforma implements IServiciosPlataforma {
@@ -21,6 +22,7 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     private final List<AlojamientosObserver> observadores=new ArrayList<>();
     private final ServicioBilleteras servicioBilleteras=new ServicioBilleteras();
     private final ServicioReservas servicioReserva=new ServicioReservas();
+    private final ServicioEstadisticas servicioEstadisticas=new ServicioEstadisticas();
 
     public void registrarObservador(AlojamientosObserver observador){
         observadores.add(observador);
@@ -278,5 +280,19 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
                                  String descripcion, String rutaImagen, UUID idHotel) throws Exception{
         servicioAlojamientos.editarHabitacion(idHabitacion,numeroHabitacion,precio,capacidad,descripcion,rutaImagen,idHotel);
         notificarObservadores();
+    }
+
+    public Map<Alojamiento, Double> calcularOcupacionPorAlojamiento(){
+        return servicioEstadisticas.calcularOcupacionPorAlojamiento();
+    }
+
+    public Map<Alojamiento, Double> obtenerGananciasPorAlojamiento(){
+        return servicioEstadisticas.obtenerGananciasPorAlojamiento();
+    }
+    public Map<Alojamiento, Long> obtenerNumeroReservasPorAlojamiento(){
+        return  servicioEstadisticas.obtenerNumeroReservasPorAlojamiento();
+    }
+    public Map<String, Double> obtenerTiposAlojamientoMasRentables(){
+        return servicioEstadisticas.obtenerTiposAlojamientoMasRentables();
     }
 }

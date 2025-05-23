@@ -5,8 +5,7 @@ import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.Alojamiento
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaApartamento;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaCasa;
 import co.edu.uniquindio.poo.proyectofinal.Model.AlojamientosFactory.FabricaHotel;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Factura;
-import co.edu.uniquindio.poo.proyectofinal.Model.entidades.Reserva;
+import co.edu.uniquindio.poo.proyectofinal.Model.entidades.*;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioAlojamientos;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioFacturas;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioReservas;
@@ -17,15 +16,10 @@ import java.util.stream.Collectors;
 
 public class ServicioEstadisticas {
 
-    private final RepositorioReservas repositorioReservas;
-    private final RepositorioAlojamientos repositorioAlojamientos;
-    private final RepositorioFacturas repositorioFacturas;
+    private final RepositorioReservas repositorioReservas= new RepositorioReservas();
+    private final RepositorioAlojamientos repositorioAlojamientos=new RepositorioAlojamientos();
+    private final RepositorioFacturas repositorioFacturas=new RepositorioFacturas();
 
-    public ServicioEstadisticas(RepositorioReservas repositorioReservas, RepositorioAlojamientos repositorioAlojamientos, RepositorioFacturas repositorioFacturas) {
-        this.repositorioReservas = repositorioReservas;
-        this.repositorioAlojamientos =  repositorioAlojamientos;
-        this.repositorioFacturas = repositorioFacturas;
-    }
 
 
     public Map<Alojamiento, Long> obtenerNumeroReservasPorAlojamiento(){
@@ -36,6 +30,10 @@ public class ServicioEstadisticas {
     public Map<Alojamiento, Double> obtenerGananciasPorAlojamiento(){
         Map<Alojamiento, Double> gananciasPorAlojamiento = new HashMap<>();
         for(Reserva reserva : repositorioReservas.getReservas()){
+            if (reserva.getEstado() == Estado.PENDIENTE || reserva.getIdFactura() == null) {
+                continue;
+            }
+
             Alojamiento alojamiento = repositorioAlojamientos.obtenerPorId(reserva.getIdAlojamiento());
 
             if (alojamiento == null){
@@ -104,11 +102,11 @@ public class ServicioEstadisticas {
 
             String tipo;
 
-            if (alojamiento instanceof FabricaApartamento) {
+            if (alojamiento instanceof ProductoApartamento) {
                 tipo = "Apartamento";
-            } else if (alojamiento instanceof FabricaCasa) {
+            } else if (alojamiento instanceof ProductoCasa) {
                 tipo = "Casa";
-            } else if (alojamiento instanceof FabricaHotel) {
+            } else if (alojamiento instanceof ProductoHotel) {
                 tipo = "Hotel";
             } else {
                 tipo = "Desconocido";

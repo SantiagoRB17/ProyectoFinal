@@ -15,9 +15,8 @@ module co.edu.uniquindio.poo.proyectofinal {
     requires com.google.zxing.javase;
     requires jakarta.activation;
 
-
+    opens co.edu.uniquindio.poo.proyectofinal.Controllers to javafx.base, javafx.fxml;
     opens co.edu.uniquindio.poo.proyectofinal.Model.entidades to com.fasterxml.jackson.databind;
-    opens co.edu.uniquindio.poo.proyectofinal.Controllers to javafx.fxml;
     exports co.edu.uniquindio.poo.proyectofinal;
     exports co.edu.uniquindio.poo.proyectofinal.Model.entidades;
     exports co.edu.uniquindio.poo.proyectofinal.Repositorios;

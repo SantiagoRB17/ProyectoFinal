@@ -10,6 +10,7 @@ import co.edu.uniquindio.poo.proyectofinal.Utils.RangoPrecio;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -275,4 +276,8 @@ public interface IServiciosPlataforma {
      * @throws Exception Si hay errores al consultar el saldo.
      */
     double consultarSaldo(String email,Billetera billetera) throws Exception;
+    Map<Alojamiento, Double> calcularOcupacionPorAlojamiento();
+    Map<Alojamiento, Double> obtenerGananciasPorAlojamiento();
+    Map<Alojamiento, Long> obtenerNumeroReservasPorAlojamiento();
+    Map<String, Double> obtenerTiposAlojamientoMasRentables();
 }
