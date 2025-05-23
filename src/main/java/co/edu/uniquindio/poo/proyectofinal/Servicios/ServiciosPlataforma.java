@@ -121,11 +121,6 @@ public class ServiciosPlataforma implements IServiciosPlataforma {
     }
 
     @Override
-    public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios, double costoExtra) {
-
-    }
-
-    @Override
     public void editarHotel(UUID id, String nombre, String ciudad, String descripcion, String rutaFoto, ArrayList<String> servicios) throws Exception{
         servicioAlojamientos.editarHotel(id,nombre,ciudad,descripcion,rutaFoto,servicios);
         notificarObservadores();
