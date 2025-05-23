@@ -44,7 +44,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 
-public class HotelViewController implements AlojamientosObserver, Initializable, HotelDataOberserver {
+public class HotelViewController implements Initializable, HotelDataOberserver {
 
 
     @FXML
@@ -173,7 +173,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ventanasController.getPlataforma().registrarObservador(this);
         //Configuracion de columnas de la tabla de hoteles
         clNombreHotel.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         clCiudadHotel.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCiudad()));
@@ -243,7 +242,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
 
                 actualizardatosHotel(nuevoHotel);
                 abrirEditarHabitacion(event);
-
+                cargarDatosTablaHotel();
             } catch (Exception e) {
                 e.printStackTrace();
                 ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -370,6 +369,7 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
                     , rutaFoto
                     , serviciosActualizados);
             limpiarCamposHotel();
+            cargarDatosTablaHotel();
             ventanasController.mostrarAlerta("Hotel editado con exito", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
             ventanasController.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
@@ -483,11 +483,6 @@ public class HotelViewController implements AlojamientosObserver, Initializable,
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void actualizar() {
-        cargarDatosTablaHotel();
-        cargarDatosTablaHabitaciones(hotelSeleccionado.getId());
-    }
+    
 
 }
