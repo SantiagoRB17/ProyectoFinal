@@ -238,29 +238,26 @@ public class InicioViewcontroller implements Initializable, AlojamientosObserver
     @FXML
     void irAEditarPerfil(ActionEvent event) {
         try{
-            ventanasController.navegarVentanas("/EditarPerfil.fxml","Editar Perfil", true,false);
+            ventanasController.navegarVentanas("/EditarPerfil.fxml","Editar Perfil", true, true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void irAReservas(ActionEvent event) {
+        try{
+            ventanasController.navegarVentanas("/reservasUsuarioView.fxml","Reservas",true, true);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     @FXML
-    void abrirBilletera(ActionEvent event) {
-        try{
-            ventanasController.navegarVentanas("/RecargarBilletera.fxml","Billetera",true,false);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    void irconsultarSaldo(ActionEvent actionEvent) throws Exception {
+        ventanasController.navegarVentanas("/ConsultarSaldo.fxml","Consultar Saldo",true, true);
     }
-
-    public void irAReservas(ActionEvent event) {
-        try{
-            ventanasController.navegarVentanas("/reservasUsuarioView.fxml","Reservas",true,false);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     void cerrarSesion(ActionEvent event) {
         sesion.cerrarSesion();

@@ -1,48 +1,64 @@
-[
-  {
-    "nombre": "Obi Wan",
-    "apellidos": "Kenobi",
-    "cedula": "7778987",
-    "email": "Kenobi@gmail.com",
-    "telefono": "35457847474",
-    "password": "0c86f2dfd04b5d52de85408b658cd99e053d9010b38c56da20673c9a891e9746",
-    "rol": "ADMINISTRADOR",
-    "cuentaActiva": true,
-    "numeroBilletera": null
-  },
-  {
-    "nombre": "Sergio",
-    "apellidos": "Perez",
-    "cedula": "474849",
-    "email": "perezsergio@gmail.com",
-    "telefono": "321454747",
-    "password": "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
-    "rol": "USUARIO",
-    "cuentaActiva": true,
-    "numeroBilletera": "1230987456"
-  },
-  {
-    "nombre": "Santiago",
-    "apellidos": "Bernal",
-    "cedula": "1097890",
-    "email": "santiago@gmail.com",
-    "telefono": "3211776553",
-    "password": "ad1e10c7f2d809520c2191e442ed016ed7507debeaad03d061a97ec69dc2361e",
-    "rol": "USUARIO",
-    "cuentaActiva": true,
-    "numeroBilletera": "3716651780"
-  },
-  {
-    "nombre": "Mariajose ",
-    "apellidos": "Diaz",
-    "cedula": "1094878423",
-    "email": "majovadi10@gmail.com",
-    "telefono": "3174882011",
-    "password": "483029d526219f816e8e8f6a9de07b422633dba180ffc26faac22862a017519f",
-    "rol": "USUARIO",
-    "cuentaActiva": true,
-    "numeroBilletera": "6460251314"
-  },
+[ {
+  "nombre" : "Alejandro",
+  "apellidos" : "Santamaria",
+  "cedula" : "7778987",
+  "email" : "alejandrosant@gmail.com",
+  "telefono" : "3128113829",
+  "password" : "5d03f26f3d98dfccf75a90e98ba6f4cf339725c2b290e470450f7e10bd83ea3e",
+  "rol" : "ADMINISTRADOR",
+  "cuentaActiva" : true,
+  "numeroBilletera" : null
+}, {
+  "nombre" : "Sergio",
+  "apellidos" : "Perez",
+  "cedula" : "474849",
+  "email" : "checoperez@gmail.com",
+  "telefono" : "3172747021",
+  "password" : "0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true,
+  "numeroBilletera" : "1230987456"
+}, {
+  "nombre" : "Santiago",
+  "apellidos" : "Bernal",
+  "cedula" : "1097890",
+  "email" : "santiago@gmail.com",
+  "telefono" : "3211776553",
+  "password" : "ad1e10c7f2d809520c2191e442ed016ed7507debeaad03d061a97ec69dc2361e",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true,
+  "numeroBilletera" : "3716651780"
+}, {
+  "nombre" : "Carlos",
+  "apellidos" : "Sainz",
+  "cedula" : "555555",
+  "email" : "carloss@gmail.com",
+  "telefono" : "31247474855",
+  "password" : "af41e68e1309fa29a5044cbdc36b90a3821d8807e68c7675a6c495112bc8a55f",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true,
+  "numeroBilletera" : "6811492340"
+}, {
+  "nombre" : "Santiago",
+  "apellidos" : "Guevara",
+  "cedula" : "1096670377",
+  "email" : "santiguevar420@gmail.com",
+  "telefono" : "3172747021",
+  "password" : "41177165eddb7d6d754a4f8e6f9758cf06f052c1b2448bd9b5e5e292ce38ea74",
+  "rol" : "USUARIO",
+  "cuentaActiva" : true,
+  "numeroBilletera" : "5586990524"
+},{
+  "nombre": "Mariajose ",
+  "apellidos": "Diaz",
+  "cedula": "1094878423",
+  "email": "majovadi10@gmail.com",
+  "telefono": "3174882011",
+  "password": "483029d526219f816e8e8f6a9de07b422633dba180ffc26faac22862a017519f",
+  "rol": "USUARIO",
+  "cuentaActiva": true,
+  "numeroBilletera": "6460251314"
+},
   {
     "nombre": "Camilo",
     "apellidos": "Torres",

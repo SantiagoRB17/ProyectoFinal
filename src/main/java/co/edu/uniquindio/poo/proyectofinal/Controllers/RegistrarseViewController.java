@@ -2,7 +2,10 @@ package co.edu.uniquindio.poo.proyectofinal.Controllers;
 
 import co.edu.uniquindio.poo.proyectofinal.Model.enums.Rol;
 import co.edu.uniquindio.poo.proyectofinal.Repositorios.RepositorioPersonas;
+import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioEnvioEmail;
 import co.edu.uniquindio.poo.proyectofinal.Servicios.ServicioPersonas;
+import co.edu.uniquindio.poo.proyectofinal.Utils.CodigoTemporal;
+import co.edu.uniquindio.poo.proyectofinal.Utils.CodigoVerificacion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -46,6 +49,7 @@ public class RegistrarseViewController {
     private TextField txtNumeroTelefonoRegistrarse;
 
     private static VentanaController ventanaController = VentanaController.getInstancia();
+    private ServicioEnvioEmail servicioEnvioEmail = new ServicioEnvioEmail();
 
     public RegistrarseViewController() throws Exception {
     }
@@ -56,7 +60,7 @@ public class RegistrarseViewController {
         comboRol.setValue(Rol.USUARIO);
     }
     @FXML
-    void registrarse(ActionEvent event) {
+    void registrarse(ActionEvent event) throws Exception {
         String nombre = txtNombreCompletoRegistrarse.getText();
         String apellido = txtApellidosRegistrarse.getText();
         String cedula = txtNumeroIdentificacionRegistrarse.getText();
@@ -64,14 +68,30 @@ public class RegistrarseViewController {
         String numero = txtNumeroTelefonoRegistrarse.getText();
         String password = passFieldContrasenaRegistrarse.getText();
         Rol rolSeleccionado= (Rol) comboRol.getValue();
-        try{
-            ventanaController.getPlataforma().crearUsuario(nombre,apellido,cedula,email,numero,password,rolSeleccionado);
-            ventanaController.mostrarAlerta("¡Registro exitoso! Ahora puedes iniciar sesión.", Alert.AlertType.INFORMATION);
-            ventanaController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",true,false);
-        }
-        catch (Exception e){
-            ventanaController.mostrarAlerta(e.getMessage(), Alert.AlertType.INFORMATION);
-        }
+
+        // Generar código y guardarlo en CodigoTemporal
+        String codigo = CodigoVerificacion.generarCodigo();
+        CodigoTemporal.setCorreo(email);
+        CodigoTemporal.setCodigo(codigo);
+        CodigoTemporal.setNombre(nombre);
+        CodigoTemporal.setApellido(apellido);
+        CodigoTemporal.setCedula(cedula);
+        CodigoTemporal.setTelefono(numero);
+        CodigoTemporal.setRol(rolSeleccionado);
+        CodigoTemporal.setPassword(password);
+        CodigoTemporal.setModo("registro");
+
+
+
+
+        // Enviar correo
+        servicioEnvioEmail.enviarNotificacion(email, "Código de activación", "Tu código de activación es: " + codigo);
+
+        ventanaController.mostrarAlerta("¡Código enviado! Revisa tu correo e ingrésalo para activar la cuenta.", Alert.AlertType.INFORMATION);
+
+        // Ir a la vista de ingresar código
+        ventanaController.navegarVentanas("/CodigoConfirmacion.fxml", "ActivarCuenta", true, true);
+
     }
 
     @FXML
@@ -81,7 +101,7 @@ public class RegistrarseViewController {
     }
     @FXML
     void  volverIniciarSesion(ActionEvent event) throws Exception {
-        ventanaController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",true,false);
+        ventanaController.navegarVentanas("/IniciarSesion.fxml","Iniciar Sesion",true, true);
     }
 
 }

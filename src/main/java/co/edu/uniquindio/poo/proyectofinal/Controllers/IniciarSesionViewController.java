@@ -32,14 +32,23 @@ public class IniciarSesionViewController {
     void iniciarSesion(ActionEvent event) throws Exception {
         String email = txtEmailInicioSesion.getText();
         String password = passFieldContrasenaInicioSesion.getText();
+        Persona persona = ventanasController.getPlataforma().iniciarSesion(email, password);
 
         if (email.isEmpty() || password.isEmpty()) {
-            ventanasController.mostrarAlerta("Debe llenar todos los campos", Alert.AlertType.ERROR);
+            ventanasController.mostrarAlerta("Debe ingresar un correo valido", Alert.AlertType.ERROR);
+            return;
+        }
+        if(persona.isCuentaActiva()==false){
+            ventanasController.mostrarAlerta("Su cuenta se encuentra inactiva", Alert.AlertType.ERROR);
+            return;
+        }
+        if (password == null || password.isEmpty()) {
+            ventanasController.mostrarAlerta("Debe ingresar una contraseña válida", Alert.AlertType.ERROR);
             return;
         }
         try {
-            Persona persona = ventanasController.getPlataforma().iniciarSesion(email, password);
             Sesion.getInstancia().setPersona(persona);
+
             if (persona.getRol().equals(Rol.ADMINISTRADOR)) {
                 ventanasController.navegarVentanas("/ServicioAlojamientosView.fxml", "Administrador", true, true);
             } else {
@@ -50,6 +59,7 @@ public class IniciarSesionViewController {
         }
     }
 
+
     @FXML
     void volverAInicio(ActionEvent event) throws Exception {
         ventanasController.navegarVentanas("/InicioView.fxml", "Inicio", true, true);
@@ -57,12 +67,12 @@ public class IniciarSesionViewController {
 
     @FXML
     void irRegistrarse(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("/Registrarse.fxml", "Registrarse", false, false);
+        ventanasController.navegarVentanas("/Registrarse.fxml", "Registrarse", true, true);
     }
 
     @FXML
     void irConfirmacionCorreo(ActionEvent event) throws Exception {
-        ventanasController.navegarVentanas("/ConfirmarCorreo.fxml", "ConfirmacionCorreo", false, false);
+        ventanasController.navegarVentanas("/ConfirmarCorreo.fxml", "ConfirmacionCorreo", true, true);
     }
 }
 
