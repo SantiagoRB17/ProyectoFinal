@@ -12,4 +12,11 @@
   "descripcionOferta" : "Dia del niño",
   "fechaInicio" : "2025-05-21",
   "fechaFin" : "2025-07-12"
+}, {
+  "tipo" : "Oferta",
+  "idAlojamiento" : "b123fa68-cb43-4fd3-b6be-dc94d51991bb",
+  "porcentajeDescuento" : 20.0,
+  "descripcionOferta" : "hola",
+  "fechaInicio" : "2025-05-23",
+  "fechaFin" : "2025-05-31"
 } ]
